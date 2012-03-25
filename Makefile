@@ -1,6 +1,8 @@
 project_dir:=/home/seel/project/hwlib
 
-src_dir:=$(project_dir)/hwu
+src_dir:=$(project_dir)/src
+include_dir:=$(project_dir)/include
+test_dir:=$(project_dir)/test
 
 obj_dir:=$(project_dir)/obj
 obj_target_dir:=$(obj_dir)/debug
@@ -15,15 +17,16 @@ tag_dir:=$(project_dir)
 tag_file:=$(tag_dir)/tags
 
 source_files:=$(shell find $(src_dir)/ -name "*.c")
+test_files:=$(shell  find $(test_dir)/ -name "*.c")
 obj_files:=$(patsubst $(src_dir)/%.c,$(obj_target_dir)/%.o,$(source_files))
 lib_files:=$(lib_target_dir)/libhw.a
 bin_files:=$(bin_target_dir)/hw.exe
 
 CC:=gcc-4
 AR:=ar
-CFLAGS:=-Wall -g -I $(project_dir) -ansi
+CFLAGS:=-Wall -g -I $(include_dir) -ansi
 
-target : make-dir lib bin
+target : bin
 
 clean :
 	@rm -rf $(obj_target_dir)
@@ -54,13 +57,15 @@ make-dir :
 
 $(obj_files) : $(obj_target_dir)/%.o : $(src_dir)/%.c Makefile
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(bin_files) : $(obj_files)
-	$(CC) $(CFLAGS) $+ -o $@
+$(bin_files) : $(test_files) $(lib_files)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $< -L$(lib_target_dir) -lhw -o $@
 
 $(lib_files) : $(obj_files)
-	ar rsv $@ $+
+	@mkdir -p $(dir $@)
+	@$(AR) rsv $@ $+
 
 $(tag_file) : $(source_files)
 	ctags $+
