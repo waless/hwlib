@@ -4,6 +4,7 @@
 *.obj
 *.exe
 *.swp
+*.swo
 
 # 無視するフォルダ
 obj/
