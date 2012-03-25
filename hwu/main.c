@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv)
 {
-	HWU_ASSERT_MESSAGE(0, "foocc");
+    printf("foo");
     return 0;
 }
 

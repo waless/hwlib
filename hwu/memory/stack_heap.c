@@ -1,6 +1,6 @@
 #include "hwu/memory/stack_heap.h"
 #include <string.h>
-#include "hwu/memory/misc.h"
+#include "hwu/utility.h"
 #include "hwu/debug/assert.h"
 
 static void* allocate_from_top(hwu_stack_heap_t* heap, int size, hwu32 alignment);
@@ -47,7 +47,7 @@ hwu_stack_heap_maker_t hwu_stack_heap_get_maker_ex(hwu_stack_heap_t* heap, hwu_s
 static void* allocate_from_top(hwu_stack_heap_t* heap, int size, hwu32 alignment)
 {
 	if(size > 0) {
-		hwuptr_t address = HWU_MEMORY_ROUND_UP(heap->top_address - size, alignment);
+		hwuptr_t address = HWU_ALIGNED_ROUND_UP(heap->top_address - size, alignment);
 		if(address >= heap->bottom_address) {
 			heap->top_address = address;
 			return (void*)address;
@@ -59,7 +59,7 @@ static void* allocate_from_top(hwu_stack_heap_t* heap, int size, hwu32 alignment
 static void* allocate_from_bottom(hwu_stack_heap_t* heap, int size, hwu32 alignment)
 {
 	if(size > 0) {
-		hwuptr_t address = HWU_MEMORY_ROUND_DOWN(heap->bottom_address, alignment);
+		hwuptr_t address = HWU_ALIGNED_ROUND_UP(heap->bottom_address, alignment);
 		hwuptr_t next_address = address + size;
 		if(next_address <= heap->top_address) {
 			heap->bottom_address = next_address;

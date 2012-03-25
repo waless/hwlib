@@ -1,6 +1,6 @@
 #include "hwu/memory/small_object_heap.h"
+#include "hwu/utility.h"
 #include "hwu/memory/unit_heap.h"
-#include "hwu/memory/misc.h"
 #include "hwu/memory/internal/unit_heap_list.h"
 #include "hwu/debug/assert.h"
 
@@ -153,5 +153,5 @@ small_object_tag_t* get_tag_address(void* memory, int memory_size)
 
 int calculate_allocate_size(int size, int alignment)
 {
-	return HWU_MEMORY_ROUND_UP(size + sizeof(small_object_tag_t), alignment);
+	return HWU_ALIGNED_ROUND_UP(size + sizeof(small_object_tag_t), alignment);
 }

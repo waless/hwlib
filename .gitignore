@@ -1,0 +1,16 @@
+
+# 無視する拡張子
+*.o
+*.obj
+*.exe
+*.swp
+
+# 無視するフォルダ
+obj/
+bin/
+lib/
+
+# 無視するファイル
+tags
+.vimrc.local
+
