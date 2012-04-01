@@ -17,7 +17,7 @@
 #   elif defined(HWU_PLATFORM_GCC)
 #      define HWU_ABORT() exit(0)
 #   else
-#      error // –¢‘Î‰‚È‚Ì‚ÅƒGƒ‰[‚É‚·‚é
+#      error // æœªå¯¾å¿œãªã®ã§ã‚¨ãƒ©ãƒ¼ã«ã™ã‚‹
 #   endif
 
 #   define HWU_ASSERT_MESSAGE(exp, message)							\
@@ -50,3 +50,4 @@
 #endif
 
 #endif  /* HWU_DEBUG_ASSERT_ */
+

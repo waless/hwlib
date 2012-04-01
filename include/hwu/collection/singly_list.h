@@ -20,3 +20,4 @@ extern BOOL hwu_singly_list_empty(hwu_singly_list_t* list);
 extern int  hwu_singly_list_count(hwu_singly_list_t* list);
 
 #endif  /* HWU_COLLECTION_SINGLY_LIST_H_ */
+

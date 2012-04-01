@@ -13,5 +13,11 @@ lib/
 
 # 無視するファイル
 tags
+GTAGS
+GPATH
+GRTAGS
+cscope.files
+cscope.out
 .vimrc.local
+.vimrc.project
 

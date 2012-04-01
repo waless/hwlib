@@ -8,3 +8,4 @@ typedef struct tag_hwu_doubly_link_t
 } hwu_doubly_link_t;
 
 #endif /* HWU_DOUBLY_LINK_H_ */
+
