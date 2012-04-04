@@ -61,13 +61,13 @@ int hwu_unit_heap_get_unit_size(hwu_unit_heap_t* heap)
 	return heap->unit_size;
 }
 
-BOOL hwu_unit_heap_empty(hwu_unit_heap_t* heap)
+hwbool hwu_unit_heap_empty(hwu_unit_heap_t* heap)
 {
     HWU_NULL_ASSERT(heap);
     return hwuL_unit_memory_empty(heap->head);
 }
 
-BOOL hwu_unit_heap_full(hwu_unit_heap_t* heap)
+hwbool hwu_unit_heap_full(hwu_unit_heap_t* heap)
 {
 	HWU_NULL_ASSERT(heap);
 	HWU_ASSERT_MESSAGE(heap->current_unit_num > heap->total_unit_num, "保持ブロック数がヒープの最大ブロック数を超えています");

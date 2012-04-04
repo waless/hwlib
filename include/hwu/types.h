@@ -31,14 +31,14 @@ typedef double             hwf64;
 
 #endif  /* HWU_PLATFORM_32BIT */
 
-typedef int BOOL;
+typedef int hwbool;
 
-#ifndef TRUE
-#    define TRUE  1;
-#endif  /* TRUE */
+#ifndef hwtrue
+#    define hwtrue 1
+#endif /* hwtrue */
 
-#ifndef FALSE
-#    define FALSE 0;
-#endif  /* FALSE */
+#ifndef hwfalse
+#    define hwfalse 0
+#endif /* hwfalse */
 
 #endif  /* HWU_TYPES_H_  */

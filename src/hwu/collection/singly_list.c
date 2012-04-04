@@ -1,4 +1,5 @@
 #include "hwu/collection/singly_list.h"
+#include <stddef.h>
 #include "hwu/debug/assert.h"
 
 void hwu_singly_list_initialize(hwu_singly_list_t* list)
@@ -81,7 +82,7 @@ void hwu_singly_list_remove(hwu_singly_list_t* list, hwu_singly_link_t* link)
 	link->next = NULL;
 }
 
-BOOL hwu_singly_list_empty(hwu_singly_list_t* list)
+hwbool hwu_singly_list_empty(hwu_singly_list_t* list)
 {
 	HWU_NULL_ASSERT(list);
 	return list->root.next != NULL;

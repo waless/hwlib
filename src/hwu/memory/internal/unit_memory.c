@@ -51,7 +51,7 @@ void hwuL_unit_memory_push(void* head, void* memory, void** new_head)
     }
 }
 
-BOOL hwuL_unit_memory_empty(void* head)
+hwbool hwuL_unit_memory_empty(void* head)
 {
     return ((block_header_t*)head)->next == NULL;
 }

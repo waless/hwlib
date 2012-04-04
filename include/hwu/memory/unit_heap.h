@@ -18,7 +18,7 @@ extern void* hwu_unit_heap_allocate(hwu_unit_heap_t* heap);
 extern void hwu_unit_heap_deallocate(hwu_unit_heap_t* heap, void* memory);
 extern void* hwu_unit_heap_get_memory(hwu_unit_heap_t* heap);
 extern int hwu_unit_heap_get_unit_size(hwu_unit_heap_t* heap);
-extern BOOL hwu_unit_heap_empty(hwu_unit_heap_t* heap);
-extern BOOL hwu_unit_heap_full(hwu_unit_heap_t* heap);
+extern hwbool hwu_unit_heap_empty(hwu_unit_heap_t* heap);
+extern hwbool hwu_unit_heap_full(hwu_unit_heap_t* heap);
 
 #endif  /* HWU_MEMORY_UNIT_HEAP_H_ */

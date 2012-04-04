@@ -105,7 +105,7 @@ void hwu_small_object_heap_deallocate(hwu_small_object_heap_t* heap, void* memor
 	}
 }
 
-BOOL hwu_small_object_heap_is_in_heap(hwu_small_object_heap_t* heap, void* memory)
+hwbool hwu_small_object_heap_is_in_heap(hwu_small_object_heap_t* heap, void* memory)
 {
 	hwuL_unit_heap_list_node_t* target_heap_node = NULL;
 	hwuL_unit_heap_list_t*		target_heap		 = NULL;

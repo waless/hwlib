@@ -18,7 +18,7 @@ extern hwu_doubly_link_t* hwu_doubly_list_pop_front(hwu_doubly_list_t* list);
 extern hwu_doubly_link_t* hwu_doubly_list_pop_back(hwu_doubly_list_t* list);
 extern void               hwu_doubly_list_insert(hwu_doubly_list_t* list, hwu_doubly_link_t* pos, hwu_doubly_link_t* link);
 extern void               hwu_doubly_list_remove(hwu_doubly_list_t* list, hwu_doubly_link_t* link);
-extern BOOL               hwu_doubly_list_empty(hwu_doubly_list_t* list);
+extern hwbool             hwu_doubly_list_empty(hwu_doubly_list_t* list);
 extern int                hwu_doubly_list_count(hwu_doubly_list_t* list);
 
 #endif  /* HWU_DOUBLY_LIST_H_ */

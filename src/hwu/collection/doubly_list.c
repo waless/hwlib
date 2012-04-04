@@ -93,7 +93,7 @@ void hwu_doubly_list_remove(hwu_doubly_list_t* list, hwu_doubly_link_t* link)
 	link->next = NULL;
 }
 
-BOOL hwu_doubly_lits_empty(hwu_doubly_list_t* list)
+hwbool hwu_doubly_lits_empty(hwu_doubly_list_t* list)
 {
 	HWU_NULL_ASSERT(list);
 	return list->root.prev == list->root.next;
@@ -112,3 +112,5 @@ int hwu_doubly_list_count(hwu_doubly_list_t* list)
 		
 	return count;
 }
+
+
