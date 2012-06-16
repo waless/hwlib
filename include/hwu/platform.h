@@ -32,22 +32,14 @@
 #   define HWU_PLATFORM_MSVC
 
 /* 32bit or 64bit 定義 */
-#   if defined(_WIN32)
-#       define HWU_PLATFORM_32BIT
-#       define HWU_PLATFORM_MSVC32
-#   elif defined(_WIN64)
+#   if defined(_WIN64)
 #       define HWU_PLATFORM_64BIT
 #       define HWU_PLATFORM_MSVC64
+#   elif
+#       define HWU_PLATFORM_32BIT
+#       define HWU_PLATFORM_MSVC32
 #   endif
 
-/* コンパイルターゲット定義 */
-/* デバッグコンパイルでなく、HWU_RELEASE設定でなければHWU_PROFILE設定にしておく */
-/* HWU_RELEASE設定はユーザーが明示的に行うこと */
-#   if defined(_DEBUG)
-#       define HWU_DEBUG
-#   elif !defined(HWU_RELEASE)
-#       define HWU_PROFILE
-#   endif
 
 /* 他環境を考えるとVC専用関数は多用できないのでセキュア関数関連の警告を無視する */
 #   pragma warning(disable:4996)
@@ -55,13 +47,27 @@
 /* GCC環境定義 */
 #elif defined(__GNUC__)
 
-#   define HWU_PLATFORM_32BIT
-#   define HWU_PLATFORM_GCC32
-
 /* GCC定義 */
 #   define HWU_PLATFORM_GCC
 
-#   define _DEBUG
+/* 32bit or 64bit 定義 */
+#   if defined(__i386__)
+#       define HWU_PLATFORM_32BIT
+#       define HWU_PLATFORM_GCC32
+#   else
+#       define HWU_PLATFORM_64BIT
+#       define HWU_PLATFORM_GCC64
+#   endif
 #endif	/* defined(__GNUC__) */
 
+/* コンパイルターゲット定義 */
+/* デバッグコンパイルでなく、HWU_RELEASE設定でなければHWU_PROFILE設定にしておく */
+/* HWU_RELEASE設定はユーザーが明示的に行うこと */
+#if defined(_DEBUG)
+#   define HWU_DEBUG
+#elif !defined(HWU_RELEASE)
+#   define HWU_PROFILE
+#endif
+
 #endif  /* HWU_PLATFORM_H_ */
+
