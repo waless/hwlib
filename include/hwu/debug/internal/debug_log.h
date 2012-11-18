@@ -1,7 +1,7 @@
 #ifndef HWU_DEBUG_INTERNAL_DEBUG_LOG_H_
 #define HWU_DEBUG_INTERNAL_DEBUG_LOG_H_
 
-#include "platform.h"
+#include "hwu/platform.h"
 
 #if !defined(HWU_RELEASE)
 

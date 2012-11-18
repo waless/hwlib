@@ -23,12 +23,20 @@ void* hwu_malloc(size_t size)
 
 void* hwu_malloc_aligned(size_t size, size_t alignment)
 {
+#if defined(HWU_PLATFORM_MSVC)
+	return _aligned_malloc(size, alignment);
+#else
 	return memalign(alignment, size);
+#endif
 }
 
 void hwu_free(void* p)
 {
+#if defined(HWU_PLATFORM_MSVC)
+	_aligned_free(p);
+#else
 	free(p);
+#endif
 }
 
 #ifndef HWU_RELEASE
@@ -45,7 +53,7 @@ void* hwu_malloc_aligned_debug(size_t size, size_t alignment, const char* file, 
 
 void  hwu_free_debug(void* p)
 {
-	hwu_free_debug(p);
+	hwu_free(p);
 }
 
 #endif

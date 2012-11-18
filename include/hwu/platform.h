@@ -35,7 +35,7 @@
 #   if defined(_WIN64)
 #       define HWU_PLATFORM_64BIT
 #       define HWU_PLATFORM_MSVC64
-#   elif
+#   else
 #       define HWU_PLATFORM_32BIT
 #       define HWU_PLATFORM_MSVC32
 #   endif

@@ -4,7 +4,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stddef.h>
-#include "platform.h"
+#include "hwu/platform.h"
+#include "hwu/debug/internal/debug_log.h"
 
 #ifdef HWU_DEBUG
 

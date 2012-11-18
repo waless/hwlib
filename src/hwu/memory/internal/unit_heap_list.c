@@ -14,14 +14,15 @@ void hwuL_unit_heap_list_initialize(hwuL_unit_heap_list_t* heap, int unit_size, 
 void* hwuL_unit_heap_list_allocate(hwuL_unit_heap_list_t* list)
 {
 	void* memory = NULL;
+	hwuL_unit_heap_list_node_t* node = NULL;
 	
 	HWU_NULL_ASSERT(list);
 	
-	hwuL_unit_heap_list_node_t* node = (hwuL_unit_heap_list_node_t*)hwu_doubly_list_get_head(&list->heap_list);
+	node = (hwuL_unit_heap_list_node_t*)hwu_doubly_list_get_head(&list->heap_list);
 	if(node != NULL) {
 		memory = hwuL_unit_memory_pop(node->heap, &node->heap);
 		--node->current_unit_num;
-		HWU_ASSERT_MESSAGE(heap->current_unit_num >= 0, "ヒープが空にもかかわらずメモリを確保しました");
+		HWU_ASSERT_MESSAGE(node->current_unit_num >= 0, "ヒープが空にもかかわらずメモリを確保しました");
 
 		/* 確保したヒープを一番後ろに回す */
 		node = (hwuL_unit_heap_list_node_t*)hwu_doubly_list_pop_front(&list->heap_list);
@@ -40,7 +41,7 @@ hwuL_unit_heap_list_node_t* hwuL_unit_heap_list_deallocate(hwuL_unit_heap_list_t
 		/* メモリの返却 */
 		hwuL_unit_memory_push(node->heap, memory, &node->heap);
 		++node->current_unit_num;
-		HWU_ASSERT_MESSAGE(node->current_unit_num <= heap->unit_num, "ヒープの最大ブロック数を超えてメモリが返却されました");
+		HWU_ASSERT_MESSAGE(node->current_unit_num <= list->unit_num, "ヒープの最大ブロック数を超えてメモリが返却されました");
 
 		/* 対象ヒープのメモリがすべて返却されたらヒープをリストから分離して返す */
 		hwu_doubly_list_remove(&list->heap_list, &node->link);

@@ -70,7 +70,7 @@ hwbool hwu_unit_heap_empty(hwu_unit_heap_t* heap)
 hwbool hwu_unit_heap_full(hwu_unit_heap_t* heap)
 {
 	HWU_NULL_ASSERT(heap);
-	HWU_ASSERT_MESSAGE(heap->current_unit_num > heap->total_unit_num, "保持ブロック数がヒープの最大ブロック数を超えています");
+	HWU_ASSERT_MESSAGE(heap->current_unit_num > heap->total_unit_num, "");
 	return heap->current_unit_num == heap->total_unit_num;
 }
 

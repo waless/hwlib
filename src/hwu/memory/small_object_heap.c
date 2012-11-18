@@ -86,6 +86,7 @@ void hwu_small_object_heap_deallocate(hwu_small_object_heap_t* heap, void* memor
 {
 	hwuL_unit_heap_list_node_t* target_heap_node = NULL;
 	hwuL_unit_heap_list_t*		target_heap		 = NULL;
+	hwuL_unit_heap_list_node_t* empty_heap       = NULL;
 	
 	HWU_NULL_ASSERT(heap);
 	HWU_NULL_ASSERT(memory);
@@ -99,7 +100,7 @@ void hwu_small_object_heap_deallocate(hwu_small_object_heap_t* heap, void* memor
 	/* ヒープにメモリを返却 */
 	/* そのヒープのメモリが使用されなくなったら */
 	/* リストから分離され返ってくるのでメモリを開放する */
-	hwuL_unit_heap_list_node_t* empty_heap = hwuL_unit_heap_list_deallocate(target_heap, target_heap_node, memory);
+	empty_heap = hwuL_unit_heap_list_deallocate(target_heap, target_heap_node, memory);
 	if(empty_heap != NULL) {
 		heap->deallocator(empty_heap->heap);
 	}
