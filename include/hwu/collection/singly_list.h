@@ -4,6 +4,10 @@
 #include "hwu/types.h"
 #include "hwu/collection/singly_link.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct tag_hwu_singly_list_t
 {
 	hwu_singly_link_t root;
@@ -18,6 +22,10 @@ extern void hwu_singly_list_insert(hwu_singly_list_t* list, hwu_singly_link_t* p
 extern void hwu_singly_list_remove(hwu_singly_list_t* list, hwu_singly_link_t* link);
 extern hwbool hwu_singly_list_empty(hwu_singly_list_t* list);
 extern int  hwu_singly_list_count(hwu_singly_list_t* list);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  /* HWU_COLLECTION_SINGLY_LIST_H_ */
 

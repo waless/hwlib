@@ -3,6 +3,10 @@
 
 #include "hwu/types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct tag_hwu_ring_heap_t
 {
 	void*		memory;
@@ -16,6 +20,10 @@ typedef hwuptr_t hwu_ring_heap_marker_t;
 extern void hwu_ring_heap_initialize(hwu_ring_heap_t* heap, void* memory, int size);
 extern void* hwu_ring_heap_allocate(hwu_ring_heap_t* heap, int size, int alignment);
 extern void hwu_ring_heap_reset_allocated_size(hwu_ring_heap_t* heap);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif	/* HWU_MEMORY_RING_HEAP_H */
 

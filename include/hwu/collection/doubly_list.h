@@ -4,6 +4,10 @@
 #include "hwu/types.h"
 #include "hwu/collection/doubly_link.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct tag_hwu_doubly_list_t
 {
 	hwu_doubly_link_t root;
@@ -20,6 +24,10 @@ extern void               hwu_doubly_list_insert(hwu_doubly_list_t* list, hwu_do
 extern void               hwu_doubly_list_remove(hwu_doubly_list_t* list, hwu_doubly_link_t* link);
 extern hwbool             hwu_doubly_list_empty(hwu_doubly_list_t* list);
 extern int                hwu_doubly_list_count(hwu_doubly_list_t* list);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  /* HWU_DOUBLY_LIST_H_ */
 

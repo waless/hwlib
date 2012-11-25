@@ -3,6 +3,10 @@
 
 #include "hwu/types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct tag_hwu_unit_heap_t
 {
 	void* head;
@@ -20,5 +24,9 @@ extern void* hwu_unit_heap_get_memory(hwu_unit_heap_t* heap);
 extern int hwu_unit_heap_get_unit_size(hwu_unit_heap_t* heap);
 extern hwbool hwu_unit_heap_empty(hwu_unit_heap_t* heap);
 extern hwbool hwu_unit_heap_full(hwu_unit_heap_t* heap);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  /* HWU_MEMORY_UNIT_HEAP_H_ */

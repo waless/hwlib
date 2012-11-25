@@ -5,6 +5,10 @@
 #include "hwu/collection/doubly_list.h"
 #include "hwu/memory/allocator.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct tag_hwuL_unit_heap_list_t
 {
 	hwu_doubly_list_t heap_list;
@@ -28,5 +32,9 @@ extern int   hwuL_unit_heap_list_get_heap_size(hwuL_unit_heap_list_t* list);
 extern int   hwuL_unit_heap_list_get_unit_size(hwuL_unit_heap_list_t* list);
 extern int   hwuL_unit_heap_list_get_unit_num(hwuL_unit_heap_list_t* list);
 extern hwuL_unit_heap_list_node_t* hwuL_unit_heap_list_get_node_from_heap_memory(void* memory, int memory_size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif	/* HWU_MEMORY_UNIT_HEAP_LIST_H */

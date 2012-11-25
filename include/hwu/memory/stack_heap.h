@@ -3,6 +3,10 @@
 
 #include "hwu/types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct tag_hwu_stack_heap_t
 {
 	hwuptr_t memory_address;
@@ -29,6 +33,10 @@ extern hwu_stack_heap_maker_t hwu_stack_heap_get_maker_ex(hwu_stack_heap_t* heap
 #define hwu_stack_heap_allocate(heap, size)             hwu_stack_heap_allocate_ex(heap, size, sizeof(double), HWU_STACK_HEAP_DIRECTION_TOP)
 #define hwu_stack_heap_deallocate_to_maker(heap, maker) hwu_stack_heap_deallocate_ex(heap, maker, HWU_STACK_HEAP_DIRECTION_TOP)
 #define hwu_stack_heap_get_maker(heap)                  hwu_stack_heap_get_maker_ex(heap, HWU_STACK_HEAP_DIRECTION_TOP)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  /* HWU_MEMORY_STACK_HEAP_H_ */
 
