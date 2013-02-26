@@ -1,4 +1,4 @@
-project_dir:=/home/seel/project/hwlib
+project_dir:=$(HOME)/projects/hwlib
 
 src_dir:=$(project_dir)/src
 include_dir:=$(project_dir)/include

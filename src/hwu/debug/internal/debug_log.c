@@ -5,6 +5,8 @@
 
 #ifdef HWU_PLATFORM_MSVC
 #   include <Windows.h>
+#else
+#   include <stdarg.h>
 #endif
 
 #if !defined(HWU_RELEASE)
