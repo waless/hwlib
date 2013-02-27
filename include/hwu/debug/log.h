@@ -1,4 +1,4 @@
-#ifndef HWU_DEBUG_LOG_H_
+﻿#ifndef HWU_DEBUG_LOG_H_
 #define HWU_DEBUG_LOG_H_
 
 #include <stdarg.h>

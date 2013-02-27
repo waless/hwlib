@@ -1,4 +1,4 @@
-#ifndef HWU_UTILITY_H_
+﻿#ifndef HWU_UTILITY_H_
 #define HWU_UTILITY_H_
 
 #define HWU_CHECK_ALIGNMENT(address, alignment)    ((address) & ((alignment) - 1) == 0)

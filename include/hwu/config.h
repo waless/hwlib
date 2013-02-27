@@ -1,4 +1,4 @@
-#ifndef HWU_CONFIG_H_
+﻿#ifndef HWU_CONFIG_H_
 #define HWU_CONFIG_H
 
 /* hwuパッケージデフォルトメモリアラインメント */

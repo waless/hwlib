@@ -1,4 +1,4 @@
-#ifndef HWU_SINGLY_LINK_H_
+﻿#ifndef HWU_SINGLY_LINK_H_
 #define HWU_SINGLY_LINK_H_
 
 #ifdef __cplusplus

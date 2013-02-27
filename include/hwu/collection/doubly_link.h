@@ -1,4 +1,4 @@
-#ifndef HWU_DOUBLY_LINK_H_
+﻿#ifndef HWU_DOUBLY_LINK_H_
 #define HWU_DOUBLY_LINK_H_
 
 #ifdef __cplusplus

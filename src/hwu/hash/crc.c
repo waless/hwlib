@@ -1,4 +1,4 @@
-#include "hwu/hash/crc.h"
+﻿#include "hwu/hash/crc.h"
 #include "hwu/debug/assert.h"
 
 static const hwu16 CRC16_TABLE[256] =

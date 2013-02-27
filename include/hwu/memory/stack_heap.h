@@ -1,4 +1,4 @@
-#ifndef HWU_MEMORY_STACK_HEAP_H_
+﻿#ifndef HWU_MEMORY_STACK_HEAP_H_
 #define HWU_MEMORY_STACK_HEAP_H_
 
 #include "hwu/types.h"

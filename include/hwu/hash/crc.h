@@ -1,4 +1,4 @@
-#ifndef HWU_HASH_CRC_
+﻿#ifndef HWU_HASH_CRC_
 #define HWU_HASH_CRC_
 
 #include <stddef.h>

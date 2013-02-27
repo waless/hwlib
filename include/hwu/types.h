@@ -1,4 +1,4 @@
-/*
+﻿/*
     Copyright okanishi_kazuki
     Lisence
     初版 2011/08/01 okanishi_kazuki

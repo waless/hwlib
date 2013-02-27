@@ -1,4 +1,4 @@
-#ifndef HWU_MEMORY_ALLOCATOR_H_
+﻿#ifndef HWU_MEMORY_ALLOCATOR_H_
 #define HWU_MEMORY_ALLOCATOR_H_
 
 #include "hwu/platform.h"

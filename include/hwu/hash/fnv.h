@@ -1,4 +1,4 @@
-#ifndef HWU_HASH_FNV_
+﻿#ifndef HWU_HASH_FNV_
 #define HWU_HASH_FNV_
 
 #include <stddef.h>

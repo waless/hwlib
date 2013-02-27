@@ -1,4 +1,4 @@
-#ifndef HWU_COLLECTION_SINGLY_LIST_H_
+﻿#ifndef HWU_COLLECTION_SINGLY_LIST_H_
 #define HWU_COLLECTION_SINGLY_LIST_H_
 
 #include "hwu/types.h"

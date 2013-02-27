@@ -1,4 +1,4 @@
-#ifndef HWU_MEMORY_SMALL_OBJECT_HEAP_H_
+﻿#ifndef HWU_MEMORY_SMALL_OBJECT_HEAP_H_
 #define HWU_MEMORY_SMALL_OBJECT_HEAP_H
 
 #include "hwu/types.h"

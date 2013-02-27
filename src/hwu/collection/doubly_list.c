@@ -1,4 +1,4 @@
-#include "hwu/collection/doubly_list.h"
+﻿#include "hwu/collection/doubly_list.h"
 #include "hwu/debug/assert.h"
 
 void hwu_doubly_list_initialize(hwu_doubly_list_t* list)

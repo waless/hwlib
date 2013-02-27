@@ -1,4 +1,4 @@
-#include "hwu/platform.h"
+﻿#include "hwu/platform.h"
 #include "hwu/debug/internal/debug_log.h"
 #include <stddef.h>
 #include <stdio.h>

@@ -1,4 +1,4 @@
-#ifndef HWU_MEMORY_INTERNAL_UNIT_MEMORY_H_
+﻿#ifndef HWU_MEMORY_INTERNAL_UNIT_MEMORY_H_
 #define HWU_MEMORY_INTERNAL_UNIT_MEMORY_H
 
 #include "hwu/types.h"

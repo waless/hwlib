@@ -1,4 +1,4 @@
-#include "hwu/debug/internal/assert_log.h"
+﻿#include "hwu/debug/internal/assert_log.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>

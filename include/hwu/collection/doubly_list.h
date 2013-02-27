@@ -1,4 +1,4 @@
-#ifndef HWU_DOUBLY_LIST_H_
+﻿#ifndef HWU_DOUBLY_LIST_H_
 #define HWU_DOUBLY_LIST_H_
 
 #include "hwu/types.h"

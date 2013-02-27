@@ -1,4 +1,4 @@
-#ifndef HWU_DEBUG_ASSERT_
+﻿#ifndef HWU_DEBUG_ASSERT_
 #define HWU_DEBUG_ASSERT_
 
 #include <stdlib.h>
