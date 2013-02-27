@@ -5,11 +5,16 @@
 *.exe
 *.swp
 *.swo
+*.sdf
+*.suo
+*.user
+*.userprefs
 
 # 無視するフォルダ
 obj/
 bin/
 lib/
+Debug/
 
 # 無視するファイル
 tags
