@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include "hwu/platform.h"
 #include "hwu/debug/assert.h"
 
