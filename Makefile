@@ -1,4 +1,4 @@
-project_dir:=$(HOME)/projects/hwlib
+project_dir:=.
 
 src_dir:=$(project_dir)/src
 include_dir:=$(project_dir)/include
