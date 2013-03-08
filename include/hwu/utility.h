@@ -8,4 +8,8 @@
 #define HWU_MAX(a, b) (((a) > (b)) ? (a) : (b))
 #define HWU_MIN(a, b) (((a) < (b)) ? (b) : (b))
 
+#define HWU_SAFE_FREE(p)   if((p) != NULL) { hwu_free((p)); (p) = NULL; }
+#define HWU_SAFE_DELETE(p) if((p) != NULL) { delete p; (p) = NULL; }
+
 #endif	/* HWU_UTILITY_H */
+
