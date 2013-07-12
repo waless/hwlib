@@ -23,9 +23,9 @@ typedef enum tag_hwu_stack_heap_direction_t
 
 typedef hwuptr_t hwu_stack_heap_maker_t;
 
-extern void hwu_stack_heap_initialize(hwu_stack_heap_t* heap, void* memory, int size);
+extern void hwu_stack_heap_initialize(hwu_stack_heap_t* heap, void* memory, hwu32 size);
 extern void hwu_stack_heap_finalize(hwu_stack_heap_t* heap);
-extern void* hwu_stack_heap_allocate_ex(hwu_stack_heap_t* heap, int size, hwu32 alignment, hwu_stack_heap_direction_t direction);
+extern void* hwu_stack_heap_allocate_ex(hwu_stack_heap_t* heap, hwu32 size, hwu32 alignment, hwu_stack_heap_direction_t direction);
 extern void hwu_stack_heap_deallocate_to_maker_ex(hwu_stack_heap_t* heap, hwu_stack_heap_maker_t maker, hwu_stack_heap_direction_t direction);
 extern hwu_stack_heap_maker_t hwu_stack_heap_get_maker_ex(hwu_stack_heap_t* heap, hwu_stack_heap_direction_t direction);
 

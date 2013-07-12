@@ -2,7 +2,7 @@
 #include "hwu/utility.h"
 #include "hwu/debug/assert.h"
 
-void hwu_ring_heap_initialize(hwu_ring_heap_t* heap, void* memory, int size)
+void hwu_ring_heap_initialize(hwu_ring_heap_t* heap, void* memory, hwu32 size)
 {
 	HWU_NULL_ASSERT(heap);
 	HWU_NULL_ASSERT(memory);
@@ -15,7 +15,7 @@ void hwu_ring_heap_initialize(hwu_ring_heap_t* heap, void* memory, int size)
 	heap->allocated_size    = 0;
 }
 
-void* hwu_ring_heap_allocate(hwu_ring_heap_t* heap, int size, int alignment)
+void* hwu_ring_heap_allocate(hwu_ring_heap_t* heap, hwu32 size, hwu32 alignment)
 {
 	void* memory = NULL;
 	

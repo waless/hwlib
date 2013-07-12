@@ -8,8 +8,8 @@
 extern "C" {
 #endif
 
-extern hws16 hwu_hash_crc16(const void* data, size_t size);
-extern hws32 hwu_hash_crc32(const void* data, size_t size);
+extern hwu16 hwu_hash_crc16(hwu16 init, const void* data, hwu32 size);
+extern hwu32 hwu_hash_crc32(hwu32 init, const void* data, hwu32 size);
 
 #ifdef __cplusplus
 }

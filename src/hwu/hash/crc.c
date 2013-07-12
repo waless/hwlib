@@ -61,23 +61,23 @@ static const hwu32 CRC32_TABLE[256] =
     0x5D681B02,0x2A6F2B94,0xB40BBE37,0xC30C8EA1,0x5A05DF1B,0x2D02EF8D
 };
 
-static hwu16 update_crc16(hwu16 crc, const hwu8* data, size_t size);
-static hwu32 update_crc32(hwu32 crc, const hwu8* data, size_t size);
+static hwu16 update_crc16(hwu16 crc, const hwu8* data, hwu32 size);
+static hwu32 update_crc32(hwu32 crc, const hwu8* data, hwu32 size);
 
-hws16 hwu_hash_crc16(const void* data, size_t size) 
+hwu16 hwu_hash_crc16(hwu16 init, const void* data, hwu32 size) 
 {
-    return update_crc16(0xFFFFL, (const hwu8*)data, size);
+    return update_crc16(init, (const hwu8*)data, size);
 }
 
-hws32 hwu_hash_crc32(const void* data, size_t size)
+hwu32 hwu_hash_crc32(hwu32 init, const void* data, hwu32 size)
 {
-    return update_crc32(0xFFFFFFFFL, (const hwu8*)data, size);
+    return update_crc32(init, (const hwu8*)data, size);
 }
 
-hwu16 update_crc16(hwu16 crc, const hwu8* data, size_t size)
+hwu16 update_crc16(hwu16 init, const hwu8* data, hwu32 size)
 {
-    hwu16 result = 0;
-    int   i      = 0;
+    hwu16 result = init;
+    hwu32 i      = 0;
 
     for(i = 0; i < size; ++i) {
         result += CRC16_TABLE[(result ^ data[i]) & 0xFF] ^ (result >> 8);
@@ -86,10 +86,10 @@ hwu16 update_crc16(hwu16 crc, const hwu8* data, size_t size)
     return result;
 }
 
-hwu32 update_crc32(hwu32 crc, const hwu8* data, size_t size)
+hwu32 update_crc32(hwu32 init, const hwu8* data, hwu32 size)
 {
-    hwu32 result = 0;
-    int   i      = 0;
+    hwu32 result = init;
+    hwu32 i      = 0;
 
     for(i = 0; i < size; ++i) {
         result += CRC32_TABLE[(result ^ data[i]) & 0xFF] ^ (result >> 8);

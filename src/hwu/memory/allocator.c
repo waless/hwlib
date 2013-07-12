@@ -16,12 +16,12 @@
 #   undef hwu_free
 #endif
 
-void* hwu_malloc(size_t size)
+void* hwu_malloc(hwu32 size)
 {
 	return hwu_malloc_aligned(size, HWU_DEFAULT_ALIGNMENT);
 }
 
-void* hwu_malloc_aligned(size_t size, size_t alignment)
+void* hwu_malloc_aligned(hwu32 size, hwu32 alignment)
 {
 #if defined(HWU_PLATFORM_MSVC)
 	return _aligned_malloc(size, alignment);
@@ -41,17 +41,25 @@ void hwu_free(void* p)
 
 #ifndef HWU_RELEASE
 
-void* hwu_malloc_debug(size_t size, const char* file, int line)
+void* hwu_malloc_debug(hwu32 size, const char* file, int line)
 {
+    /* TODO */
+    (void)file;
+    (void)line;
+
 	return hwu_malloc(size);
 }
 
-void* hwu_malloc_aligned_debug(size_t size, size_t alignment, const char* file, int line)
+void* hwu_malloc_aligned_debug(hwu32 size, hwu32 alignment, const char* file, int line)
 {
+    /* TODO */
+    (void)file;
+    (void)line;
+
 	return hwu_malloc_aligned(size, alignment);
 }
 
-void  hwu_free_debug(void* p)
+void hwu_free_debug(void* p)
 {
 	hwu_free(p);
 }

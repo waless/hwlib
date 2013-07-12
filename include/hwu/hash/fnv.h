@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-extern hwu32 hwu_hash_fnv(const void* data, size_t size);
+extern hwu32 hwu_hash_fnv(const void* data, hwu32 size);
 
 #ifdef __cplusplus
 }

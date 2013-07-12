@@ -42,3 +42,4 @@ typedef int hwbool;
 #endif /* hwfalse */
 
 #endif  /* HWU_TYPES_H_  */
+
