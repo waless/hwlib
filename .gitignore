@@ -6,6 +6,7 @@
 *.swp
 *.swo
 *.sdf
+*.opensdf
 *.suo
 *.user
 *.userprefs
