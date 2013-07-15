@@ -33,13 +33,13 @@ typedef double             hwf64;
 
 typedef int hwbool;
 
-#ifndef hwtrue
-#    define hwtrue 1
-#endif /* hwtrue */
+#ifndef HW_TRUE
+#    define HW_TRUE 1
+#endif /* HW_TRUE */
 
-#ifndef hwfalse
-#    define hwfalse 0
-#endif /* hwfalse */
+#ifndef HW_FALSE
+#    define HW_FALSE 0
+#endif /* HW_FALSE */
 
 #endif  /* HWU_TYPES_H_  */
 
