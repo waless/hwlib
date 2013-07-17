@@ -6,6 +6,7 @@
 *.swp
 *.swo
 *.sdf
+*.opensdf
 *.suo
 *.user
 *.userprefs
@@ -14,7 +15,9 @@
 obj/
 bin/
 lib/
+ipch/
 Debug/
+Release/
 
 # 無視するファイル
 tags
@@ -25,4 +28,5 @@ cscope.files
 cscope.out
 .vimrc.local
 .vimrc.project
+.git.exe.stackdump
 

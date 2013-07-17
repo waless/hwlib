@@ -1,6 +1,6 @@
 ﻿#include <stdio.h>
-#include "hwu/platform.h"
-#include "hwu/debug/assert.h"
+#include "hw/platform.h"
+#include "hw/debug/assert.h"
 
 int main(int argc, char** argv)
 {

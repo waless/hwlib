@@ -12,108 +12,108 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\hwu\collection\doubly_link.h">
+    <ClInclude Include="..\include\hw\collection\doubly_link.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\collection\doubly_list.h">
+    <ClInclude Include="..\include\hw\collection\doubly_list.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\collection\singly_link.h">
+    <ClInclude Include="..\include\hw\collection\singly_link.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\collection\singly_list.h">
+    <ClInclude Include="..\include\hw\collection\singly_list.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\config.h">
+    <ClInclude Include="..\include\hw\config.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\debug\assert.h">
+    <ClInclude Include="..\include\hw\debug\assert.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\debug\internal\assert_log.h">
+    <ClInclude Include="..\include\hw\debug\internal\assert_log.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\debug\internal\debug_log.h">
+    <ClInclude Include="..\include\hw\debug\internal\debug_log.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\debug\log.h">
+    <ClInclude Include="..\include\hw\debug\log.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\hash\crc.h">
+    <ClInclude Include="..\include\hw\hash\crc.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\hash\fnv.h">
+    <ClInclude Include="..\include\hw\hash\fnv.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\memory\allocator.h">
+    <ClInclude Include="..\include\hw\memory\allocator.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\memory\internal\unit_heap_list.h">
+    <ClInclude Include="..\include\hw\memory\internal\unit_heap_list.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\memory\internal\unit_memory.h">
+    <ClInclude Include="..\include\hw\memory\internal\unit_memory.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\memory\ring_heap.h">
+    <ClInclude Include="..\include\hw\memory\ring_heap.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\memory\small_object_heap.h">
+    <ClInclude Include="..\include\hw\memory\small_object_heap.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\memory\stack_heap.h">
+    <ClInclude Include="..\include\hw\memory\stack_heap.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\memory\unit_heap.h">
+    <ClInclude Include="..\include\hw\memory\unit_heap.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\platform.h">
+    <ClInclude Include="..\include\hw\platform.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\types.h">
+    <ClInclude Include="..\include\hw\types.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\hwu\utility.h">
+    <ClInclude Include="..\include\hw\utility.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\hwu\collection\doubly_list.c">
+    <ClCompile Include="..\src\hw\collection\doubly_list.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwu\collection\singly_list.c">
+    <ClCompile Include="..\src\hw\collection\singly_list.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwu\debug\internal\assert_log.c">
+    <ClCompile Include="..\src\hw\debug\internal\assert_log.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwu\debug\internal\debug_log.c">
+    <ClCompile Include="..\src\hw\debug\internal\debug_log.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwu\hash\crc.c">
+    <ClCompile Include="..\src\hw\hash\crc.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwu\hash\fnv.c">
+    <ClCompile Include="..\src\hw\hash\fnv.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwu\memory\allocator.c">
+    <ClCompile Include="..\src\hw\memory\allocator.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwu\memory\internal\unit_heap_list.c">
+    <ClCompile Include="..\src\hw\memory\internal\unit_heap_list.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwu\memory\internal\unit_memory.c">
+    <ClCompile Include="..\src\hw\memory\internal\unit_memory.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwu\memory\ring_heap.c">
+    <ClCompile Include="..\src\hw\memory\ring_heap.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwu\memory\small_object_heap.c">
+    <ClCompile Include="..\src\hw\memory\small_object_heap.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwu\memory\stack_heap.c">
+    <ClCompile Include="..\src\hw\memory\stack_heap.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwu\memory\unit_heap.c">
+    <ClCompile Include="..\src\hw\memory\unit_heap.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
