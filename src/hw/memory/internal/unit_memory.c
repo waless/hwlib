@@ -6,9 +6,9 @@ typedef struct tag_block_header_t
 	struct tag_block_header_t* next;
 } block_header_t;
 
-void hwL_unit_memory_initialize(void* memory, hw32 unit_size, hw32 unit_num, void* append_unit_memory)
+void hwL_unit_memory_initialize(void* memory, hwu32 unit_size, hwu32 unit_num, void* append_unit_memory)
 {
-	hw32				i	  = 0;
+	hwu32				i	  = 0;
     block_header_t*		block = memory;
 
     /* NULLチェック */
@@ -56,7 +56,7 @@ hwbool hwL_unit_memory_empty(void* head)
     return ((block_header_t*)head)->next == NULL;
 }
 
-hw32 hwL_unit_memory_calculate_need_size(hw32 unit_size, hw32 unit_num)
+hwu32 hwL_unit_memory_calculate_need_size(hwu32 unit_size, hwu32 unit_num)
 {
 	return unit_size * unit_num;
 }

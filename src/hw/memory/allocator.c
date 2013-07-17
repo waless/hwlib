@@ -16,12 +16,12 @@
 #   undef hw_free
 #endif
 
-void* hw_malloc(hw32 size)
+void* hw_malloc(hwu32 size)
 {
 	return hw_malloc_aligned(size, HW_DEFAULT_ALIGNMENT);
 }
 
-void* hw_malloc_aligned(hw32 size, hw32 alignment)
+void* hw_malloc_aligned(hwu32 size, hwu32 alignment)
 {
 #if defined(HW_PLATFORM_MSVC)
 	return _aligned_malloc(size, alignment);
@@ -41,7 +41,7 @@ void hw_free(void* p)
 
 #ifndef HW_RELEASE
 
-void* hw_malloc_debug(hw32 size, const char* file, int line)
+void* hw_malloc_debug(hwu32 size, const char* file, int line)
 {
     /* TODO */
     (void)file;
@@ -50,7 +50,7 @@ void* hw_malloc_debug(hw32 size, const char* file, int line)
 	return hw_malloc(size);
 }
 
-void* hw_malloc_aligned_debug(hw32 size, hw32 alignment, const char* file, int line)
+void* hw_malloc_aligned_debug(hwu32 size, hwu32 alignment, const char* file, int line)
 {
     /* TODO */
     (void)file;

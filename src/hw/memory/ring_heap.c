@@ -2,7 +2,7 @@
 #include "hw/utility.h"
 #include "hw/debug/assert.h"
 
-void hw_ring_heap_initialize(hw_ring_heap_t* heap, void* memory, hw32 size)
+void hw_ring_heap_initialize(hw_ring_heap_t* heap, void* memory, hwu32 size)
 {
 	HW_NULL_ASSERT(heap);
 	HW_NULL_ASSERT(memory);
@@ -15,7 +15,7 @@ void hw_ring_heap_initialize(hw_ring_heap_t* heap, void* memory, hw32 size)
 	heap->allocated_size    = 0;
 }
 
-void* hw_ring_heap_allocate(hw_ring_heap_t* heap, hw32 size, hw32 alignment)
+void* hw_ring_heap_allocate(hw_ring_heap_t* heap, hwu32 size, hwu32 alignment)
 {
 	void* memory = NULL;
 	

@@ -3,12 +3,12 @@
 #include "hw/utility.h"
 #include "hw/debug/assert.h"
 
-static void* allocate_from_top(hw_stack_heap_t* heap, hw32 size, hw32 alignment);
-static void* allocate_from_bottom(hw_stack_heap_t* heap, hw32 size, hw32 alignment);
+static void* allocate_from_top(hw_stack_heap_t* heap, hwu32 size, hwu32 alignment);
+static void* allocate_from_bottom(hw_stack_heap_t* heap, hwu32 size, hwu32 alignment);
 static void	 deallocate_to_top(hw_stack_heap_t* heap, hw_stack_heap_maker_t maker);
 static void	 deallocate_to_bottom(hw_stack_heap_t* heap, hw_stack_heap_maker_t maker);
 
-void hw_stack_heap_initialize(hw_stack_heap_t* heap, void* memory, hw32 size)
+void hw_stack_heap_initialize(hw_stack_heap_t* heap, void* memory, hwu32 size)
 {
 	HW_NULL_ASSERT(heap);
 	HW_NULL_ASSERT(memory);
@@ -26,7 +26,7 @@ void hw_stack_heao_finalize(hw_stack_heap_t* heap)
 	memset(heap, 0, sizeof(*heap));
 }
 
-void* hw_stack_heap_allocate_ex(hw_stack_heap_t* heap, hw32 size, hw32 alignment, hw_stack_heap_direction_t direction)
+void* hw_stack_heap_allocate_ex(hw_stack_heap_t* heap, hwu32 size, hwu32 alignment, hw_stack_heap_direction_t direction)
 {
 	HW_NULL_ASSERT(heap);
 	return direction == HW_STACK_HEAP_DIRECTION_TOP ? allocate_from_top(heap, size, alignment) : allocate_from_bottom(heap, size, alignment);
@@ -44,7 +44,7 @@ hw_stack_heap_maker_t hw_stack_heap_get_maker_ex(hw_stack_heap_t* heap, hw_stack
 	return direction == HW_STACK_HEAP_DIRECTION_TOP ? heap->top_address : heap->bottom_address;
 }
 
-static void* allocate_from_top(hw_stack_heap_t* heap, hw32 size, hw32 alignment)
+static void* allocate_from_top(hw_stack_heap_t* heap, hwu32 size, hwu32 alignment)
 {
 	if(size > 0) {
 		hwptr_t address = HW_ALIGNED_ROUND_UP(heap->top_address - size, alignment);
@@ -56,7 +56,7 @@ static void* allocate_from_top(hw_stack_heap_t* heap, hw32 size, hw32 alignment)
 	return NULL;
 }
 
-static void* allocate_from_bottom(hw_stack_heap_t* heap, hw32 size, hw32 alignment)
+static void* allocate_from_bottom(hw_stack_heap_t* heap, hwu32 size, hwu32 alignment)
 {
 	if(size > 0) {
 		hwptr_t address = HW_ALIGNED_ROUND_UP(heap->bottom_address, alignment);

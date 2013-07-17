@@ -9,14 +9,14 @@ typedef void* small_object_tag_t;
 
 static void grow_heap(hw_small_object_heap_t* parent, hwL_unit_heap_list_t* heap);
 static hwL_unit_heap_list_node_t* get_node_from_memory(hw_small_object_heap_t* heap, void* memory);
-static small_object_tag_t* get_tag_address(void* memory, hw32 memory_size);
-static hw32 calculate_allocate_size(hw32 size, hw32 alignment);
+static small_object_tag_t* get_tag_address(void* memory, hwu32 memory_size);
+static hwu32 calculate_allocate_size(hwu32 size, hwu32 alignment);
 
-void hw_small_object_heap_initialize(hw_small_object_heap_t* heap, hw_allocator_aligned_t allocator, hw_deallocator_aligned_t deallocator, hw32 max_unit_size, hw32 split_unit_size, hw32 unit_heap_size)
+void hw_small_object_heap_initialize(hw_small_object_heap_t* heap, hw_allocator_aligned_t allocator, hw_deallocator_aligned_t deallocator, hwu32 max_unit_size, hwu32 split_unit_size, hwu32 unit_heap_size)
 {
     hwL_unit_heap_list_t* heap_array = NULL;
-    hw32				   heap_num   = 0;
-	hw32				   i		  = 0;
+    hwu32				   heap_num   = 0;
+	hwu32				   i		  = 0;
 	
     /* NULLチェック */
     HW_NULL_ASSERT(heap);
@@ -37,8 +37,8 @@ void hw_small_object_heap_initialize(hw_small_object_heap_t* heap, hw_allocator_
 
 	/* 各ヒープのブロックサイズ計算して初期化 */
 	for(i = 0; i < heap_num; ++i) {
-		hw32 unit_size = split_unit_size * i;
-		hw32 unit_num  = (unit_heap_size - sizeof(hwL_unit_heap_list_node_t)) / unit_size;
+		hwu32 unit_size = split_unit_size * i;
+		hwu32 unit_num  = (unit_heap_size - sizeof(hwL_unit_heap_list_node_t)) / unit_size;
 		hwL_unit_heap_list_initialize(heap_array + i, unit_size, unit_num);
 	}
 
@@ -50,10 +50,10 @@ void hw_small_object_heap_initialize(hw_small_object_heap_t* heap, hw_allocator_
 	heap->deallocator	  = deallocator;
 }
 
-void* hw_small_object_heap_allocate(hw_small_object_heap_t* heap, hw32 size, hw32 alignment)
+void* hw_small_object_heap_allocate(hw_small_object_heap_t* heap, hwu32 size, hwu32 alignment)
 {
-	hw32						heap_index    = 0;
-	hw32						allocate_size = 0;
+	hwu32						heap_index    = 0;
+	hwu32						allocate_size = 0;
 	hwL_unit_heap_list_t*		target_heap	  = NULL;
 	void*                       memory        = NULL;
 		
@@ -124,7 +124,7 @@ hwbool hw_small_object_heap_is_in_heap(hw_small_object_heap_t* heap, void* memor
 
 void grow_heap(hw_small_object_heap_t* parent, hwL_unit_heap_list_t* heap)
 {
-	hw32 allocate_size = parent->unit_heap_size;
+	hwu32 allocate_size = parent->unit_heap_size;
 	void* heap_memory   = parent->allocator(allocate_size, allocate_size);
 	if(heap_memory != NULL) {
 		hwL_unit_heap_list_grow(heap, heap_memory, allocate_size);
@@ -147,12 +147,12 @@ hwL_unit_heap_list_node_t* get_node_from_memory(hw_small_object_heap_t* heap, vo
 	return target_heap_node;
 }
 
-small_object_tag_t* get_tag_address(void* memory, hw32 memory_size)
+small_object_tag_t* get_tag_address(void* memory, hwu32 memory_size)
 {
 	return (small_object_tag_t*)((char*)memory + memory_size - sizeof(small_object_tag_t));
 }
 
-hw32 calculate_allocate_size(hw32 size, hw32 alignment)
+hwu32 calculate_allocate_size(hwu32 size, hwu32 alignment)
 {
 	return HW_ALIGNED_ROUND_UP(size + sizeof(small_object_tag_t), alignment);
 }

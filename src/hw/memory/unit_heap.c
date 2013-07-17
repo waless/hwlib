@@ -3,7 +3,7 @@
 #include "hw/memory/internal/unit_memory.h"
 #include "hw/debug/assert.h"
 
-void hw_unit_heap_initialize(hw_unit_heap_t* heap, void* memory, hw32 unit_size, hw32 unit_num)
+void hw_unit_heap_initialize(hw_unit_heap_t* heap, void* memory, hwu32 unit_size, hwu32 unit_num)
 {
     HW_NULL_ASSERT(heap);
 
@@ -55,7 +55,7 @@ void* hw_unit_heap_get_memory(hw_unit_heap_t* heap)
 	return heap->memory;
 }
 
-hw32 hw_unit_heap_get_unit_size(hw_unit_heap_t* heap)
+hwu32 hw_unit_heap_get_unit_size(hw_unit_heap_t* heap)
 {
 	HW_NULL_ASSERT(heap);
 	return heap->unit_size;

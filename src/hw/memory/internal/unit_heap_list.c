@@ -3,7 +3,7 @@
 #include "hw/collection/doubly_link.h"
 #include "hw/memory/internal/unit_memory.h"
 
-void hwL_unit_heap_list_initialize(hwL_unit_heap_list_t* heap, hw32 unit_size, int unit_num)
+void hwL_unit_heap_list_initialize(hwL_unit_heap_list_t* heap, hwu32 unit_size, int unit_num)
 {
 	HW_NULL_ASSERT(heap);
 	hw_doubly_list_initialize(&heap->heap_list);
@@ -57,7 +57,7 @@ hwL_unit_heap_list_node_t* hwL_unit_heap_list_deallocate(hwL_unit_heap_list_t* l
 	return NULL;
 }
 
-void hwL_unit_heap_list_grow(hwL_unit_heap_list_t* list, void* memory, hw32 memory_size)
+void hwL_unit_heap_list_grow(hwL_unit_heap_list_t* list, void* memory, hwu32 memory_size)
 {
 	hwL_unit_heap_list_node_t* node = NULL;
 	
@@ -98,7 +98,7 @@ int hwL_unit_heap_list_get_unit_num(hwL_unit_heap_list_t* list)
 	return list->unit_num;
 }
 
-hwL_unit_heap_list_node_t* hwL_unit_heap_list_get_node_from_heap_memory(void* memory, hw32 memory_size)
+hwL_unit_heap_list_node_t* hwL_unit_heap_list_get_node_from_heap_memory(void* memory, hwu32 memory_size)
 {
 	return (hwL_unit_heap_list_node_t*)((char*)memory + memory_size - sizeof(hwL_unit_heap_list_node_t));
 }
