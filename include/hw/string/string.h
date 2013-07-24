@@ -26,7 +26,7 @@ extern hwbool hw_string_find_buffer(hwu32* string_index, hwu32* string_size, con
 extern hwbool hw_string_substring_to_string(hw_string_t* out, const hw_string_t* state, hwu32 begin_index, hwu32 length);
 extern hwbool hw_string_substring_to_buffer(char* buffer, hwu32 buffer_size, const hw_string_t* state, hwu32 begin_index, hwu32 length);
 extern hwu32 hw_string_get_split_count(const hw_string_t* state, char separete);
-extern void hw_string_split(
+extern hwu32 hw_string_split(hw_string_t out_array[], hwu32 out_array_count, const hw_string_t* state, char separete);
 
 #endif
 
