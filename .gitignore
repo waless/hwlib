@@ -10,13 +10,17 @@
 *.suo
 *.user
 *.userprefs
+*.tlog
+*.lastbuildstate
+*.log
+*.idb
+*.pdb
 
 # 無視するフォルダ
 obj/
 bin/
 lib/
 ipch/
-Debug/
 Release/
 
 # 無視するファイル
