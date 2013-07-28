@@ -35,7 +35,7 @@ void hwu_assert_put_message(const char* exp, const char* file, const int line, c
     append_message(out, "user    :", user_message);
     strcat(out, ASSERT_LINE_END);
 
-    hwu_debug_print(out);
+    hw_debug_print(out);
 }
 
 void append_message(char* out, const char* name, const char* message) {
