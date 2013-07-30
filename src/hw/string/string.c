@@ -89,38 +89,52 @@ void hw_string_append_buffer(hw_string_t* state, const char* buffer, hwu32 size)
     }
 }
 
-char hw_string_find_char(const hw_string_t* state)
+hwbool hw_string_find_char(hwu32* out_index, const hw_string_t* state)
 {
     const char* p = strchr(state->buffer, c);
     if(p != NULL) {
-        return *p;
+        if(out_index != NULL) {
+            *out_index = (hwu32)(p - state->buffer);
+        }
+
+        return HW_TRUE;
     }
-    else {
-        return '\0';
-    }
+
+    return HW_FALSE;
 }
 
-const char* hw_string_find_string(const hw_string_t* state, const hw_string_t* string)
+hwbool hw_string_find_string(hwu32* out_index, const hw_string_t* state, const hw_string_t* string)
 {
-    return hw_string_find_buffer(state, string->buffer, string->length);
+    return hw_string_find_buffer(out_index, state, string->buffer, string->length);
 }
 
-const char* hw_string_find_buffer(const hw_string_t* state, const char* buffer, hwu32 size)
+hwbool hw_string_find_buffer(hwu32* out_index, const hw_string_t* state, const char* buffer, hwu32 size)
 {
     if(buffer != NULL && size > 0) {
-        return strstr(state->buffer, buffer);
+        const char* p = strstr(state->buffer, buffer);
+        if(p != NULL) {
+            if(out_index != NULL) {
+                *out_index = (hwu32)(p - state->buffer);
+            }
+
+            return HW_TRUE;
+        }
     }
-    else {
-        return NULL;
-    }
+
+    return HW_FALSE;
 }
 
 hwbool hw_string_substring_to_string(hw_string_t* out, const hw_string_t* state, hwu32 begin_index, hwu32 length)
 {
+    return hw_string_substring_to_buffer(out->buffer, out->capacity, state, begin_index, length);
 }
 
 hwbool hw_string_substring_to_buffer(char* buffer, hwu32 buffer_size, const hw_string_t* state, hwu32 begin_index, hwu32 length)
 {
+    if(buffer != NULL && buffer_size > length && state->length < begin_index) {
+    }
+
+    return HW_FALSE;
 }
 
 hwu32 hw_string_get_split_count(const hw_string_t* state, char separete)

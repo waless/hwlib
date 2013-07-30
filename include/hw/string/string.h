@@ -20,9 +20,9 @@ extern void hw_string_copy_buffer(hw_string_t* lhs, const char* buffer, hwu32 si
 extern void hw_string_append_string(hw_string_t* state, const hw_string_t* rhs);
 extern void hw_string_append_char(hw_string_t* state, char c);
 extern void hw_string_append_buffer(hw_string_t* state, const char* buffer, hwu32 size);
-extern char hw_string_find_char(const hw_string_t* state, char c);
-extern const char* hw_string_find_string(const hw_string_t* state, const hw_string_t* string);
-extern const char* hw_string_find_buffer(const hw_string_t* state, const char* buffer, hwu32 size);
+extern hwbool hw_string_find_char(hwu32* out_index, const hw_string_t* state, char c);
+extern hwbool hw_string_find_string(hwu32* out_index, const hw_string_t* state, const hw_string_t* string);
+extern hwbool hw_string_find_buffer(hwu32* out_index, const hw_string_t* state, const char* buffer, hwu32 size);
 extern hwbool hw_string_substring_to_string(hw_string_t* out, const hw_string_t* state, hwu32 begin_index, hwu32 length);
 extern hwbool hw_string_substring_to_buffer(char* buffer, hwu32 buffer_size, const hw_string_t* state, hwu32 begin_index, hwu32 length);
 extern hwu32 hw_string_get_split_count(const hw_string_t* state, char separete);
