@@ -96,6 +96,7 @@
     <ClInclude Include="..\include\hw\debug\internal\assert_log.h" />
     <ClInclude Include="..\include\hw\debug\internal\debug_log.h" />
     <ClInclude Include="..\include\hw\debug\log.h" />
+    <ClInclude Include="..\include\hw\error.h" />
     <ClInclude Include="..\include\hw\hash\crc.h" />
     <ClInclude Include="..\include\hw\hash\fnv.h" />
     <ClInclude Include="..\include\hw\memory\allocator.h" />
@@ -115,6 +116,7 @@
     <ClCompile Include="..\src\hw\collection\singly_list.c" />
     <ClCompile Include="..\src\hw\debug\internal\assert_log.c" />
     <ClCompile Include="..\src\hw\debug\internal\debug_log.c" />
+    <ClCompile Include="..\src\hw\error.c" />
     <ClCompile Include="..\src\hw\hash\crc.c" />
     <ClCompile Include="..\src\hw\hash\fnv.c" />
     <ClCompile Include="..\src\hw\memory\allocator.c" />

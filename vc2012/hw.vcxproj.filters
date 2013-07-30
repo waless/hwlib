@@ -75,6 +75,9 @@
     <ClInclude Include="..\include\hw\string\string.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\hw\error.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\hw\collection\doubly_list.c">
@@ -117,7 +120,10 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\hw\string\string.c">
-      <Filter>include</Filter>
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\hw\error.c">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

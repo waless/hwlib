@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <string.h>
 #include "hw/types.h"
+#include "hw/error.h"
 
 void hw_string_initialize(hw_string_t* state, char* buffer, hwu32 size)
 {
