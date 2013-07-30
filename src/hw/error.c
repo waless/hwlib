@@ -1,18 +1,21 @@
 ﻿#include "hw/error.h"
-#include <stddef.h>
 
 static hw_error_t error =
 {
     HW_ERROR_SUCCESS,
-    NULL,
+    "",
+    "",
+    "",
     0,
 };
 
-void hw_set_error(int kind, const char* file, int line)
+void hw_set_error(int kind, const char* message, const char* file, const char* func, int line)
 {
-    error.kind = kind;
-    error.file = file;
-    error.line = line;
+    error.kind    = kind;
+    error.message = message;
+    error.file    = file;
+    error.func    = func;
+    error.line    = line;
 }
 
 const hw_error_t* hw_get_error()
