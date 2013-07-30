@@ -106,6 +106,7 @@
     <ClInclude Include="..\include\hw\memory\stack_heap.h" />
     <ClInclude Include="..\include\hw\memory\unit_heap.h" />
     <ClInclude Include="..\include\hw\platform.h" />
+    <ClInclude Include="..\include\hw\string\string.h" />
     <ClInclude Include="..\include\hw\types.h" />
     <ClInclude Include="..\include\hw\utility.h" />
   </ItemGroup>
@@ -123,6 +124,7 @@
     <ClCompile Include="..\src\hw\memory\small_object_heap.c" />
     <ClCompile Include="..\src\hw\memory\stack_heap.c" />
     <ClCompile Include="..\src\hw\memory\unit_heap.c" />
+    <ClCompile Include="..\src\hw\string\string.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

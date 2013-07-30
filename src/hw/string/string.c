@@ -1,5 +1,6 @@
 ﻿#include "hw/string/string.h"
 #include <stddef.h>
+#include <string.h>
 #include "hw/types.h"
 
 void hw_string_initialize(hw_string_t* state, char* buffer, hwu32 size)
@@ -22,7 +23,7 @@ void hw_string_finalize(hw_string_t* state)
 
 char hw_string_at(const hw_string_t* state, hwu32 index)
 {
-    return (index < state->length) ? state->buffer[index] : "\0";
+    return (index < state->length) ? state->buffer[index] : '\0';
 }
 
 char* hw_string_get_pointer(hw_string_t* state, hwu32 index)
@@ -50,7 +51,7 @@ void hw_string_copy_string(hw_string_t* lhs, const hw_string_t* rhs)
 void hw_string_copy_buffer(hw_string_t* lhs, const char* buffer, hwu32 size)
 {
     if(size < lhs->capacity) {
-        memcpy(lhs->buffer, rhs->buffer, size);
+        memcpy(lhs->buffer, buffer, size);
         lhs->buffer[size] = '\0';
         lhs->length = size;
     }
@@ -89,7 +90,7 @@ void hw_string_append_buffer(hw_string_t* state, const char* buffer, hwu32 size)
     }
 }
 
-hwbool hw_string_find_char(hwu32* out_index, const hw_string_t* state)
+hwbool hw_string_find_char(hwu32* out_index, const hw_string_t* state, char c)
 {
     const char* p = strchr(state->buffer, c);
     if(p != NULL) {
@@ -131,7 +132,16 @@ hwbool hw_string_substring_to_string(hw_string_t* out, const hw_string_t* state,
 
 hwbool hw_string_substring_to_buffer(char* buffer, hwu32 buffer_size, const hw_string_t* state, hwu32 begin_index, hwu32 length)
 {
-    if(buffer != NULL && buffer_size > length && state->length < begin_index) {
+    if(length > 0) {
+        if(buffer != NULL &&
+           buffer_size > (length + 1) &&
+           state->length < begin_index &&
+           (begin_index + length) < state->length) {
+            memcpy(buffer, state->buffer + begin_index, length);
+            buffer[length] = '\0';
+
+            return HW_TRUE;
+        }
     }
 
     return HW_FALSE;
@@ -139,9 +149,54 @@ hwbool hw_string_substring_to_buffer(char* buffer, hwu32 buffer_size, const hw_s
 
 hwu32 hw_string_get_split_count(const hw_string_t* state, char separete)
 {
+    hwu32 count = 0;
+
+    if(state->length > 0) {
+        hwu32 i;
+
+        for(i = 0; i < state->length; ++i) {
+            if(state->buffer[i] == separete) {
+                ++count;
+            }
+        }
+        ++count;
+    }
+
+    return count;
 }
 
 hwu32 hw_string_split(hw_string_t out_array[], hwu32 out_array_count, const hw_string_t* state, char separete)
 {
+    hwu32        count = 0;
+    hwu32        pos   = 0;
+    hw_string_t* out   = NULL;
+    hwu32        i;
+
+    if(out_array == NULL) {
+        return 0;
+    }
+
+    if(out_array_count <= 0) {
+        return 0;
+    }
+
+    if(state->length <= 0) {
+        return 0;
+    }
+
+    out = out_array + 0;
+    for(i = 0; i < state->length; ++i) {
+        if(state->buffer[i] == separete) {
+            ++count;
+            out = out_array + count;
+            pos = 0;
+        }
+        else {
+            out->buffer[pos++] = state->buffer[i];
+        }
+    }
+    ++count;
+
+    return count;
 }
 

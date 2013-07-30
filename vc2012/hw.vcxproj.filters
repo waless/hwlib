@@ -72,6 +72,9 @@
     <ClInclude Include="..\include\hw\utility.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\hw\string\string.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\hw\collection\doubly_list.c">
@@ -112,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="..\src\hw\memory\unit_heap.c">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\hw\string\string.c">
+      <Filter>include</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

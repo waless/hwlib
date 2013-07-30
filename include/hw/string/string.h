@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-typedef hw_string_t {
+typedef struct hw_string_t {
     char* buffer;
     hwu32 capacity;
     hwu32 length;
