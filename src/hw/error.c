@@ -1,4 +1,5 @@
 ﻿#include "hw/error.h"
+#include <stddef.h>
 
 static hw_error_t error =
 {

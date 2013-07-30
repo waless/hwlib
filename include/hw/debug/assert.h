@@ -1,16 +1,16 @@
-﻿#ifndef HW_DEBUG_ASSERT_
-#define HW_DEBUG_ASSERT_
+﻿#ifndef HW_DEBUG_ASSERT_H_
+#define HW_DEBUG_ASSERT_H_
 
 #include <stdlib.h>
 #include "hw/platform.h"
 #include "hw/types.h"
 #include "hw/debug/internal/assert_log.h"
 
-#ifdef HW_PLATFORM_MSVC
+#if defined(HW_PLATFORM_MSVC)
 #   include <Windows.h>
 #endif
 
-#ifdef HW_DEBUG
+#if !defined(HW_RELEASE)
 
 #   ifdef HW_PLATFORM_MSVC
 #      define HW_ABORT() DebugBreak()
@@ -21,7 +21,7 @@
 #   endif
 
 #   define HW_ASSERT_MESSAGE(exp, message)							\
-	   if((exp) == FALSE){hw_assert_put_message(#exp, __FILE__, __LINE__, message); HW_ABORT();}
+	   if(!(exp)){hw_assert_put_message(#exp, __FILE__, __LINE__, message); HW_ABORT();}
 
 #   define HW_ASSERT(exp) HW_ASSERT_MESSAGE(exp, "");
 #   define HW_NULL_ASSERT(exp) HW_ASSERT_MESSAGE(exp, "null pointer");
@@ -49,5 +49,5 @@
 #   define HW_TRY(exp) HW_TRY_VRETURN(exp,)
 #endif
 
-#endif  /* HW_DEBUG_ASSERT_ */
+#endif  /* HW_DEBUG_ASSERT_H_ */
 
