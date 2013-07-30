@@ -89,38 +89,30 @@ void hw_string_append_buffer(hw_string_t* state, const char* buffer, hwu32 size)
     }
 }
 
-hwbool hw_string_find_char(hwu32* char_index, const hw_string_t* state, char c)
+char hw_string_find_char(const hw_string_t* state)
 {
     const char* p = strchr(state->buffer, c);
     if(p != NULL) {
-        if(char_index != NULL) {
-            *char_index = (hwu32)(p - state->buffer);
-        }
-
-        return HW_TRUE;
+        return *p;
     }
     else {
-        if(char_index != NULL) {
-            *char_index = 0;
-        }
-
-        return HW_FALSE;
+        return '\0';
     }
 }
 
-hwbool hw_string_find_string(hwu32* string_index, hwu32* string_size, const hw_string_t* state, const hw_string_t* string)
+const char* hw_string_find_string(const hw_string_t* state, const hw_string_t* string)
 {
-    const char* p = strstr(state->buffer, string-buffer);
-    if(p != NULL) {
-        if(string_idex) {
-        }
-    }
-    else {
-    }
+    return hw_string_find_buffer(state, string->buffer, string->length);
 }
 
-hwbool hw_string_find_buffer(hwu32* string_index, hwu32* string_size, const hw_string_t* state, const char* buffer, hwu32 size)
+const char* hw_string_find_buffer(const hw_string_t* state, const char* buffer, hwu32 size)
 {
+    if(buffer != NULL && size > 0) {
+        return strstr(state->buffer, buffer);
+    }
+    else {
+        return NULL;
+    }
 }
 
 hwbool hw_string_substring_to_string(hw_string_t* out, const hw_string_t* state, hwu32 begin_index, hwu32 length)
