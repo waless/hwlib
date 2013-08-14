@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-#ifdef HW_DEBUG
+#if !defined(HW_RELEASE)
 extern void hw_assert_put_message(const char* exp, const char* file, const int line, const char* format, ...);
 #endif
 

@@ -10,21 +10,36 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\hwm\math.c" />
+    <ClCompile Include="..\src\hwm\matrix44.c" />
+    <ClCompile Include="..\src\hwm\vector2.c" />
+    <ClCompile Include="..\src\hwm\vector3.c" />
+    <ClCompile Include="..\src\hwm\vector4.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\hwm\math.h" />
+    <ClInclude Include="..\include\hwm\matrix44.h" />
+    <ClInclude Include="..\include\hwm\vector2.h" />
+    <ClInclude Include="..\include\hwm\vector3.h" />
+    <ClInclude Include="..\include\hwm\vector4.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{14EACE87-0E97-4C89-8166-0203CF87433F}</ProjectGuid>
+    <ProjectGuid>{94455948-B140-49E1-A54E-91C243723C01}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>hwlib</RootNamespace>
-    <ProjectName>hw</ProjectName>
+    <RootNamespace>hwm</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -39,14 +54,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>$(ProjectName)_vs2010_debug</TargetName>
+    <TargetName>$(ProjectName)_vs2012_debug</TargetName>
     <OutDir>$(SolutionDir)..\bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)..\bin\</OutDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetName>$(ProjectName)_vs2010_release</TargetName>
+    <TargetName>$(ProjectName)_vs2012_release</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -55,7 +68,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\include;$(ProjectDir)..\..\hw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -74,7 +87,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\include;$(ProjectDir)..\..\hw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -82,51 +95,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <Lib>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-    </Lib>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\include\hw\collection\doubly_link.h" />
-    <ClInclude Include="..\include\hw\collection\doubly_list.h" />
-    <ClInclude Include="..\include\hw\collection\singly_link.h" />
-    <ClInclude Include="..\include\hw\collection\singly_list.h" />
-    <ClInclude Include="..\include\hw\config.h" />
-    <ClInclude Include="..\include\hw\debug\assert.h" />
-    <ClInclude Include="..\include\hw\debug\internal\assert_log.h" />
-    <ClInclude Include="..\include\hw\debug\internal\debug_log.h" />
-    <ClInclude Include="..\include\hw\debug\log.h" />
-    <ClInclude Include="..\include\hw\hash\crc.h" />
-    <ClInclude Include="..\include\hw\hash\fnv.h" />
-    <ClInclude Include="..\include\hw\memory\allocator.h" />
-    <ClInclude Include="..\include\hw\memory\internal\unit_heap_list.h" />
-    <ClInclude Include="..\include\hw\memory\internal\unit_memory.h" />
-    <ClInclude Include="..\include\hw\memory\ring_heap.h" />
-    <ClInclude Include="..\include\hw\memory\small_object_heap.h" />
-    <ClInclude Include="..\include\hw\memory\stack_heap.h" />
-    <ClInclude Include="..\include\hw\memory\unit_heap.h" />
-    <ClInclude Include="..\include\hw\platform.h" />
-    <ClInclude Include="..\include\hw\types.h" />
-    <ClInclude Include="..\include\hw\utility.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\hw\collection\doubly_list.c" />
-    <ClCompile Include="..\src\hw\collection\singly_list.c" />
-    <ClCompile Include="..\src\hw\debug\internal\assert_log.c" />
-    <ClCompile Include="..\src\hw\debug\internal\debug_log.c" />
-    <ClCompile Include="..\src\hw\hash\crc.c" />
-    <ClCompile Include="..\src\hw\hash\fnv.c" />
-    <ClCompile Include="..\src\hw\memory\allocator.c" />
-    <ClCompile Include="..\src\hw\memory\internal\unit_heap_list.c" />
-    <ClCompile Include="..\src\hw\memory\internal\unit_memory.c" />
-    <ClCompile Include="..\src\hw\memory\ring_heap.c" />
-    <ClCompile Include="..\src\hw\memory\small_object_heap.c" />
-    <ClCompile Include="..\src\hw\memory\stack_heap.c" />
-    <ClCompile Include="..\src\hw\memory\unit_heap.c" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
