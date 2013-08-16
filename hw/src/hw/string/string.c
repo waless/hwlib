@@ -249,10 +249,13 @@ hwbool hw_string_replace_ext_cstring(hw_string_t* state, const char* ext)
 
 hwbool hw_string_replace_ext_buffer(hw_string_t* state, const char* ext, hwu32 size)
 {
+    hwu32 ext_index;
+    hwu32 growed_length;
+
     if(ext != NULL && size > 0) {
-        hwu32 ext_index;
         if(hw_string_find_char(&ext_index, state, '.')) {
-            hwu32 growed_length = ext_index + size;
+            growed_length = ext_index + size;
+
             if(growed_length < state->capacity) {
                 char* p = hw_string_get_pointer(state, ext_index);
                 if(p != NULL) {
