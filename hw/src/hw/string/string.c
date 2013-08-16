@@ -3,6 +3,7 @@
 #include <string.h>
 #include "hw/types.h"
 #include "hw/error.h"
+#include "hw/debug/assert.h"
 
 void hw_string_initialize(hw_string_t* state, char* buffer, hwu32 size)
 {
@@ -49,8 +50,17 @@ void hw_string_copy_string(hw_string_t* lhs, const hw_string_t* rhs)
     hw_string_copy_buffer(lhs, rhs->buffer, rhs->length);
 }
 
+void hw_string_copy_cstring(hw_string_t* lhs, const char* p)
+{
+    HW_NULL_ASSERT(p);
+
+    hw_string_copy_buffer(lhs, p, strlen(p));
+}
+
 void hw_string_copy_buffer(hw_string_t* lhs, const char* buffer, hwu32 size)
 {
+    HW_NULL_ASSERT(buffer);
+
     if(size < lhs->capacity) {
         memcpy(lhs->buffer, buffer, size);
         lhs->buffer[size] = '\0';
@@ -73,6 +83,13 @@ void hw_string_append_char(hw_string_t* state, char c)
     if(state->length < (state->capacity - 1)) {
         state->buffer[state->length++] = c;
     }
+}
+
+void hw_string_append_cstring(hw_string_t* state, const char* p)
+{
+    HW_NULL_ASSERT(p);
+
+    hw_string_append_buffer(state, p, strlen(p));
 }
 
 void hw_string_append_buffer(hw_string_t* state, const char* buffer, hwu32 size)
@@ -108,6 +125,13 @@ hwbool hw_string_find_char(hwu32* out_index, const hw_string_t* state, char c)
 hwbool hw_string_find_string(hwu32* out_index, const hw_string_t* state, const hw_string_t* string)
 {
     return hw_string_find_buffer(out_index, state, string->buffer, string->length);
+}
+
+hwbool hw_string_find_cstring(hwu32* out_index, const hw_string_t* state, const char* p)
+{
+    HW_NULL_ASSERT(p);
+
+    return hw_string_find_buffer(out_index, state, p, strlen(p));
 }
 
 hwbool hw_string_find_buffer(hwu32* out_index, const hw_string_t* state, const char* buffer, hwu32 size)
