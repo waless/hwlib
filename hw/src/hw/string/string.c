@@ -5,14 +5,20 @@
 #include "hw/error.h"
 #include "hw/debug/assert.h"
 
-void hw_string_initialize(hw_string_t* state, char* buffer, hwu32 size)
+void hw_string_initialize(hw_string_t* state, char* buffer, hwu32 capacity)
 {
     state->buffer   = buffer;
-    state->capacity = size;
+    state->capacity = capacity;
     state->length   = 0;
 
-    if(buffer != NULL && size > 0) {
-        state->length = strlen(buffer);
+    if(buffer != NULL && capacity > 0) {
+        hwu32 length = strnlen(buffer, capacity);
+
+        /* 長さが容量以上の場合は未初期化のバッファとみなして
+         * 長さを設定しない */
+        if(length < capacity) {
+            state->length = length;
+        }
     }
 }
 
@@ -38,10 +44,16 @@ const char* hw_string_get_const_pointer(const hw_string_t* state, hwu32 index)
     return (index < state->length) ? state->buffer + index : NULL;
 }
 
+hwu32 hw_string_get_length(const hw_string_t* state)
+{
+    return state->length;
+}
+
 void hw_string_clear(hw_string_t* state)
 {
     if(state->buffer != NULL && state->capacity > 0) {
         memset(state->buffer, 0, sizeof(char) * state->capacity);
+        state->length = 0;
     }
 }
 
@@ -53,14 +65,12 @@ void hw_string_copy_string(hw_string_t* lhs, const hw_string_t* rhs)
 void hw_string_copy_cstring(hw_string_t* lhs, const char* p)
 {
     HW_NULL_ASSERT(p);
-
     hw_string_copy_buffer(lhs, p, strlen(p));
 }
 
 void hw_string_copy_buffer(hw_string_t* lhs, const char* buffer, hwu32 size)
 {
     HW_NULL_ASSERT(buffer);
-
     if(size < lhs->capacity) {
         memcpy(lhs->buffer, buffer, size);
         lhs->buffer[size] = '\0';
@@ -73,39 +83,41 @@ void hw_string_copy_buffer(hw_string_t* lhs, const char* buffer, hwu32 size)
     }
 }
 
-void hw_string_append_string(hw_string_t* state, const hw_string_t* rhs)
-{
-    hw_string_append_buffer(state, rhs->buffer, rhs->length);
-}
-
-void hw_string_append_char(hw_string_t* state, char c)
+hwbool hw_string_append_char(hw_string_t* state, char c)
 {
     if(state->length < (state->capacity - 1)) {
         state->buffer[state->length++] = c;
+        return HW_TRUE;
     }
+
+    return HW_FALSE;
 }
 
-void hw_string_append_cstring(hw_string_t* state, const char* p)
+hwbool hw_string_append_string(hw_string_t* state, const hw_string_t* rhs)
+{
+    return hw_string_append_buffer(state, rhs->buffer, rhs->length);
+}
+
+hwbool hw_string_append_cstring(hw_string_t* state, const char* p)
 {
     HW_NULL_ASSERT(p);
-
-    hw_string_append_buffer(state, p, strlen(p));
+    return hw_string_append_buffer(state, p, strlen(p));
 }
 
-void hw_string_append_buffer(hw_string_t* state, const char* buffer, hwu32 size)
+hwbool hw_string_append_buffer(hw_string_t* state, const char* buffer, hwu32 size)
 {
     hwu32 capacity  = state->capacity - state->length;
-    hwu32 copy_size = size;
 
     if(buffer != NULL) {
-        if(capacity < (size + 1)) {
-            copy_size = capacity;
-        }
+        if(capacity > size) {
+            memcpy(state->buffer, buffer, size);
+            state->length += size;
 
-        if(copy_size > 0) {
-            memcpy(state->buffer, buffer, copy_size);
+            return hw_string_append_char(state, '\0');
         }
     }
+
+    return HW_FALSE;
 }
 
 hwbool hw_string_find_char(hwu32* out_index, const hw_string_t* state, char c)
@@ -130,7 +142,6 @@ hwbool hw_string_find_string(hwu32* out_index, const hw_string_t* state, const h
 hwbool hw_string_find_cstring(hwu32* out_index, const hw_string_t* state, const char* p)
 {
     HW_NULL_ASSERT(p);
-
     return hw_string_find_buffer(out_index, state, p, strlen(p));
 }
 
@@ -223,5 +234,40 @@ hwu32 hw_string_split(hw_string_t out_array[], hwu32 out_array_count, const hw_s
     ++count;
 
     return count;
+}
+
+hwbool hw_string_replace_ext_string(hw_string_t* state, const hw_string_t* ext)
+{
+    return hw_string_replace_ext_buffer(state, ext->buffer, ext->length);
+}
+
+hwbool hw_string_replace_ext_cstring(hw_string_t* state, const char* ext)
+{
+    HW_NULL_ASSERT(ext);
+    return hw_string_replace_ext_buffer(state, ext, strlen(ext));
+}
+
+hwbool hw_string_replace_ext_buffer(hw_string_t* state, const char* ext, hwu32 size)
+{
+    if(ext != NULL && size > 0) {
+        hwu32 ext_index;
+        if(hw_string_find_char(&ext_index, state, '.')) {
+            hwu32 growed_length = ext_index + size;
+            if(growed_length < state->capacity) {
+                char* p = hw_string_get_pointer(state, ext_index);
+                if(p != NULL) {
+                    memcpy(p + 1, ext, size);
+                    return HW_TRUE;
+                }
+            }
+        }
+        else {
+            if(hw_string_append_char(state, '.')) {
+                return hw_string_append_buffer(state, ext, size);
+            }
+        }
+    }
+
+    return HW_FALSE;
 }
 
