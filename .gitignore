@@ -15,6 +15,7 @@
 *.log
 *.idb
 *.pdb
+*.ilk
 *.cache
 
 # 無視するフォルダ

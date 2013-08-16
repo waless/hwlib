@@ -7,7 +7,7 @@
 #include "hw/platform.h"
 #include "hw/debug/internal/debug_log.h"
 
-#ifdef HW_DEBUG
+#if !defined(HW_RELEASE)
 
 static const char* ASSERT_LINE_BEGIN = "/*----------------------------------------------\n";
 static const char* ASSERT_LINE_END   = "----------------------------------------------*/\n";
@@ -15,7 +15,7 @@ static const char* ASSERT_MESSAGE    = "ASSERT ERROR\n\n";
 
 static void append_message(char* out, const char* name, const char* message);
 
-void hwu_assert_put_message(const char* exp, const char* file, const int line, const char* format, ...) 
+void hw_assert_put_message(const char* exp, const char* file, const int line, const char* format, ...) 
 {
     char    out[1024]         = {0};
     char    line_string[32]   = {0};

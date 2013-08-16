@@ -11,13 +11,9 @@ enum {
     HWMC_PATH_MAX = 256,
 };
 
-typedef struct hwmc_option_t {
+typedef struct hwmc_state_t {
     char input_path[HWMC_PATH_MAX];
     char output_path[HWMC_PATH_MAX];
-} hwmc_option_t;
-
-typedef struct hwmc_state_t {
-    hwmc_option_t option;
 } hwmc_state_t;
 
 extern hwbool hwmc_initialize(hwmc_state_t* state, int argc, const char* argv[]);
