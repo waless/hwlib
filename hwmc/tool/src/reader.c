@@ -3,7 +3,7 @@
 #include <assimp/scene.h>
 #include <assimp/mesh.h>
 
-static void read_mesh(const struct aiMesh* mesh);
+static void read_mesh(reader_mesh_t* out, const struct aiMesh* input);
 
 void reader_initialize(reader_t* reader)
 {
@@ -35,7 +35,7 @@ hwbool reader_read(reader_t* reader, const char* input_path)
     return result;
 }
 
-void read_mesh(const struct aiMesh* mesh)
+void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
 {
 }
 
