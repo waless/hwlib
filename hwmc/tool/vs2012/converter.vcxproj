@@ -13,9 +13,11 @@
   <ItemGroup>
     <ClCompile Include="..\src\hwmc.c" />
     <ClCompile Include="..\src\main.c" />
+    <ClCompile Include="..\src\reader.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\hwmc.h" />
+    <ClInclude Include="..\src\reader.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4AA30706-CC47-4F86-BFB1-BA6C1128718B}</ProjectGuid>

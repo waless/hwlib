@@ -16,9 +16,15 @@
     <ClCompile Include="..\src\hwmc.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\reader.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\hwmc.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\reader.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

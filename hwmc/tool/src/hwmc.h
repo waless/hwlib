@@ -2,6 +2,7 @@
 #define HWG_MODEL_CONVERTER_H_
 
 #include <hw/types.h>
+#include "reader.h"
 
 #ifdef __cplusplus
 extern "C" {
