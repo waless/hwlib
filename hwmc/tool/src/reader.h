@@ -2,6 +2,7 @@
 #define HWMC_READER_H_
 
 #include <hw/types.h>
+#include <hwm/vector3.h>
 #include <hwm/matrix44.h>
 
 #ifdef __cplusplus

@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "hw/string/string.h"
+#include "reader.h"
 
 static hwbool parse_args(hwmc_state_t* state, int argc, const char* argv[]);
 
@@ -21,7 +22,7 @@ void hwmc_finalize(hwmc_state_t* state)
 
 void hwmc_run(hwmc_state_t* state)
 {
-    reader_t reader;
+    struct reader_t reader;
 
     reader_initialize(&reader);
     if(reader_read(&reader, state->input_path)) {
