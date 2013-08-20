@@ -51,7 +51,6 @@ hwbool reader_read(reader_t* reader, const char* input_path)
     const struct aiScene* scene  = NULL;
     reader_node_t         root;
     hwbool                result = HW_FALSE;
-    int                   i;
 
     if(input_path != NULL) {
         scene = aiImportFile(input_path, 0);
@@ -72,12 +71,12 @@ void read_node(reader_node_t* out, const struct aiScene* scene, const struct aiN
     HW_NULL_ASSERT(out);
 
     if(node != NULL) {
-        if(node->mNumMeshs > 0) {
-            out->meshes = (reader_mesh_t*)hw_malloc(sizeof(reader_mesh_t) * node->mNumMeshs);
-            for(i = 0; i < node->mNumMeshs; ++i) {
+        if(node->mNumMeshes > 0) {
+            out->meshes = (reader_mesh_t*)hw_malloc(sizeof(reader_mesh_t) * node->mNumMeshes);
+            for(i = 0; i < node->mNumMeshes; ++i) {
                 read_mesh(out->meshes + i, scene->mMeshes[node->mMeshes[i]]);
             }
-            out->mesh_count = node->mNumMeshs;
+            out->mesh_count = node->mNumMeshes;
         }
     }
 }

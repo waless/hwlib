@@ -28,7 +28,7 @@ typedef struct reader_mesh_t {
 } reader_mesh_t;
 
 typedef struct reader_node_t {
-    reader_mesh_t*        meshs;
+    reader_mesh_t*        meshes;
     hwu32                 mesh_count;
     hwm_matrix44_t        local_transform;
     struct reader_node_t* children;
