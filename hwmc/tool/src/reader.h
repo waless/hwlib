@@ -19,12 +19,13 @@ typedef struct reader_material_t {
 } reader_material_t;
 
 typedef struct reader_mesh_t {
-    hwm_vector3_t*     vertices;
-    hwm_vector3_t*     normals;
-    hwm_vector3_t*     texcoords;
-    hwu32              vertex_count;
-    reader_material_t* materials;
-    hwu32              material_count;
+    hwm_vector3_t*    vertices;
+    hwu32*            indices;
+    hwm_vector3_t*    normals;
+    hwm_vector3_t*    texcoords;
+    hwu32             vertex_count;
+    hwu32             index_count;
+    reader_material_t material;
 } reader_mesh_t;
 
 typedef struct reader_node_t {
