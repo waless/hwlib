@@ -25,13 +25,24 @@ typedef struct reader_mesh_t {
     hwu32              vertex_count;
     reader_material_t* materials;
     hwu32              material_count;
-    hwm_matrix44_t     local_transform;
 } reader_mesh_t;
 
+typedef struct reader_node_t {
+    reader_mesh_t*        meshs;
+    hwu32                 mesh_count;
+    hwm_matrix44_t        local_transform;
+    struct reader_node_t* children;
+    hwu32                 child_count;
+} reader_node_t;
+
 typedef struct reader_t {
-    reader_mesh_t* meshs;
-    hwu32          mesh_count;
+    reader_node_t root;
 } reader_t;
+
+extern void reader_node_initialize(reader_node_t* node);
+extern void reader_mesh_initialize(reader_mesh_t* mesh);
+extern void reader_material_initialize(reader_material_t* material);
+extern void reader_texture_initialize(reader_texture_t* texture);
 
 extern void reader_initialize(reader_t* reader);
 extern void reader_finalize(reader_t* reader);
