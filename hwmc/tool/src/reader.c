@@ -21,8 +21,7 @@ void reader_mesh_initialize(reader_mesh_t* mesh)
     mesh->normals        = NULL;
     mesh->texcoords      = NULL;
     mesh->vertex_count   = 0;
-    mesh->materials      = NULL;
-    mesh->material_count = 0;
+    reader_material_initialize(&mesh->material);
 }
 
 void reader_material_initialize(reader_material_t* material)
@@ -92,18 +91,33 @@ void read_node(reader_node_t* out, const struct aiScene* scene, const struct aiN
 
 void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
 {
-    hwu32 i;
+    hwu32 vertex_count                = 0;
+    hwu32 index_count                 = 0;
+    hwu32 counter                     = 0;
+    const struct aiFace*     face     = NULL;
+    const struct aiVector3D* vertex   = NULL;
+    const struct aiVector3D* normal   = NULL;
+    const struct aiColor4D*  color    = NULL;
+    const struct aiVector3D* texcoord = NULL;
+                 hwu32       i;
+                 hwu32       j;
 
     HW_NULL_ASSERT(out);
 
     if(input != NULL) {
-        if(input->mNumIndices > 0) {
-            HW_ASSERT(input->mNumVertices > 0);
+        if(input->mNumVertices > 0) {
             HW_ASSERT(input->mNumFaces > 0);
 
-            out->indices     = (hwu32*)hw_malloc(sizeof(hwu32) * input->mNumIndices);
-            out->index_count = input->mNumIndices;
+            vertex_count = input->mNumVertices;
+            index_count  = input->mNumFaces * 3;
+
+            out->indices     = (hwu32*)hw_malloc(sizeof(hwu32) * index_count);
+            out->index_count = index_count;
             for(i = 0; i < input->mNumFaces; ++i) {
+                face = input->mFaces + i;
+                for(j = 0; j < face->mNumIndices; ++j) {
+                    face->mNumIndices[j];
+                }
             }
         }
     }
