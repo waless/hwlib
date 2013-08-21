@@ -91,14 +91,15 @@ void read_node(reader_node_t* out, const struct aiScene* scene, const struct aiN
 
 void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
 {
-    hwu32 vertex_count                = 0;
-    hwu32 index_count                 = 0;
-    hwu32 counter                     = 0;
-    const struct aiFace*     face     = NULL;
-    const struct aiVector3D* vertex   = NULL;
-    const struct aiVector3D* normal   = NULL;
-    const struct aiColor4D*  color    = NULL;
-    const struct aiVector3D* texcoord = NULL;
+                 hwu32       vertex_count = 0;
+                 hwu32       index_count  = 0;
+                 hwu32       index        = 0;
+                 hwu32       counter      = 0;
+    const struct aiFace*     face         = NULL;
+    const struct aiVector3D* vertex       = NULL;
+    const struct aiVector3D* normal       = NULL;
+    const struct aiColor4D*  color        = NULL;
+    const struct aiVector3D* texcoord     = NULL;
                  hwu32       i;
                  hwu32       j;
 
@@ -116,7 +117,7 @@ void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
             for(i = 0; i < input->mNumFaces; ++i) {
                 face = input->mFaces + i;
                 for(j = 0; j < face->mNumIndices; ++j) {
-                    face->mNumIndices[j];
+                    out->indices[counter++] = face->mNumIndices[j];
                 }
             }
         }
