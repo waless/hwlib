@@ -7,6 +7,7 @@
 
 static void read_node(reader_node_t* out, const struct aiScene* scene, const struct aiNode* input);
 static void read_mesh(reader_mesh_t* out, const struct aiMesh* input);
+static hwm_vector3_t* create_vector3_array(const struct aiVector3D* source);
 
 void reader_node_initialize(reader_node_t* node)
 {
@@ -108,19 +109,42 @@ void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
     if(input != NULL) {
         if(input->mNumVertices > 0) {
             HW_ASSERT(input->mNumFaces > 0);
+            HW_NULL_ASSERT(input->mVertices);
 
-            vertex_count = input->mNumVertices;
-            index_count  = input->mNumFaces * 3;
+            out->vertices = create_vector3_array(input->mVertices, input->mNumVertices);
+            out->normals = create_vector3_array(input->mNormals, input->mNumVertices);
+            out->colors = ;
+            out->texcoords = ;
+
+            out->vertex_count = input->mNumVertices;
+
 
             out->indices     = (hwu32*)hw_malloc(sizeof(hwu32) * index_count);
-            out->index_count = index_count;
+            out->index_count = input->mNumVertices * 3;
             for(i = 0; i < input->mNumFaces; ++i) {
                 face = input->mFaces + i;
                 for(j = 0; j < face->mNumIndices; ++j) {
-                    out->indices[counter++] = face->mNumIndices[j];
+                    out->indices[counter++] = face->mIndices[j];
                 }
             }
         }
     }
+}
+
+hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count)
+{
+    hwm_vector3_t* out = NULL;
+    hwu32          i;
+
+    if(source != NULL && count > 0) { 
+        hwm_vector3_t* out = (hwm_vector3_t*)hw_malloc(sizeof(hwm_vector3_t) * count);
+        for(i = 0; i < count; ++i) {
+            out[i].x = source[i].x;
+            out[i].y = source[i].y;
+            out[i].z = source[i].z;
+        }
+    }
+
+    return out;
 }
 
