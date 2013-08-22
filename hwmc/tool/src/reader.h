@@ -3,6 +3,7 @@
 
 #include <hw/types.h>
 #include <hwm/vector3.h>
+#include <hwm/vector4.h>
 #include <hwm/matrix44.h>
 
 #ifdef __cplusplus
@@ -23,6 +24,7 @@ typedef struct reader_mesh_t {
     hwu32*            indices;
     hwm_vector3_t*    normals;
     hwm_vector3_t*    texcoords;
+    hwm_vector4_t*    colors;
     hwu32             vertex_count;
     hwu32             index_count;
     reader_material_t material;
