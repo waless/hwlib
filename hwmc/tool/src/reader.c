@@ -21,6 +21,8 @@ void reader_node_initialize(reader_node_t* node)
 
 void reader_node_finalize(reader_node_t* node)
 {
+    HW_SAFE_FREE(node->meshs);
+    node->mesh_count = 0;
 }
 
 void reader_mesh_initialize(reader_mesh_t* mesh)
