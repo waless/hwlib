@@ -19,6 +19,10 @@ void reader_node_initialize(reader_node_t* node)
     hwm_matrix44_identity(&node->local_transform);
 }
 
+void reader_node_finalize(reader_node_t* node)
+{
+}
+
 void reader_mesh_initialize(reader_mesh_t* mesh)
 {
     mesh->vertices       = NULL;
@@ -77,6 +81,7 @@ void read_node(reader_node_t* out, const struct aiScene* scene, const struct aiN
         if(input->mNumMeshes > 0) {
             out->meshes = (reader_mesh_t*)hw_malloc(sizeof(reader_mesh_t) * input->mNumMeshes);
             for(i = 0; i < input->mNumMeshes; ++i) {
+                reader_mesh_initialize(out->meshes + 1);
                 read_mesh(out->meshes + i, scene->mMeshes[input->mMeshes[i]]);
             }
             out->mesh_count = input->mNumMeshes;
@@ -86,6 +91,7 @@ void read_node(reader_node_t* out, const struct aiScene* scene, const struct aiN
         if(input->mNumChildren > 0) {
             out->children = (reader_node_t*)hw_malloc(sizeof(reader_node_t) * input->mNumChildren);
             for(i = 0; i < input->mNumChildren; ++i) {
+                reader_node_initialize(out->children + i);
                 read_node(out->children + i, scene, input->mChildren[i]);
             }
             out->child_count = input->mNumChildren;
@@ -114,9 +120,9 @@ void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
             out->texcoords = create_vector3_array(input->mTextureCoords, input->mNumVertices);
 
             out->vertex_count = input->mNumVertices;
-
-            out->indices     = (hwu32*)hw_malloc(sizeof(hwu32) * index_count);
             out->index_count = input->mNumVertices * 3;
+
+            out->indices     = (hwu32*)hw_malloc(sizeof(hwu32) * out->index_count);
             for(i = 0; i < input->mNumFaces; ++i) {
                 for(j = 0; j < input->mFaces[i].mNumIndices; ++j) {
                     out->indices[counter++] = input->mFaces[i].mIndices[j];
