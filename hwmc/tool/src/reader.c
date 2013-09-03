@@ -4,13 +4,17 @@
 #include <assimp/mesh.h>
 #include <assimp/vector3.h>
 #include <assimp/color4.h>
+#include <hw/utility.h>
 #include <hw/memory/allocator.h>
 #include <hw/debug/assert.h>
 
 static void read_node(reader_node_t* out, const struct aiScene* scene, const struct aiNode* input);
 static void read_mesh(reader_mesh_t* out, const struct aiMesh* input);
+
 static hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count);
 static hwm_vector4_t* create_color4_array(const struct aiColor4D* source, hwu32 count);
+
+static hwm_vector3_t* create_vectr3ptr_array(const struct aiVector3D** source, hwu32 count);
 
 void reader_node_initialize(reader_node_t* node)
 {
@@ -21,7 +25,7 @@ void reader_node_initialize(reader_node_t* node)
 
 void reader_node_finalize(reader_node_t* node)
 {
-    HW_SAFE_FREE(node->meshs);
+    HW_SAFE_FREE(node->meshes);
     node->mesh_count = 0;
 }
 
@@ -163,6 +167,24 @@ hwm_vector4_t* create_color4_array(const struct aiColor4D* source, hwu32 count)
             out[i].y = source[i].g;
             out[i].z = source[i].b;
             out[i].w = source[i].a;
+        }
+    }
+
+    return out;
+}
+
+hwm_vector3_t* create_vectr3ptr_array(const struct aiVector3D** source, hwu32 count)
+{
+    hwm_vector3_t* out = NULL;
+    hwu32          i;
+
+    if(source != NULL && count > 0) {
+        out = (hwm_vector3_t*)hw_malloc(sizeof(hwm_vector3_t) * count);
+        for(i = 0; i < count; ++i) {
+            out[i].x = source[i]->r;
+            out[i].y = source[i]->g;
+            out[i].z = source[i]->b;
+            out[i].w = source[i]->a;
         }
     }
 
