@@ -12,9 +12,8 @@ static void read_node(reader_node_t* out, const struct aiScene* scene, const str
 static void read_mesh(reader_mesh_t* out, const struct aiMesh* input);
 
 static hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count);
-static hwm_vector4_t* create_color4_array(const struct aiColor4D* source, hwu32 count);
-
-static hwm_vector3_t* create_vectr3ptr_array(const struct aiVector3D** source, hwu32 count);
+static hwm_vector4_t* create_color4ptr_array(const struct aiColor4D* const * source, hwu32 count);
+static hwm_vector3_t* create_vector3ptr_array(const struct aiVector3D* const * source, hwu32 count);
 
 void reader_node_initialize(reader_node_t* node)
 {
@@ -62,14 +61,12 @@ void reader_finalize(reader_t* reader)
 hwbool reader_read(reader_t* reader, const char* input_path)
 {
     const struct aiScene* scene  = NULL;
-    reader_node_t         root;
     hwbool                result = HW_FALSE;
 
     if(input_path != NULL) {
         scene = aiImportFile(input_path, 0);
         if(scene != NULL) {
-            reader_node_initialize(&root);
-            read_node(&root, scene, scene->mRootNode);
+            read_node(&reader->root, scene, scene->mRootNode);
             aiReleaseImport(scene);
         }
     }
@@ -107,10 +104,7 @@ void read_node(reader_node_t* out, const struct aiScene* scene, const struct aiN
 
 void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
 {
-    hwu32 vertex_count = 0;
-    hwu32 index_count  = 0;
-    hwu32 index        = 0;
-    hwu32 counter      = 0;
+    hwu32 counter = 0;
     hwu32 i,j;
 
     HW_NULL_ASSERT(out);
@@ -122,13 +116,13 @@ void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
 
             out->vertices  = create_vector3_array(input->mVertices, input->mNumVertices);
             out->normals   = create_vector3_array(input->mNormals, input->mNumVertices);
-            out->colors    = create_color4_array(input->mColors, input->mNumVertices);
-            out->texcoords = create_vector3_array(input->mTextureCoords, input->mNumVertices);
+            out->colors    = create_color4ptr_array(input->mColors, input->mNumVertices);
+            out->texcoords = create_vector3ptr_array(input->mTextureCoords, input->mNumVertices);
 
             out->vertex_count = input->mNumVertices;
-            out->index_count = input->mNumVertices * 3;
+            out->index_count  = input->mNumVertices * 3;
 
-            out->indices     = (hwu32*)hw_malloc(sizeof(hwu32) * out->index_count);
+            out->indices = (hwu32*)hw_malloc(sizeof(hwu32) * out->index_count);
             for(i = 0; i < input->mNumFaces; ++i) {
                 for(j = 0; j < input->mFaces[i].mNumIndices; ++j) {
                     out->indices[counter++] = input->mFaces[i].mIndices[j];
@@ -155,7 +149,7 @@ hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count
     return out;
 }
 
-hwm_vector4_t* create_color4_array(const struct aiColor4D* source, hwu32 count)
+hwm_vector4_t* create_color4ptr_array(const struct aiColor4D* const * source, hwu32 count)
 {
     hwm_vector4_t* out = NULL;
     hwu32          i;
@@ -163,17 +157,17 @@ hwm_vector4_t* create_color4_array(const struct aiColor4D* source, hwu32 count)
     if(source != NULL && count > 0) {
         out = (hwm_vector4_t*)hw_malloc(sizeof(hwm_vector4_t) * count);
         for(i = 0; i < count; ++i) {
-            out[i].x = source[i].r;
-            out[i].y = source[i].g;
-            out[i].z = source[i].b;
-            out[i].w = source[i].a;
+            out[i].x = source[i]->r;
+            out[i].y = source[i]->g;
+            out[i].z = source[i]->b;
+            out[i].w = source[i]->a;
         }
     }
 
     return out;
 }
 
-hwm_vector3_t* create_vectr3ptr_array(const struct aiVector3D** source, hwu32 count)
+hwm_vector3_t* create_vector3ptr_array(const struct aiVector3D* const * source, hwu32 count)
 {
     hwm_vector3_t* out = NULL;
     hwu32          i;
@@ -181,10 +175,9 @@ hwm_vector3_t* create_vectr3ptr_array(const struct aiVector3D** source, hwu32 co
     if(source != NULL && count > 0) {
         out = (hwm_vector3_t*)hw_malloc(sizeof(hwm_vector3_t) * count);
         for(i = 0; i < count; ++i) {
-            out[i].x = source[i]->r;
-            out[i].y = source[i]->g;
-            out[i].z = source[i]->b;
-            out[i].w = source[i]->a;
+            out[i].x = source[i]->x;
+            out[i].y = source[i]->y;
+            out[i].z = source[i]->z;
         }
     }
 
