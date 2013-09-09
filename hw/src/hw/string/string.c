@@ -19,6 +19,9 @@ void hw_string_initialize(hw_string_t* state, char* buffer, hwu32 capacity)
         if(length < capacity) {
             state->length = length;
         }
+        else {
+            memset(buffer, 0, capacity);
+        }
     }
 }
 
@@ -259,7 +262,7 @@ hwbool hw_string_replace_ext_buffer(hw_string_t* state, const char* ext, hwu32 s
             if(growed_length < state->capacity) {
                 char* p = hw_string_get_pointer(state, ext_index);
                 if(p != NULL) {
-                    memcpy(p + 1, ext, size);
+                    memcpy(p, ext, size);
                     return HW_TRUE;
                 }
             }

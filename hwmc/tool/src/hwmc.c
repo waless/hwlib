@@ -41,7 +41,7 @@ hwbool parse_args(hwmc_state_t* state, int argc, const char* argv[])
     }
 
     hw_string_initialize(&input, state->input_path, sizeof(state->input_path));
-    hw_string_initialize(&input, state->output_path, sizeof(state->output_path));
+    hw_string_initialize(&output, state->output_path, sizeof(state->output_path));
 
     hw_string_copy_cstring(&input, argv[1]);
     if(argc > 2) {

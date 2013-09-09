@@ -71,7 +71,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ASSIMP_SDK)\lib\x86;$(ProjectDir)..\..\..\hw\bin;$(ProjectDir)..\..\..\hwm\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ASSIMP_SDK)\bin\x84;$(ASSIMP_SDK)\lib\x86;$(ProjectDir)..\..\..\hw\bin;$(ProjectDir)..\..\..\hwm\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>assimp.lib;hw_vs2012_debug.lib;hwm_vs2012_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
