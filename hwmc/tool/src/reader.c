@@ -160,12 +160,21 @@ hwm_vector3_t* create_normal_array(const struct aiVector3D* source, hwu32 vertex
     return create_vertex_array(source, vertex_num);
 }
 
-hwm_vector4_t* create_color_set_array(const struct aiColor4D* const * source, hwu32 vertex_num)
+hwm_vector4_t** create_color_set_array(const struct aiColor4D* const * source, hwu32 vertex_num)
 {
-    hwm_vector4_t* out = NULL;
-    hwu32          i;
+    hwm_vector4_t** out = NULL;
+    hwu32           set_count = 0;
+    hwu32           i,j;
 
     if(source != NULL && vertex_num > 0) {
+        for(i = 0; i < AI_MAX_NUMBER_OF_COLOR_SETS; ++i) {
+            ++set_count;
+        }
+
+        if(set_count > 0) {
+            out = (hwm_vector4_t**)hw_malloc(sizeof(hwm_vector4_t*) * set_count);
+        }
+
         out = (hwm_vector4_t*)hw_malloc(sizeof(hwm_vector4_t) * vertex_num);
         for(i = 0; i < vertex_num; ++i) {
             const struct aiColor4D* c = source[i];
@@ -182,7 +191,7 @@ hwm_vector4_t* create_color_set_array(const struct aiColor4D* const * source, hw
     return out;
 }
 
-hwm_vector3_t* create_texcoord_set_array(const struct aiVector3D* const * source, hwu32 vertex_num)
+hwm_vector3_t** create_texcoord_set_array(const struct aiVector3D* const * source, hwu32 vertex_num)
 {
     hwm_vector3_t* out = NULL;
     hwu32          i;
