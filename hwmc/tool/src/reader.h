@@ -23,10 +23,12 @@ typedef struct reader_mesh_t {
     hwm_vector3_t*    vertices;
     hwu32*            indices;
     hwm_vector3_t*    normals;
-    hwm_vector3_t*    texcoords;
-    hwm_vector4_t*    colors;
+    hwm_vector3_t**   texcoords;
+    hwm_vector4_t**   colors;
     hwu32             vertex_count;
     hwu32             index_count;
+    hwu32             texcoord_layer_count;
+    hwu32             color_layer_count;
     reader_material_t material;
 } reader_mesh_t;
 
