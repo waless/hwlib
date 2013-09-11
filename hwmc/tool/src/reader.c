@@ -160,7 +160,7 @@ void read_normal_array(reader_mesh_t* out, const struct aiMesh* input)
     return create_vertex_array(source, vertex_num);
 }
 
-** create_color_set_array(const struct aiColor4D* const * source, hwu32 vertex_num)
+void create_color_set_array(reader_mesh_t* out, const struct aiMesh* input)
 {
     hwm_vector4_t** out = NULL;
     hwu32           set_count = 0;
@@ -193,7 +193,7 @@ void read_normal_array(reader_mesh_t* out, const struct aiMesh* input)
     return out;
 }
 
-hwm_vector3_t** create_texcoord_set_array(const struct aiVector3D* const * source, hwu32 vertex_num)
+void create_texcoord_set_array(reader_mesh_t
 {
     hwm_vector3_t** out       = NULL;
     hwu32           set_count = 0;
