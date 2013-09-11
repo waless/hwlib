@@ -11,10 +11,10 @@
 static void read_node(reader_node_t* out, const struct aiScene* scene, const struct aiNode* input);
 static void read_mesh(reader_mesh_t* out, const struct aiMesh* input);
 
-static hwm_vector3_t*  create_vertex_array(const struct aiVector3D* source, hwu32 vertex_num);
-static hwm_vector3_t*  create_normal_array(const struct aiVector3D* source, hwu32 vertex_num);
-static hwm_vector4_t** create_color_set_array(const struct aiColor4D* const * source, hwu32 vertex_num);
-static hwm_vector3_t** create_texcoord_set_array(const struct aiVector3D* const * source, hwu32 vertex_num);
+static void read_vertex_array(reader_mesh_t* out, const struct aiMesh* input);
+static void read_normal_array(reader_mesh_t* out, const struct aiMesh* input);
+static void read_color_set_array(reader_mesh_t* out, const struct aiMesh* input);
+static void read_texcoord_set_array(reader_mesh_t* out, const struct aiMesh* input);
 
 void reader_node_initialize(reader_node_t* node)
 {
@@ -136,7 +136,7 @@ void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
     }
 }
 
-hwm_vector3_t* create_vertex_array(const struct aiVector3D* source, hwu32 vertex_num)
+void read_vertex_array(reader_mesh_t* out, const struct aiMesh* input)
 {
     hwm_vector3_t* out = NULL;
     hwu32          i;
@@ -155,12 +155,12 @@ hwm_vector3_t* create_vertex_array(const struct aiVector3D* source, hwu32 vertex
     return out;
 }
 
-hwm_vector3_t* create_normal_array(const struct aiVector3D* source, hwu32 vertex_num)
+void read_normal_array(reader_mesh_t* out, const struct aiMesh* input)
 {
     return create_vertex_array(source, vertex_num);
 }
 
-hwm_vector4_t** create_color_set_array(const struct aiColor4D* const * source, hwu32 vertex_num)
+** create_color_set_array(const struct aiColor4D* const * source, hwu32 vertex_num)
 {
     hwm_vector4_t** out = NULL;
     hwu32           set_count = 0;
