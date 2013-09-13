@@ -16,7 +16,7 @@ static void read_normal_array(reader_mesh_t* out, const struct aiMesh* input);
 static void read_color_set_array(reader_mesh_t* out, const struct aiMesh* input);
 static void read_texcoord_set_array(reader_mesh_t* out, const struct aiMesh* input);
 
-hwm_vector3_t* create_vector3_array(const aiVector3D* source, hsu32 count);
+static hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count);
 
 void reader_node_initialize(reader_node_t* node)
 {
@@ -120,10 +120,10 @@ void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
             HW_ASSERT(input->mNumFaces > 0);
             HW_NULL_ASSERT(input->mVertices);
 
-            out->vertices  = create_vertex_array(input->mVertices, input->mNumVertices);
-            out->normals   = create_normal_array(input->mNormals, input->mNumVertices);
-            out->colors    = create_color_set_array(input->mColors, input->mNumVertices);
-            out->texcoords = create_texcoord_set_array(input->mTextureCoords, input->mNumVertices);
+            read_vertex_array(out, input);
+            read_normal_array(out, input);
+            read_color_set_array(out, input);
+            read_texcoord_set_array(out, input);
 
             out->vertex_count = input->mNumVertices;
             out->index_count  = input->mNumVertices * 3;
@@ -140,24 +140,24 @@ void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
 
 void read_vertex_array(reader_mesh_t* out, const struct aiMesh* input)
 {
-    out->vertices = create_vertex_array(input->mVertices, input->mNumVertices);
+    out->vertices = create_vector3_array(input->mVertices, input->mNumVertices);
     if(out->vertices != NULL) {
-        out->vertex_count = input->mVertices;
+        out->vertex_count = input->mNumVertices;
     }
 }
 
 void read_normal_array(reader_mesh_t* out, const struct aiMesh* input)
 {
-    out->normals = create_vertex_array(input->mNormals, input->mNumVertices);
+    out->normals = create_vector3_array(input->mNormals, input->mNumVertices);
 }
 
-void create_color_set_array(reader_mesh_t* out, const struct aiMesh* input)
+void read_color_set_array(reader_mesh_t* out, const struct aiMesh* input)
 {
     hwm_vector4_t** colors    = NULL;
     hwu32           set_count = 0;
     hwu32           i,j;
 
-    if(source != NULL && vertex_num > 0) {
+    if(input != NULL && input->mNumVertices > 0) {
         for(i = 0; i < AI_MAX_NUMBER_OF_COLOR_SETS; ++i) {
             ++set_count;
         }
@@ -166,11 +166,11 @@ void create_color_set_array(reader_mesh_t* out, const struct aiMesh* input)
             colors = (hwm_vector4_t**)hw_malloc(sizeof(hwm_vector4_t*) * set_count);
 
             for(i = 0; i < set_count; ++i) {
-                colors[i] = (hwm_vector4_t*)hw_malloc(sizeof(hwm_vector4_t) * vertex_num);
+                colors[i] = (hwm_vector4_t*)hw_malloc(sizeof(hwm_vector4_t) * input->mNumVertices);
                 
-                for(j = 0; j < vertex_num; ++j) {
+                for(j = 0; j < input->mNumVertices; ++j) {
                                  hwm_vector4_t* o = &colors[i][j];
-                    const struct aiColor4D*     c = &source[i][j];
+                    const struct aiColor4D*     c = &input->mColors[i][j];
 
                     o->x = c->r;
                     o->y = c->g;
@@ -181,29 +181,29 @@ void create_color_set_array(reader_mesh_t* out, const struct aiMesh* input)
         }
     }
 
-    return out;
+    out->colors = colors;
 }
 
-void create_texcoord_set_array(reader_mesh_t* out, const aiMesh* input)
+void read_texcoord_set_array(reader_mesh_t* out, const struct aiMesh* input)
 {
-    hwm_vector3_t** out       = NULL;
+    hwm_vector3_t** texcoords = NULL;
     hwu32           set_count = 0;
     hwu32           i,j;
 
-    if(source != NULL && vertex_num > 0) {
+    if(input != NULL && input->mNumVertices > 0) {
         for(i = 0; i < AI_MAX_NUMBER_OF_TEXTURECOORDS; ++i) {
             ++set_count;
         }
 
         if(set_count > 0) {
-            out = (hwm_vector3_t**)hw_malloc(sizeof(hwm_vector3_t*) * set_count);
+            texcoords = (hwm_vector3_t**)hw_malloc(sizeof(hwm_vector3_t*) * set_count);
 
             for(i = 0; i < set_count; ++i) {
-                out[i] = (hwm_vector3_t*)hw_malloc(sizeof(hwm_vector3_t) * set_count);
+                texcoords[i] = (hwm_vector3_t*)hw_malloc(sizeof(hwm_vector3_t) * set_count);
 
-                for(j = 0; j < vertex_num; ++j) {
-                                 hwm_vector3_t* o = &out[i][j];
-                    const struct aiVector3D*    v = &source[i][j];
+                for(j = 0; j < input->mNumVertices; ++j) {
+                                 hwm_vector3_t* o = &texcoords[i][j];
+                    const struct aiVector3D*    v = &input->mTextureCoords[i][j];
 
                     o->x = v->x;
                     o->y = v->y;
@@ -213,10 +213,10 @@ void create_texcoord_set_array(reader_mesh_t* out, const aiMesh* input)
         }
     }
 
-    return out;
+    out->texcoords = texcoords;
 }
 
-hwm_vector3_t* create_vector3_array(const aiVector3D* source, hsu32 count)
+hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count)
 {
     hwm_vector3_t* out = NULL;
     hwu32          i;

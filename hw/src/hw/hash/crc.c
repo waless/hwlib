@@ -1,7 +1,7 @@
 ﻿#include "hw/hash/crc.h"
 #include "hw/debug/assert.h"
 
-static const hw16 CRC16_TABLE[256] =
+static const hwu16 CRC16_TABLE[256] =
 {
     0x0000,0xC0C1,0xC181,0x0140,0xC301,0x03C0,0x0280,0xC241,0xC601,0x06C0,
     0x0780,0xC741,0x0500,0xC5C1,0xC481,0x0440,0xCC01,0x0CC0,0x0D80,0xCD41,
@@ -61,22 +61,22 @@ static const hwu32 CRC32_TABLE[256] =
     0x5D681B02,0x2A6F2B94,0xB40BBE37,0xC30C8EA1,0x5A05DF1B,0x2D02EF8D
 };
 
-static hw16 update_crc16(hw16 crc, const hw8* data, hwu32 size);
-static hwu32 update_crc32(hwu32 crc, const hw8* data, hwu32 size);
+static hwu16 update_crc16(hwu16 crc, const hwu8* data, hwu32 size);
+static hwu32 update_crc32(hwu32 crc, const hwu8* data, hwu32 size);
 
-hw16 hw_hash_crc16(hw16 init, const void* data, hwu32 size) 
+hwu16 hw_hash_crc16(hwu16 init, const void* data, hwu32 size) 
 {
-    return update_crc16(init, (const hw8*)data, size);
+    return update_crc16(init, (const hwu8*)data, size);
 }
 
 hwu32 hw_hash_crc32(hwu32 init, const void* data, hwu32 size)
 {
-    return update_crc32(init, (const hw8*)data, size);
+    return update_crc32(init, (const hwu8*)data, size);
 }
 
-hw16 update_crc16(hw16 init, const hw8* data, hwu32 size)
+hwu16 update_crc16(hwu16 init, const hwu8* data, hwu32 size)
 {
-    hw16 result = init;
+    hwu16 result = init;
     hwu32 i      = 0;
 
     for(i = 0; i < size; ++i) {
@@ -86,7 +86,7 @@ hw16 update_crc16(hw16 init, const hw8* data, hwu32 size)
     return result;
 }
 
-hwu32 update_crc32(hwu32 init, const hw8* data, hwu32 size)
+hwu32 update_crc32(hwu32 init, const hwu8* data, hwu32 size)
 {
     hwu32 result = init;
     hwu32 i      = 0;

@@ -20,10 +20,10 @@
 typedef signed char        hws8;
 typedef signed short       hws16;
 typedef signed long        hws32;
-typedef unsigned char      hw8;
-typedef unsigned short     hw16;
+typedef unsigned char      hwu8;
+typedef unsigned short     hwu16;
 typedef unsigned long      hwu32;
-typedef unsigned long long hw64;
+typedef unsigned long long hwu64;
 typedef hws32              hwsptr_t;
 typedef hwu32              hwptr_t;
 typedef float              hwf32;
