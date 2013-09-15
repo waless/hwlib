@@ -128,6 +128,7 @@ void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
             out->vertex_count = input->mNumVertices;
             out->index_count  = input->mNumVertices * 3;
 
+            hw_malloc(4);
             out->indices = (hwu32*)hw_malloc(sizeof(hwu32) * out->index_count);
             for(i = 0; i < input->mNumFaces; ++i) {
                 for(j = 0; j < input->mFaces[i].mNumIndices; ++j) {
@@ -159,7 +160,12 @@ void read_color_set_array(reader_mesh_t* out, const struct aiMesh* input)
 
     if(input != NULL && input->mNumVertices > 0) {
         for(i = 0; i < AI_MAX_NUMBER_OF_COLOR_SETS; ++i) {
-            ++set_count;
+            if(input->mColors[i] != NULL) {
+                ++set_count;
+            }
+            else {
+                break;
+            }
         }
 
         if(set_count > 0) {
@@ -192,7 +198,12 @@ void read_texcoord_set_array(reader_mesh_t* out, const struct aiMesh* input)
 
     if(input != NULL && input->mNumVertices > 0) {
         for(i = 0; i < AI_MAX_NUMBER_OF_TEXTURECOORDS; ++i) {
-            ++set_count;
+            if(input->mTextureCoords[i] != NULL) {
+                ++set_count;
+            }
+            else {
+                break;
+            }
         }
 
         if(set_count > 0) {
