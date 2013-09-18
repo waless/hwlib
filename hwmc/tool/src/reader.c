@@ -128,7 +128,6 @@ void read_mesh(reader_mesh_t* out, const struct aiMesh* input)
             out->vertex_count = input->mNumVertices;
             out->index_count  = input->mNumVertices * 3;
 
-            hw_malloc(4);
             out->indices = (hwu32*)hw_malloc(sizeof(hwu32) * out->index_count);
             for(i = 0; i < input->mNumFaces; ++i) {
                 for(j = 0; j < input->mFaces[i].mNumIndices; ++j) {
@@ -210,7 +209,7 @@ void read_texcoord_set_array(reader_mesh_t* out, const struct aiMesh* input)
             texcoords = (hwm_vector3_t**)hw_malloc(sizeof(hwm_vector3_t*) * set_count);
 
             for(i = 0; i < set_count; ++i) {
-                texcoords[i] = (hwm_vector3_t*)hw_malloc(sizeof(hwm_vector3_t) * set_count);
+                texcoords[i] = (hwm_vector3_t*)hw_malloc(sizeof(hwm_vector3_t) * input->mNumVertices);
 
                 for(j = 0; j < input->mNumVertices; ++j) {
                                  hwm_vector3_t* o = &texcoords[i][j];
