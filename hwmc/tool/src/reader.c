@@ -17,6 +17,7 @@ static void read_colors(reader_mesh_t* out, const struct aiMesh* input);
 static void read_texcoords(reader_mesh_t* out, const struct aiMesh* input);
 static void read_indices(reader_mesh_t* out, const struct aiMesh* input);
 static void read_material(reader_mesh_t* out, const struct aiScene* scene, const struct aiMesh* input);
+static void read_textures(reader_material_t* out, const struct aiScene* scene, const struct aiMaterial* material);
 
 static hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count);
 
@@ -243,6 +244,42 @@ void read_indices(reader_mesh_t* out, const struct aiMesh* input)
 
 void read_material(reader_mesh_t* out, const struct aiScene* scene, const struct aiMesh* input)
 {
+    const struct aiMaterial* material = NULL;
+
+    if(scene->mNumMaterials > 0 && (scene->mMaterials != NULL)) {
+        material = scene->mMaterials[input->mMaterialIndex];
+        if(material != NULL) {
+            read_textures(&out->material, scene, material);
+        }
+    }
+}
+
+void read_textures(reader_material_t* out, const struct aiScene* scene, const struct aiMaterial* material)
+{
+    const struct aiMaterialProperty* property      = NULL;
+    const struct aiTexture*          texture       = NULL;
+          reader_texture_t*          textures      = NULL;
+          hwu32                      texture_count = 0;
+          hwu32                      counter       = 0;
+          hwu32                      i;
+
+    for(i = 0; i < material->mNumProperties; ++i) {
+        property = material->mProperties[i];
+        if(property != NULL && (property->mSemantic != aiTextureType_NONE)) {
+            ++texture_count;
+        }
+    }
+
+    if(texture_count > 0) {
+        textures = (reader_texture_t*)hw_malloc(sizeof(reader_texture_t) * texture_count);
+        for(i = 0; i < material->mNumProperties; ++i) {
+            property = material->mProperties[i];
+            if(property != NULL && (property->mSemantic != aiTextureType_NONE)) {
+                texture = scene->mTextures[property->mIndex];
+                ++counter;
+            }
+        }
+    }
 }
 
 hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count)
