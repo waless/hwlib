@@ -17,9 +17,13 @@ static void read_colors(reader_mesh_t* out, const struct aiMesh* input);
 static void read_texcoords(reader_mesh_t* out, const struct aiMesh* input);
 static void read_indices(reader_mesh_t* out, const struct aiMesh* input);
 static void read_material(reader_mesh_t* out, const struct aiScene* scene, const struct aiMesh* input);
-static void read_textures(reader_material_t* out, const struct aiScene* scene, const struct aiMaterial* material);
+static void read_textures(reader_material_t* out, const struct aiMaterial* material);
 
 static hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count);
+
+static hwg_texture_mapping_t to_hw_texture_mapping(enum aiTextureMapping mapping);
+static hwg_texture_wrap_t    to_hw_texture_wrap(enum aiTextureMapMode wrap);
+static hwg_texture_op_t      to_hw_texture_op(enum aiTextureOp op);
 
 void reader_node_initialize(reader_node_t* node)
 {
@@ -48,13 +52,19 @@ void reader_mesh_initialize(reader_mesh_t* mesh)
 
 void reader_material_initialize(reader_material_t* material)
 {
-    material->textures      = NULL;
-    material->texture_count = 0;
+    material->diffuses      = NULL;
+    material->diffuse_count = 0;
 }
 
 void reader_texture_initialize(reader_texture_t* texture)
 {
-    texture->path = "";
+    memset(texture->path, 0, sizeof(texture->path));
+    texture->type         = HWG_TEXTURE_TYPE_DIFFUSE;
+    texture->mapping      = HWG_TEXTURE_MAPPING_UV;
+    texture->wrap         = HWG_TEXTURE_WRAP_REPEAT;
+    texture->op           = HWG_TEXTURE_OP_MULTIPLY;
+    texture->blend_factor = 1.0f;
+    texture->flags        = 0;
 }
 
 void reader_initialize(reader_t* reader)
@@ -249,37 +259,43 @@ void read_material(reader_mesh_t* out, const struct aiScene* scene, const struct
     if(scene->mNumMaterials > 0 && (scene->mMaterials != NULL)) {
         material = scene->mMaterials[input->mMaterialIndex];
         if(material != NULL) {
-            read_textures(&out->material, scene, material);
+            read_textures(&out->material, material);
+
+            aiGetMaterialColor(&
         }
     }
 }
 
-void read_textures(reader_material_t* out, const struct aiScene* scene, const struct aiMaterial* material)
+void read_textures(reader_material_t* out, const struct aiMaterial* material)
 {
-    const struct aiMaterialProperty* property      = NULL;
-    const struct aiTexture*          texture       = NULL;
-          reader_texture_t*          textures      = NULL;
-          hwu32                      texture_count = 0;
-          hwu32                      counter       = 0;
-          hwu32                      i;
+    struct aiString            path;
+    enum   aiTextureMapping    mapping       = aiTextureMapping_UV;
+    enum   aiTextureOp         op            = aiTextureOp_Multiply;
+    enum   aiTextureMapMode    wrap          = aiTextureMapMode_Wrap;
+    reader_texture_t*          diffuses      = NULL;
+    hwuint                     uv_index      = 0;
+    hwf32                      blend_factor  = 1.0f;
+    hwuint                     flags         = 0;
+    hwu32                      diffuse_count = 0;
+    hwu32                      i;
 
-    for(i = 0; i < material->mNumProperties; ++i) {
-        property = material->mProperties[i];
-        if(property != NULL && (property->mSemantic != aiTextureType_NONE)) {
-            ++texture_count;
+    diffuse_count = aiGetMaterialTextureCount(material, aiTextureType_DIFFUSE);
+    diffuses      = (reader_texture_t*)hw_malloc(sizeof(reader_texture_t) * diffuse_count);
+    for(i = 0; i < diffuse_count; ++i) {
+        enum aiReturn result = aiGetMaterialTexture(material, aiTextureType_DIFFUSE, i, &path, &mapping, &uv_index, &blend_factor, &op, &wrap, &flags);
+        if(result == aiReturn_SUCCESS) {
+            reader_texture_t* diffuse = diffuses + i;
+            diffuse->type         = HWG_TEXTURE_TYPE_DIFFUSE;
+            diffuse->mapping      = to_hw_texture_mapping(mapping);
+            diffuse->wrap         = to_hw_texture_wrap(wrap);
+            diffuse->op           = to_hw_texture_op(op);
+            diffuse->blend_factor = blend_factor;
+            diffuse->flags         = flags;
         }
     }
 
-    if(texture_count > 0) {
-        textures = (reader_texture_t*)hw_malloc(sizeof(reader_texture_t) * texture_count);
-        for(i = 0; i < material->mNumProperties; ++i) {
-            property = material->mProperties[i];
-            if(property != NULL && (property->mSemantic != aiTextureType_NONE)) {
-                texture = scene->mTextures[property->mIndex];
-                ++counter;
-            }
-        }
-    }
+    out->diffuses      = diffuses;
+    out->diffuse_count = diffuse_count;
 }
 
 hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count)
@@ -299,5 +315,71 @@ hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count
     }
 
     return out;
+}
+
+hwg_texture_mapping_t to_hw_texture_mapping(enum aiTextureMapping mapping)
+{
+    switch(mapping) {
+        case aiTextureMapping_UV:
+            return HWG_TEXTURE_MAPPING_UV;
+
+        case aiTextureMapping_SPHERE:
+            return HWG_TEXTURE_MAPPING_SPHERE;
+
+        case aiTextureMapping_CYLINDER:
+            return HWG_TEXTURE_MAPPING_CYLINDER;
+
+        case aiTextureMapping_BOX:
+            return HWG_TEXTURE_MAPPING_BOX;
+
+        case aiTextureMapping_PLANE:
+            return HWG_TEXTURE_MAPPING_PLANE;
+    }
+
+    return HWG_TEXTURE_MAPPING_UNKOWN;
+}
+
+hwg_texture_wrap_t to_hw_texture_wrap(enum aiTextureMapMode wrap)
+{
+    switch(wrap) {
+        case aiTextureMapMode_Wrap:
+            return HWG_TEXTURE_WRAP_REPEAT;
+
+        case aiTextureMapMode_Clamp:
+            return HWG_TEXTURE_WRAP_CLAMP;
+
+        case aiTextureMapMode_Decal:
+            return HWG_TEXTURE_WRAP_DECAL;
+
+        case aiTextureMapMode_Mirror:
+            return HWG_TEXTURE_WRAP_MIRROR;
+    }
+
+    return HWG_TEXTURE_WRAP_UNKOWN;
+}
+
+hwg_texture_op_t to_hw_texture_op(enum aiTextureOp op)
+{
+    switch(op) {
+        case aiTextureOp_Multiply:
+            return HWG_TEXTURE_OP_MULTIPLY;
+
+        case aiTextureOp_Add:
+            return HWG_TEXTURE_OP_ADD;
+
+        case aiTextureOp_Subtract:
+            return HWG_TEXTURE_OP_SUBTRACT;
+
+        case aiTextureOp_Divide:
+            return HWG_TEXTURE_OP_DIVIDE;
+
+        case aiTextureOp_SmoothAdd:
+            return HWG_TEXTURE_OP_SMOOTH_ADD;
+
+        case aiTextureOp_SignedAdd:
+            return HWG_TEXTURE_OP_SIGNED_ADD;
+    }
+
+    return HWG_TEXTURE_OP_SIGNED_ADD;
 }
 
