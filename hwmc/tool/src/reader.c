@@ -17,6 +17,7 @@ static void read_colors(reader_mesh_t* out, const struct aiMesh* input);
 static void read_texcoords(reader_mesh_t* out, const struct aiMesh* input);
 static void read_indices(reader_mesh_t* out, const struct aiMesh* input);
 static void read_material(reader_mesh_t* out, const struct aiScene* scene, const struct aiMesh* input);
+static void read_material_color(reader_material_t* out, const struct aiMaterial* input);
 static void read_textures(reader_material_t* out, const struct aiMaterial* material);
 
 static hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count);
@@ -52,8 +53,8 @@ void reader_mesh_initialize(reader_mesh_t* mesh)
 
 void reader_material_initialize(reader_material_t* material)
 {
-    material->diffuses      = NULL;
-    material->diffuse_count = 0;
+    material->diffuse_textures      = NULL;
+    material->diffuse_texture_count = 0;
 }
 
 void reader_texture_initialize(reader_texture_t* texture)
@@ -260,9 +261,20 @@ void read_material(reader_mesh_t* out, const struct aiScene* scene, const struct
         material = scene->mMaterials[input->mMaterialIndex];
         if(material != NULL) {
             read_textures(&out->material, material);
-
-            aiGetMaterialColor(&
+            read_material_color(&out->material, material);
         }
+    }
+}
+
+void read_material_color(reader_material_t* out, const struct aiMaterial* input)
+{
+    struct aiColor4D color;
+
+    if(aiGetMaterialColor(input, AI_MATKEY_COLOR_DIFFUSE, &color) == AI_SUCCESS) {
+        out->diffuse_color.x = color.r;
+        out->diffuse_color.y = color.g;
+        out->diffuse_color.z = color.b;
+        out->diffuse_color.w = color.a;
     }
 }
 
@@ -294,8 +306,8 @@ void read_textures(reader_material_t* out, const struct aiMaterial* material)
         }
     }
 
-    out->diffuses      = diffuses;
-    out->diffuse_count = diffuse_count;
+    out->diffuse_textures      = diffuses;
+    out->diffuse_texture_count = diffuse_count;
 }
 
 hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count)

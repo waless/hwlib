@@ -6,6 +6,7 @@
 #include <hwm/vector3.h>
 #include <hwm/vector4.h>
 #include <hwm/matrix44.h>
+#include <hwg/color4_f32.h>
 #include <assimp/types.h>
 
 #ifdef __cplusplus
@@ -72,8 +73,9 @@ typedef struct reader_texture_t {
 } reader_texture_t;
 
 typedef struct reader_material_t {
-    reader_texture_t* diffuses;
-    hwu32             diffuse_count;
+    hwg_color4_f32_t  diffuse_color;
+    reader_texture_t* diffuse_textures;
+    hwu32             diffuse_texture_count;
 } reader_material_t;
 
 typedef struct reader_mesh_t {
