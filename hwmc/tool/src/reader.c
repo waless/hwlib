@@ -302,7 +302,7 @@ void read_textures(reader_material_t* out, const struct aiMaterial* material)
             diffuse->wrap         = to_hw_texture_wrap(wrap);
             diffuse->op           = to_hw_texture_op(op);
             diffuse->blend_factor = blend_factor;
-            diffuse->flags         = flags;
+            diffuse->flags        = flags;
         }
     }
 
