@@ -14,6 +14,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hwm", "..\..\..\hwm\vs2012\
 		{14EACE87-0E97-4C89-8166-0203CF87433F} = {14EACE87-0E97-4C89-8166-0203CF87433F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hwg", "..\..\..\hwg\vs2012\hwg.vcxproj", "{1C29577E-C826-412D-BE29-4C9FB7A411DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -32,6 +34,10 @@ Global
 		{94455948-B140-49E1-A54E-91C243723C01}.Debug|Win32.Build.0 = Debug|Win32
 		{94455948-B140-49E1-A54E-91C243723C01}.Release|Win32.ActiveCfg = Release|Win32
 		{94455948-B140-49E1-A54E-91C243723C01}.Release|Win32.Build.0 = Release|Win32
+		{1C29577E-C826-412D-BE29-4C9FB7A411DB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1C29577E-C826-412D-BE29-4C9FB7A411DB}.Debug|Win32.Build.0 = Debug|Win32
+		{1C29577E-C826-412D-BE29-4C9FB7A411DB}.Release|Win32.ActiveCfg = Release|Win32
+		{1C29577E-C826-412D-BE29-4C9FB7A411DB}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

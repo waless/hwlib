@@ -28,15 +28,27 @@ static hwg_texture_op_t      to_hw_texture_op(enum aiTextureOp op);
 
 void reader_node_initialize(reader_node_t* node)
 {
-    node->meshes     = NULL;
-    node->mesh_count = 0;
+    node->meshes      = NULL;
+    node->mesh_count  = 0;
+    node->children    = NULL;
+    node->child_count = 0;
     hwm_matrix44_identity(&node->local_transform);
 }
 
 void reader_node_finalize(reader_node_t* node)
 {
+    hwu32 i;
+
+    for(i = 0; i < node->mesh_count; ++i) {
+        reader_mesh_finalize(node->meshes + i);
+    }
     HW_SAFE_FREE(node->meshes);
-    node->mesh_count = 0;
+
+    for(i = 0; i < node->child_count; ++i) {
+        reader_node_finalize(node->children + i);
+    }
+
+    reader_node_initialize(node);
 }
 
 void reader_mesh_initialize(reader_mesh_t* mesh)
@@ -51,10 +63,41 @@ void reader_mesh_initialize(reader_mesh_t* mesh)
     reader_material_initialize(&mesh->material);
 }
 
+void reader_mesh_finalize(reader_mesh_t* mesh)
+{
+    hwu32 i;
+
+    reader_material_finalize(&mesh->material);
+
+    if(mesh->colors != NULL) {
+        for(i = 0; i < mesh->color_layer_count; ++i) {
+            HW_SAFE_FREE(mesh->colors[i]);
+        }
+        HW_SAFE_FREE(mesh->colors);
+    }
+
+    if(mesh->texcoords != NULL) {
+        for(i = 0; i < mesh->texcoord_layer_count; ++i) {
+            HW_SAFE_FREE(mesh->texcoords[i]);
+        }
+        HW_SAFE_FREE(mesh->texcoords);
+    }
+
+    HW_SAFE_FREE(mesh->normals);
+    HW_SAFE_FREE(mesh->indices);
+    HW_SAFE_FREE(mesh->vertices);
+
+    reader_mesh_initialize(mesh);
+}
+
 void reader_material_initialize(reader_material_t* material)
 {
     material->diffuse_textures      = NULL;
     material->diffuse_texture_count = 0;
+}
+
+void reader_material_finalize(reader_material_t* material)
+{
 }
 
 void reader_texture_initialize(reader_texture_t* texture)
@@ -271,10 +314,10 @@ void read_material_color(reader_material_t* out, const struct aiMaterial* input)
     struct aiColor4D color;
 
     if(aiGetMaterialColor(input, AI_MATKEY_COLOR_DIFFUSE, &color) == AI_SUCCESS) {
-        out->diffuse_color.x = color.r;
-        out->diffuse_color.y = color.g;
-        out->diffuse_color.z = color.b;
-        out->diffuse_color.w = color.a;
+        out->diffuse_color.r = color.r;
+        out->diffuse_color.g = color.g;
+        out->diffuse_color.b = color.b;
+        out->diffuse_color.a = color.a;
     }
 }
 

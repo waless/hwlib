@@ -106,7 +106,7 @@ typedef struct reader_t {
 extern void reader_node_initialize(reader_node_t* node);
 extern void reader_node_finalize(reader_node_t* node);
 extern void reader_mesh_initialize(reader_mesh_t* mesh);
-extern void reader_mesh_finalize(reader_mesh_t* node);
+extern void reader_mesh_finalize(reader_mesh_t* mesh);
 extern void reader_material_initialize(reader_material_t* material);
 extern void reader_material_finalize(reader_material_t* material);
 extern void reader_texture_initialize(reader_texture_t* texture);
