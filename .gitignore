@@ -17,6 +17,7 @@
 *.pdb
 *.ilk
 *.cache
+*.i
 
 # 無視するフォルダ
 obj/
