@@ -1,6 +1,30 @@
 ﻿#ifndef HWG_COLOR4_U8_H_
 #define HWG_COLOR4_U8_H_
 
+#include <hw/types.h>
+#include "hwg/color4_f32.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef union hwg_color4_u8_t {
+    struct {
+        hwu8 a;
+        hwu8 g;
+        hwu8 b;
+        hwu8 r;
+    } elements;
+
+    hwu32 value;
+} hwg_color4_u8_t;
+
+extern void hwg_color4_u8_to_color4_f32(hwg_color4_f32_t* out, hwg_color4_u8_t input);
+
+#ifdef __cplusplus
+}
+#endif
+
 #if 0
 #include <hw/types.h>
 #include "hwg/color4_f32.h"
