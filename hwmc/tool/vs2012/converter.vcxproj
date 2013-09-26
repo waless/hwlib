@@ -72,8 +72,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ASSIMP_SDK)\bin\x84;$(ASSIMP_SDK)\lib\x86;$(ProjectDir)..\..\..\hw\bin;$(ProjectDir)..\..\..\hwm\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp.lib;hw_vs2012_debug.lib;hwm_vs2012_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ASSIMP_SDK)\bin\x84;$(ASSIMP_SDK)\lib\x86;$(ProjectDir)..\..\..\hw\bin;$(ProjectDir)..\..\..\hwm\bin;$(ProjectDir)..\..\..\hwg\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp.lib;hw_vs2012_debug.lib;hwm_vs2012_debug.lib;hwg_vs2012_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
@@ -96,8 +96,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ASSIMP_SDK)\lib\x86;$(ProjectDir)..\..\..\hw\bin;$(ProjectDir)..\..\..\hwm\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp.lib;hw_vs2012_release.lib;hwm_vs2012_release.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ASSIMP_SDK)\lib\x86;$(ProjectDir)..\..\..\hw\bin;$(ProjectDir)..\..\..\hwm\bin;$(ProjectDir)..\..\..\hwg\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp.lib;hw_vs2012_release.lib;hwm_vs2012_release.lib;hwg_vs2012_release.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

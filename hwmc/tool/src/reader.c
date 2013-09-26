@@ -92,12 +92,21 @@ void reader_mesh_finalize(reader_mesh_t* mesh)
 
 void reader_material_initialize(reader_material_t* material)
 {
+    hwg_color4_f32_set_scaler(&material->diffuse_color, 0xFF);
     material->diffuse_textures      = NULL;
     material->diffuse_texture_count = 0;
 }
 
 void reader_material_finalize(reader_material_t* material)
 {
+    hwu32 i;
+
+    for(i = 0; i < material->diffuse_texture_count; ++i) {
+        reader_texture_finalize(material->diffuse_textures + i);
+    }
+    HW_SAFE_FREE(material->diffuse_textures);
+
+    reader_material_initialize(material);
 }
 
 void reader_texture_initialize(reader_texture_t* texture)
@@ -109,6 +118,10 @@ void reader_texture_initialize(reader_texture_t* texture)
     texture->op           = HWG_TEXTURE_OP_MULTIPLY;
     texture->blend_factor = 1.0f;
     texture->flags        = 0;
+}
+
+void reader_texture_finalize(reader_texture_t* texture)
+{
 }
 
 void reader_initialize(reader_t* reader)
