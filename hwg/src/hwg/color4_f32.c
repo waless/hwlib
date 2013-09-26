@@ -11,7 +11,6 @@ void hwg_color4_f32_set_scaler(hwg_color4_f32_t* out, hwf32 scaler)
     out->a = scaler;
 }
 
-#if 0
 void hwg_color4_f32_set_color4_u8(hwg_color4_f32_t* out, hwg_color4_u8_t input)
 {
     out->r = (hwf32)input.elements.r / 255.0f;
@@ -27,5 +26,4 @@ void hwg_color4_f32_to_color4_u8(hwg_color4_u8_t* out, hwg_color4_f32_t* input)
     out->elements.b = (hwu8)(input->b * 255.0f);
     out->elements.a = (hwu8)(input->a * 255.0f);
 }
-#endif
 

@@ -19,13 +19,9 @@ extern const hwg_color4_f32_t k_hwg_color4_f32_zero;
 extern const hwg_color4_f32_t k_hwg_color4_f32_one;
 
 extern void hwg_color4_f32_set_scaler(hwg_color4_f32_t* out, hwf32 scaler);
-#if 0
 extern void hwg_color4_f32_set_color4_u8(hwg_color4_f32_t* out, hwg_color4_u8_t input);
-#endif
 
-#if 0
 extern void hwg_color4_f32_to_color4_u8(hwg_color4_u8_t* out, hwg_color4_f32_t* color);
-#endif
 
 #ifdef __cplusplus
 }
