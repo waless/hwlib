@@ -74,6 +74,10 @@ typedef struct reader_texture_t {
 
 typedef struct reader_material_t {
     hwg_color4_f32_t  diffuse_color;
+    hwg_color4_f32_t  specular_color;
+    hwg_color4_f32_t  ambient_color;
+    hwg_color4_f32_t  emissive_color;
+
     reader_texture_t* diffuse_textures;
     hwu32             diffuse_texture_count;
 } reader_material_t;

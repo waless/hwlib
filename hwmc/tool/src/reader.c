@@ -17,10 +17,12 @@ static void read_colors(reader_mesh_t* out, const struct aiMesh* input);
 static void read_texcoords(reader_mesh_t* out, const struct aiMesh* input);
 static void read_indices(reader_mesh_t* out, const struct aiMesh* input);
 static void read_material(reader_mesh_t* out, const struct aiScene* scene, const struct aiMesh* input);
-static void read_material_color(reader_material_t* out, const struct aiMaterial* input);
+static void read_material_colors(reader_material_t* out, const struct aiMaterial* input);
 static void read_textures(reader_material_t* out, const struct aiMaterial* material);
 
+static hwu32 get_index_count(const struct aiMesh* mesh);
 static hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count);
+static hwbool get_material_color(hwg_color4_f32_t* out, const struct aiMaterial* material, const char* key, hwuint type, hwuint index);
 
 static hwg_texture_mapping_t to_hw_texture_mapping(enum aiTextureMapping mapping);
 static hwg_texture_wrap_t    to_hw_texture_wrap(enum aiTextureMapMode wrap);
@@ -93,6 +95,9 @@ void reader_mesh_finalize(reader_mesh_t* mesh)
 void reader_material_initialize(reader_material_t* material)
 {
     hwg_color4_f32_set_scaler(&material->diffuse_color, 0xFF);
+    hwg_color4_f32_set_scaler(&material->specular_color, 0xFF);
+    hwg_color4_f32_set_scaler(&material->ambient_color, 0xFF);
+    hwg_color4_f32_set_scaler(&material->emissive_color, 0xFF);
     material->diffuse_textures      = NULL;
     material->diffuse_texture_count = 0;
 }
@@ -112,7 +117,7 @@ void reader_material_finalize(reader_material_t* material)
 void reader_texture_initialize(reader_texture_t* texture)
 {
     memset(texture->path, 0, sizeof(texture->path));
-    texture->type         = HWG_TEXTURE_TYPE_DIFFUSE;
+    texture->type         = HWG_TEXTURE_TYPE_NONE;
     texture->mapping      = HWG_TEXTURE_MAPPING_UV;
     texture->wrap         = HWG_TEXTURE_WRAP_REPEAT;
     texture->op           = HWG_TEXTURE_OP_MULTIPLY;
@@ -122,6 +127,7 @@ void reader_texture_initialize(reader_texture_t* texture)
 
 void reader_texture_finalize(reader_texture_t* texture)
 {
+    reader_texture_initialize(texture);
 }
 
 void reader_initialize(reader_t* reader)
@@ -131,7 +137,7 @@ void reader_initialize(reader_t* reader)
 
 void reader_finalize(reader_t* reader)
 {
-    (void)reader;
+    reader_node_finalize(&reader->root);
 }
 
 hwbool reader_read(reader_t* reader, const char* input_path)
@@ -160,7 +166,7 @@ void read_node(reader_node_t* out, const struct aiScene* scene, const struct aiN
         if(input->mNumMeshes > 0) {
             out->meshes = (reader_mesh_t*)hw_malloc(sizeof(reader_mesh_t) * input->mNumMeshes);
             for(i = 0; i < input->mNumMeshes; ++i) {
-                reader_mesh_initialize(out->meshes + 1);
+                reader_mesh_initialize(out->meshes + i);
                 read_mesh(out->meshes + i, scene, scene->mMeshes[input->mMeshes[i]]);
             }
             out->mesh_count = input->mNumMeshes;
@@ -293,7 +299,7 @@ void read_indices(reader_mesh_t* out, const struct aiMesh* input)
     hwu32  counter     = 0;
     hwu32  i,j;
 
-    index_count = input->mNumVertices * 3;
+    index_count = get_index_count(input);
     if(index_count > 0) {
         indices = (hwu32*)hw_malloc(sizeof(hwu32) * index_count);
         for(i = 0; i < input->mNumFaces; ++i) {
@@ -317,21 +323,17 @@ void read_material(reader_mesh_t* out, const struct aiScene* scene, const struct
         material = scene->mMaterials[input->mMaterialIndex];
         if(material != NULL) {
             read_textures(&out->material, material);
-            read_material_color(&out->material, material);
+            read_material_colors(&out->material, material);
         }
     }
 }
 
-void read_material_color(reader_material_t* out, const struct aiMaterial* input)
+void read_material_colors(reader_material_t* out, const struct aiMaterial* input)
 {
-    struct aiColor4D color;
-
-    if(aiGetMaterialColor(input, AI_MATKEY_COLOR_DIFFUSE, &color) == AI_SUCCESS) {
-        out->diffuse_color.r = color.r;
-        out->diffuse_color.g = color.g;
-        out->diffuse_color.b = color.b;
-        out->diffuse_color.a = color.a;
-    }
+    get_material_color(&out->diffuse_color, input, AI_MATKEY_COLOR_DIFFUSE);
+    get_material_color(&out->specular_color, input, AI_MATKEY_COLOR_SPECULAR);
+    get_material_color(&out->ambient_color, input, AI_MATKEY_COLOR_AMBIENT);
+    get_material_color(&out->emissive_color, input, AI_MATKEY_COLOR_EMISSIVE);
 }
 
 void read_textures(reader_material_t* out, const struct aiMaterial* material)
@@ -426,6 +428,11 @@ hwg_texture_wrap_t to_hw_texture_wrap(enum aiTextureMapMode wrap)
     return HWG_TEXTURE_WRAP_UNKOWN;
 }
 
+hwu32 get_index_count(const struct aiMesh* mesh)
+{
+    return mesh->mNumFaces * 3;
+}
+
 hwg_texture_op_t to_hw_texture_op(enum aiTextureOp op)
 {
     switch(op) {
@@ -449,5 +456,22 @@ hwg_texture_op_t to_hw_texture_op(enum aiTextureOp op)
     }
 
     return HWG_TEXTURE_OP_SIGNED_ADD;
+}
+
+hwbool get_material_color(hwg_color4_f32_t* out, const struct aiMaterial* material, const char* key, hwuint type, hwuint index)
+{
+    struct aiColor4D color;
+    
+    if(aiGetMaterialColor(material, key, type, index, &color) == AI_SUCCESS) {
+        out->r = color.r;
+        out->g = color.g;
+        out->b = color.b;
+        out->a = color.a;
+
+        return HW_TRUE;
+    }
+    else {
+        return HW_FALSE;
+    }
 }
 
