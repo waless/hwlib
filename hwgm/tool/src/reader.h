@@ -1,5 +1,5 @@
-﻿#ifndef HWMC_READER_H_
-#define HWMC_READER_H_
+﻿#ifndef HWGM_READER_H_
+#define HWGM_READER_H_
 
 #include <hw/types.h>
 #include <hw/string/string.h>
@@ -63,13 +63,13 @@ typedef enum reader_texture_flags_t {
 } reader_texture_fags_t;
 
 typedef struct reader_texture_t {
-    char                  path[MAXLEN];
+    char                     path[MAXLEN];
     reader_texture_type_t    type;
     reader_texture_mapping_t mapping;
     reader_texture_wrap_t    wrap;
     reader_texture_op_t      op;
-    hwf32                 blend_factor;
-    hwu32                 flags;
+    hwf32                    blend_factor;
+    hwu32                    flags;
 } reader_texture_t;
 
 typedef struct reader_material_t {

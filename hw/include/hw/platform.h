@@ -21,15 +21,24 @@
 
 	  HW_PLATFORM_GCC32  : gcc32bit環境
 	  HW_PLATFORM_GCC64  : gcc64bit環境
+
+      HW_PLATFORM_WINDOWS : windows環境
+      HW_PLATFORM_OSX     : mac-osx環境
+      HW_PLATFORM_ANDROID : android環境
+      HW_PLATFORM_IOS     : ios環境
 */
 #ifndef HW_PLATFORM_H_
 #define HW_PLATFORM_H_
 
+/* ビルドツール定義 */
 /* MicrosoftVisualStudioC++関連の環境定義 */
 #if defined(_MSC_VER)
 
 /* MicrosoftVisualStudioC++定義 */
 #   define HW_PLATFORM_MSVC
+
+/* Microsoft Winodws 定義 */
+#   define HW_PLATFORM_WINDOWS
 
 /* 32bit or 64bit 定義 */
 #   if defined(_WIN64)
