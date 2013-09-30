@@ -1,12 +1,12 @@
-﻿#include "hwmc.h"
+﻿#include "hwgm.h"
 #include <string.h>
 #include <stdio.h>
 #include "hw/string/string.h"
 #include "reader.h"
 
-static hwbool parse_args(hwmc_state_t* state, int argc, const char* argv[]);
+static hwbool parse_args(hwgm_state_t* state, int argc, const char* argv[]);
 
-hwbool hwmc_initialize(hwmc_state_t* state, int argc, const char* argv[])
+hwbool hwgm_initialize(hwgm_state_t* state, int argc, const char* argv[])
 {
     if(parse_args(state, argc, argv) == HW_FALSE) {
         return HW_FALSE;
@@ -15,12 +15,12 @@ hwbool hwmc_initialize(hwmc_state_t* state, int argc, const char* argv[])
     return HW_TRUE;
 }
 
-void hwmc_finalize(hwmc_state_t* state)
+void hwgm_finalize(hwgm_state_t* state)
 {
     (void)state;
 }
 
-void hwmc_run(hwmc_state_t* state)
+void hwgm_run(hwgm_state_t* state)
 {
     struct reader_t reader;
 
@@ -30,7 +30,7 @@ void hwmc_run(hwmc_state_t* state)
     }
 }
 
-hwbool parse_args(hwmc_state_t* state, int argc, const char* argv[])
+hwbool parse_args(hwgm_state_t* state, int argc, const char* argv[])
 {
     int i;
     hw_string_t input;

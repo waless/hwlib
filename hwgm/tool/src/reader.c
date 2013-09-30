@@ -24,9 +24,9 @@ static hwu32 get_index_count(const struct aiMesh* mesh);
 static hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count);
 static hwbool get_material_color(hwg_color4_f32_t* out, const struct aiMaterial* material, const char* key, hwuint type, hwuint index);
 
-static hwg_texture_mapping_t to_hw_texture_mapping(enum aiTextureMapping mapping);
-static hwg_texture_wrap_t    to_hw_texture_wrap(enum aiTextureMapMode wrap);
-static hwg_texture_op_t      to_hw_texture_op(enum aiTextureOp op);
+static reader_texture_mapping_t to_hw_texture_mapping(enum aiTextureMapping mapping);
+static reader_texture_wrap_t    to_hw_texture_wrap(enum aiTextureMapMode wrap);
+static reader_texture_op_t      to_hw_texture_op(enum aiTextureOp op);
 
 void reader_node_initialize(reader_node_t* node)
 {
@@ -117,10 +117,10 @@ void reader_material_finalize(reader_material_t* material)
 void reader_texture_initialize(reader_texture_t* texture)
 {
     memset(texture->path, 0, sizeof(texture->path));
-    texture->type         = HWG_TEXTURE_TYPE_NONE;
-    texture->mapping      = HWG_TEXTURE_MAPPING_UV;
-    texture->wrap         = HWG_TEXTURE_WRAP_REPEAT;
-    texture->op           = HWG_TEXTURE_OP_MULTIPLY;
+    texture->type         = READER_TEXTURE_TYPE_NONE;
+    texture->mapping      = READER_TEXTURE_MAPPING_UV;
+    texture->wrap         = READER_TEXTURE_WRAP_REPEAT;
+    texture->op           = READER_TEXTURE_OP_MULTIPLY;
     texture->blend_factor = 1.0f;
     texture->flags        = 0;
 }
@@ -355,7 +355,7 @@ void read_textures(reader_material_t* out, const struct aiMaterial* material)
         enum aiReturn result = aiGetMaterialTexture(material, aiTextureType_DIFFUSE, i, &path, &mapping, &uv_index, &blend_factor, &op, &wrap, &flags);
         if(result == aiReturn_SUCCESS) {
             reader_texture_t* diffuse = diffuses + i;
-            diffuse->type         = HWG_TEXTURE_TYPE_DIFFUSE;
+            diffuse->type         = READER_TEXTURE_TYPE_DIFFUSE;
             diffuse->mapping      = to_hw_texture_mapping(mapping);
             diffuse->wrap         = to_hw_texture_wrap(wrap);
             diffuse->op           = to_hw_texture_op(op);
@@ -387,45 +387,45 @@ hwm_vector3_t* create_vector3_array(const struct aiVector3D* source, hwu32 count
     return out;
 }
 
-hwg_texture_mapping_t to_hw_texture_mapping(enum aiTextureMapping mapping)
+reader_texture_mapping_t to_hw_texture_mapping(enum aiTextureMapping mapping)
 {
     switch(mapping) {
         case aiTextureMapping_UV:
-            return HWG_TEXTURE_MAPPING_UV;
+            return READER_TEXTURE_MAPPING_UV;
 
         case aiTextureMapping_SPHERE:
-            return HWG_TEXTURE_MAPPING_SPHERE;
+            return READER_TEXTURE_MAPPING_SPHERE;
 
         case aiTextureMapping_CYLINDER:
-            return HWG_TEXTURE_MAPPING_CYLINDER;
+            return READER_TEXTURE_MAPPING_CYLINDER;
 
         case aiTextureMapping_BOX:
-            return HWG_TEXTURE_MAPPING_BOX;
+            return READER_TEXTURE_MAPPING_BOX;
 
         case aiTextureMapping_PLANE:
-            return HWG_TEXTURE_MAPPING_PLANE;
+            return READER_TEXTURE_MAPPING_PLANE;
     }
 
-    return HWG_TEXTURE_MAPPING_UNKOWN;
+    return READER_TEXTURE_MAPPING_UNKOWN;
 }
 
-hwg_texture_wrap_t to_hw_texture_wrap(enum aiTextureMapMode wrap)
+reader_texture_wrap_t to_hw_texture_wrap(enum aiTextureMapMode wrap)
 {
     switch(wrap) {
         case aiTextureMapMode_Wrap:
-            return HWG_TEXTURE_WRAP_REPEAT;
+            return READER_TEXTURE_WRAP_REPEAT;
 
         case aiTextureMapMode_Clamp:
-            return HWG_TEXTURE_WRAP_CLAMP;
+            return READER_TEXTURE_WRAP_CLAMP;
 
         case aiTextureMapMode_Decal:
-            return HWG_TEXTURE_WRAP_DECAL;
+            return READER_TEXTURE_WRAP_DECAL;
 
         case aiTextureMapMode_Mirror:
-            return HWG_TEXTURE_WRAP_MIRROR;
+            return READER_TEXTURE_WRAP_MIRROR;
     }
 
-    return HWG_TEXTURE_WRAP_UNKOWN;
+    return READER_TEXTURE_WRAP_UNKOWN;
 }
 
 hwu32 get_index_count(const struct aiMesh* mesh)
@@ -433,29 +433,29 @@ hwu32 get_index_count(const struct aiMesh* mesh)
     return mesh->mNumFaces * 3;
 }
 
-hwg_texture_op_t to_hw_texture_op(enum aiTextureOp op)
+reader_texture_op_t to_hw_texture_op(enum aiTextureOp op)
 {
     switch(op) {
         case aiTextureOp_Multiply:
-            return HWG_TEXTURE_OP_MULTIPLY;
+            return READER_TEXTURE_OP_MULTIPLY;
 
         case aiTextureOp_Add:
-            return HWG_TEXTURE_OP_ADD;
+            return READER_TEXTURE_OP_ADD;
 
         case aiTextureOp_Subtract:
-            return HWG_TEXTURE_OP_SUBTRACT;
+            return READER_TEXTURE_OP_SUBTRACT;
 
         case aiTextureOp_Divide:
-            return HWG_TEXTURE_OP_DIVIDE;
+            return READER_TEXTURE_OP_DIVIDE;
 
         case aiTextureOp_SmoothAdd:
-            return HWG_TEXTURE_OP_SMOOTH_ADD;
+            return READER_TEXTURE_OP_SMOOTH_ADD;
 
         case aiTextureOp_SignedAdd:
-            return HWG_TEXTURE_OP_SIGNED_ADD;
+            return READER_TEXTURE_OP_SIGNED_ADD;
     }
 
-    return HWG_TEXTURE_OP_SIGNED_ADD;
+    return READER_TEXTURE_OP_SIGNED_ADD;
 }
 
 hwbool get_material_color(hwg_color4_f32_t* out, const struct aiMaterial* material, const char* key, hwuint type, hwuint index)

@@ -13,61 +13,61 @@
 extern "C" {
 #endif
 
-typedef enum hwg_texture_type_t {
-    HWG_TEXTURE_TYPE_UNKNOWN = -1,
-    HWG_TEXTURE_TYPE_NONE = 0,
-    HWG_TEXTURE_TYPE_DIFFUSE,
-    HWG_TEXTURE_TYPE_SPECULAR,
-    HWG_TEXTURE_TYPE_AMBIEND,
-    HWG_TEXTURE_TYPE_EMISSIVE,
-    HWG_TEXTURE_TYPE_HEIGHT,
-    HWG_TEXTURE_TYPE_NORMAL,
-    HWG_TEXTURE_TYPE_SHININESS,
-    HWG_TEXTURE_TYPE_OPACITY,
-    HWG_TEXTURE_TYPE_DISPLACEMENT,
-    HWG_TEXTURE_TYPE_LIGHTMAP,
-    HWG_TEXTURE_TYPE_REFLECTION,
-} hwg_texture_type_t;
+typedef enum reader_texture_type_t {
+    READER_TEXTURE_TYPE_UNKNOWN = -1,
+    READER_TEXTURE_TYPE_NONE = 0,
+    READER_TEXTURE_TYPE_DIFFUSE,
+    READER_TEXTURE_TYPE_SPECULAR,
+    READER_TEXTURE_TYPE_AMBIEND,
+    READER_TEXTURE_TYPE_EMISSIVE,
+    READER_TEXTURE_TYPE_HEIGHT,
+    READER_TEXTURE_TYPE_NORMAL,
+    READER_TEXTURE_TYPE_SHININESS,
+    READER_TEXTURE_TYPE_OPACITY,
+    READER_TEXTURE_TYPE_DISPLACEMENT,
+    READER_TEXTURE_TYPE_LIGHTMAP,
+    READER_TEXTURE_TYPE_REFLECTION,
+} reader_texture_type_t;
 
-typedef enum hwg_texture_mapping_t {
-    HWG_TEXTURE_MAPPING_UNKOWN = -1,
-    HWG_TEXTURE_MAPPING_UV,
-    HWG_TEXTURE_MAPPING_SPHERE,
-    HWG_TEXTURE_MAPPING_CYLINDER,
-    HWG_TEXTURE_MAPPING_BOX,
-    HWG_TEXTURE_MAPPING_PLANE,
-} hwg_texture_mapping_t;
+typedef enum reader_texture_mapping_t {
+    READER_TEXTURE_MAPPING_UNKOWN = -1,
+    READER_TEXTURE_MAPPING_UV,
+    READER_TEXTURE_MAPPING_SPHERE,
+    READER_TEXTURE_MAPPING_CYLINDER,
+    READER_TEXTURE_MAPPING_BOX,
+    READER_TEXTURE_MAPPING_PLANE,
+} reader_texture_mapping_t;
 
-typedef enum hwg_texture_wrap_t {
-    HWG_TEXTURE_WRAP_UNKOWN = -1,
-    HWG_TEXTURE_WRAP_REPEAT,
-    HWG_TEXTURE_WRAP_CLAMP,
-    HWG_TEXTURE_WRAP_DECAL,
-    HWG_TEXTURE_WRAP_MIRROR,
-} hwg_texture_wrap_t;
+typedef enum reader_texture_wrap_t {
+    READER_TEXTURE_WRAP_UNKOWN = -1,
+    READER_TEXTURE_WRAP_REPEAT,
+    READER_TEXTURE_WRAP_CLAMP,
+    READER_TEXTURE_WRAP_DECAL,
+    READER_TEXTURE_WRAP_MIRROR,
+} reader_texture_wrap_t;
 
-typedef enum hwg_texture_op_t {
-    HWG_TEXTURE_OP_UNKOWN = -1,
-    HWG_TEXTURE_OP_MULTIPLY = 0,
-    HWG_TEXTURE_OP_ADD,
-    HWG_TEXTURE_OP_SUBTRACT,
-    HWG_TEXTURE_OP_DIVIDE,
-    HWG_TEXTURE_OP_SMOOTH_ADD,
-    HWG_TEXTURE_OP_SIGNED_ADD,
-} hwg_texture_op_t;
+typedef enum reader_texture_op_t {
+    READER_TEXTURE_OP_UNKOWN = -1,
+    READER_TEXTURE_OP_MULTIPLY = 0,
+    READER_TEXTURE_OP_ADD,
+    READER_TEXTURE_OP_SUBTRACT,
+    READER_TEXTURE_OP_DIVIDE,
+    READER_TEXTURE_OP_SMOOTH_ADD,
+    READER_TEXTURE_OP_SIGNED_ADD,
+} reader_texture_op_t;
 
-typedef enum hwg_texture_flags_t {
-    HWG_TEXTURE_FLAGS_INVERT       = (1 << 0),
-    HWG_TEXTURE_FLAGS_USE_ALPHA    = (1 << 1),
-    HWG_TEXTURE_FALGS_IGNORE_ALPHA = (1 << 2),
-} hwg_texture_fags_t;
+typedef enum reader_texture_flags_t {
+    READER_TEXTURE_FLAGS_INVERT       = (1 << 0),
+    READER_TEXTURE_FLAGS_USE_ALPHA    = (1 << 1),
+    READER_TEXTURE_FALGS_IGNORE_ALPHA = (1 << 2),
+} reader_texture_fags_t;
 
 typedef struct reader_texture_t {
     char                  path[MAXLEN];
-    hwg_texture_type_t    type;
-    hwg_texture_mapping_t mapping;
-    hwg_texture_wrap_t    wrap;
-    hwg_texture_op_t      op;
+    reader_texture_type_t    type;
+    reader_texture_mapping_t mapping;
+    reader_texture_wrap_t    wrap;
+    reader_texture_op_t      op;
     hwf32                 blend_factor;
     hwu32                 flags;
 } reader_texture_t;

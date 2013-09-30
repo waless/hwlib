@@ -13,18 +13,18 @@
     <ClCompile Include="..\src\main.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hwmc.c">
+    <ClCompile Include="..\src\reader.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\reader.c">
+    <ClCompile Include="..\src\hwgm.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\hwmc.h">
+    <ClInclude Include="..\src\reader.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\reader.h">
+    <ClInclude Include="..\src\hwgm.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
