@@ -1,28 +1,36 @@
 #ifndef HWGM_WRITER_H_
 #define HWGM_WRITER_H_
 
-#if defined(HWG_GL)
-#elif defined(HWG_DX)
-#elif defined(HWG_MANTLE)
-#endif
+#include <hw/types.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 typedef struct hwgm_model_t {
-    hwgm_node_t root;
+    hws8  code[4];
+    hwu8  major_version;
+    hwu8  minor_version;
+
+    hwu32 node_count;
+    hwu32 node_offset;
+
+    hwu32 mesh_count;
+    hwu32 mesh_offset;
+    
+    hwu32 vertex_count;
+    hwu32 vertex_offset;
+
+    hwgm_node_t   nodes[];
+    hwgm_mesh_t   meshes[];
+    hwgm_vertex_t vertices[];
 } hwgm_model_t;
 
 typedef struct hwgm_node_t {
-    hwm_matrix44_t transform;
 } hwgm_node_t;
 
 typedef struct hwgm_mesh_t {
 } hwgm_mesh_t;
-
-typedef struct hwgm_material_t {
-} hwgm_material_t;
 
 #ifdef __cplusplus
 }
