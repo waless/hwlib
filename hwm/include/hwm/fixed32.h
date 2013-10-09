@@ -5,10 +5,10 @@
 
 typedef hws32 hwm_fixed32_t;
 
-extern const hwm_fixed32_t k_hwm_fixed32_one;
-extern const hwm_fixed32_t k_hwm_fixed32_half;
-extern const hwm_fixed32_t k_hwm_fixed32_pi;
-extern const hwm_fixed32_t k_hwm_fixed32_two_pi;
+#define HWM_FIXED32_ONE  0x00010000
+#define HWM_FIXED32_HALF 0x00008000
+#define HWM_FIXED32_PI
+#define HWM_FIXED32_TWO_PI
 
 extern hwm_fixed32_t hwm_fixed32_add(hwm_fixed32_t lhs, hwm_fixed32_t rhs);
 extern hwm_fixed32_t hwm_fixed32_sub(hwm_fixed32_t lhs, hwm_fixed32_t rhs);
@@ -28,6 +28,7 @@ extern hwm_fixed32_t hwm_fix3d32_ceil(hwm_fixed32_t value);
 extern hwm_fixed32_t hwm_fixed32_floor(hwm_fixed32_t value);
 extern hwm_fixed32_t hwm_fixed32_sqrt(hwm_fixed32_t value);
 extern hwm_fixed32_t hwm_fixed32_abs(hwm_fixed32_t value);
+extern hwm_fixed32_t hwm_fixed32_log(hwm_fixed32_t value);
 
 extern hws32 hwm_fixed32_to_s32(hwm_fixed32_t value);
 extern hws64 hwm_fixed32_to_s64(hwm_fixed32_t value);
