@@ -5,10 +5,14 @@
 
 typedef hws32 hwm_fixed32_t;
 
-#define HWM_FIXED32_ONE    0x00010000
-#define HWM_FIXED32_HALF   0x00008000
-#define HWM_FIXED32_PI      
-#define HWM_FIXED32_TWO_PI
+#define HWM_FIXED32_ONE    (0x00010000)
+#define HWM_FIXED32_HALF   (0x00008000)
+#define HWM_FIXED32_PI     (0x00031415)
+#define HWM_FIXED32_TWO_PI (0x00062831)
+#define HWM_FIXED32_TO_RAD_VALUE
+#define HWM_FIXED32_TO_DEG_VALUE
+#define HWM_FIXED32_TO_RAD(deg) hwm_fixed32_mul(deg, HWM_FIXED32_TO_RAD)
+#define HWM_FIXED32_TO_DEG(rad) hwm_fixed32_mul(rad, HWM_FIXED32_TO_DEG)
 
 extern hwm_fixed32_t hwm_fixed32_add(hwm_fixed32_t lhs, hwm_fixed32_t rhs);
 extern hwm_fixed32_t hwm_fixed32_sub(hwm_fixed32_t lhs, hwm_fixed32_t rhs);

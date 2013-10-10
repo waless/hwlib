@@ -12,6 +12,11 @@ extern "C" {
 #endif
 #define HWM_PI (3.1415926535897932384626433832795f)
 
+#ifdef HWM_TWO_PI
+#   undef HWM_TWO_PI
+#endif
+#define HWM_TWO_PI (6.283185307179586476925286766559f)
+
 #ifdef HWM_TO_RAD_VALUE
 #   undef HWM_TO_RAD_VALUE
 #endif

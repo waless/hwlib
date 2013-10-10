@@ -1,23 +1,40 @@
 #include "hwm/fixed32.h"
 
+static const HWM_FIXED32_SIN_TABLE[65536]
+{
+};
+
+static const HWM_FIXED32_COS_TABLE[65536]
+{
+};
+
+static const HWM_FIXED32_TAN_TABLE[65536]
+{
+};
+
 hwm_fixed32_t hwm_fixed32_add(hwm_fixed32_t lhs, hwm_fixed32_t rhs)
 {
+    return lhs + rhs;
 }
 
 hwm_fixed32_t hwm_fixed32_sub(hwm_fixed32_t lhs, hwm_fixed32_t rhs)
 {
+    return lhs - rhs;
 }
 
 hwm_fixed32_t hwm_fixed32_mul(hwm_fixed32_t lhs, hwm_fixed32_t rhs)
 {
+    return lhs * rhs;
 }
 
 hwm_fixed32_t hwm_fixed32_div(hwm_fixed32_t lhs, hwm_fixed32_t rhs)
 {
+    return lhs / rhs;
 }
 
 hwm_fixed32_t hwm_fixed32_mod(hwm_fixed32_t lhs, hwm_fixed32_t rhs)
 {
+    return lhs % rhs;
 }
 
 hwm_fixed32-t hwm_fixed32_sin(hwm_fixed32_t x)

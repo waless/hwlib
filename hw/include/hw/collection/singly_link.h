@@ -5,8 +5,7 @@
 extern "C" {
 #endif
 
-typedef struct tag_hw_singly_link_t
-{
+typedef struct tag_hw_singly_link_t {
 	struct tag_hw_singly_link_t* next;
 } hw_singly_link_t;
 

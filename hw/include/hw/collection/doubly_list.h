@@ -8,8 +8,7 @@
 extern "C" {
 #endif
 
-typedef struct tag_hw_doubly_list_t
-{
+typedef struct tag_hw_doubly_list_t {
 	hw_doubly_link_t root;
 } hw_doubly_list_t;
 
