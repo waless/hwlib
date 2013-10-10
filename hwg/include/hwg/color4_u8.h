@@ -21,8 +21,8 @@ typedef union hwg_color4_u8_t {
     hwu32 value;
 } hwg_color4_u8_t;
 
-#define k_hwg_color4_u8_zero 0
-#define k_hwg_color4_u8_one  0xFFFFFFFF
+#define HWG_COLOR4_U8_ZERO 0
+#define HWG_COLOR4_U8_ONE  0xFFFFFFFF
 
 extern void hwg_color4_u8_set_scaler(hwg_color4_u8_t* out, hwu8 scaler);
 extern void hwg_color4_u8_set_color4_f32(hwg_color4_u8_t* out, const struct hwg_color4_f32_t* input);

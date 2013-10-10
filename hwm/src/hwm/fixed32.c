@@ -1,8 +1,5 @@
 #include "hwm/fixed32.h"
 
-enum {
-};
-
 hwm_fixed32_t hwm_fixed32_add(hwm_fixed32_t lhs, hwm_fixed32_t rhs)
 {
 }

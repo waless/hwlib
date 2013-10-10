@@ -2,17 +2,17 @@
 #include <string.h>
 #include "hwm/math.h"
 
-const hwm_vector2_t k_hwm_vector2_zero = {0.0f, 0.0f};
-const hwm_vector2_t k_hwm_vector2_one  = {1.0f, 1.0f};
+const hwm_vector2_t HWM_VECTOR2_ZERO = {0.0f, 0.0f};
+const hwm_vector2_t HWM_VECTOR2_ONE  = {1.0f, 1.0f};
 
 void hwm_vector2_set_zero(hwm_vector2_t* out)
 {
-    *out = k_hwm_vector2_zero;
+    *out = HWM_VECTOR2_ZERO;
 }
 
 void hwm_vector2_set_one(hwm_vector2_t* out)
 {
-    *out = k_hwm_vector2_one;
+    *out = HWM_VECTOR2_ONE;
 }
 
 void hwm_vector2_set_scaler(hwm_vector2_t* out, hwf32 scaler)
@@ -265,12 +265,12 @@ hwbool hwm_vector2_is_unit(const hwm_vector2_t* v, hwf32 epsilon)
 
 hwbool hwm_vector2_is_zero(const hwm_vector2_t* v)
 {
-    return memcmp(v, &k_hwm_vector2_zero, sizeof(hwm_vector2_t)) == 0;
+    return memcmp(v, &HWM_VECTOR2_ZERO, sizeof(hwm_vector2_t)) == 0;
 }
 
 hwbool hwm_vector2_is_one(const hwm_vector2_t* v)
 {
-    return memcmp(v, &k_hwm_vector2_one, sizeof(hwm_vector2_t)) == 0;
+    return memcmp(v, &HWM_VECTOR2_ONE, sizeof(hwm_vector2_t)) == 0;
 }
 
 hwbool hwm_vector2_is_nan(const hwm_vector2_t* v)

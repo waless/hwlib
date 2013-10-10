@@ -15,8 +15,8 @@ typedef struct hwg_color4_f32_t {
     hwf32 a;
 } hwg_color4_f32_t;
 
-extern const hwg_color4_f32_t k_hwg_color4_f32_zero;
-extern const hwg_color4_f32_t k_hwg_color4_f32_one;
+extern const hwg_color4_f32_t HWG_COLOR4_F32_ZERO;
+extern const hwg_color4_f32_t HWG_COLOR4_F32_ONE;
 
 extern void hwg_color4_f32_set_scaler(hwg_color4_f32_t* out, hwf32 scaler);
 extern void hwg_color4_f32_set_color4_u8(hwg_color4_f32_t* out, hwg_color4_u8_t input);

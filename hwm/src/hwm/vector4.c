@@ -2,41 +2,41 @@
 #include <string.h>
 #include "hwm/math.h"
 
-const hwm_vector4_t k_hwm_vector4_one    = {1.0f, 1.0f, 1.0f, 1.0f};
-const hwm_vector4_t k_hwm_vector4_zero   = {0.0f, 0.0f, 0.0f, 0.0f};
-const hwm_vector4_t k_hwm_vector4_unit_x = {1.0f, 0.0f, 0.0f, 0.0f};
-const hwm_vector4_t k_hwm_vector4_unit_y = {0.0f, 1.0f, 0.0f, 0.0f};
-const hwm_vector4_t k_hwm_vector4_unit_z = {0.0f, 0.0f, 1.0f, 0.0f};
-const hwm_vector4_t k_hwm_vector4_unit_w = {0.0f, 0.0f, 0.0f, 1.0f};
+const hwm_vector4_t HWM_VECTOR4_ONE    = {1.0f, 1.0f, 1.0f, 1.0f};
+const hwm_vector4_t HWM_VECTOR4_ZERO   = {0.0f, 0.0f, 0.0f, 0.0f};
+const hwm_vector4_t HWM_VECTOR4_UNIT_X = {1.0f, 0.0f, 0.0f, 0.0f};
+const hwm_vector4_t HWM_VECTOR4_UNIT_Y = {0.0f, 1.0f, 0.0f, 0.0f};
+const hwm_vector4_t HWM_VECTOR4_UNIT_Z = {0.0f, 0.0f, 1.0f, 0.0f};
+const hwm_vector4_t HWM_VECTOR4_UNIT_W = {0.0f, 0.0f, 0.0f, 1.0f};
 
 void hwm_vector4_set_zero(hwm_vector4_t* out)
 {
-    *out = k_hwm_vector4_zero;
+    *out = HWM_VECTOR4_ZERO;
 }
 
 void hwm_vector4_set_one(hwm_vector4_t* out)
 {
-    *out = k_hwm_vector4_one;
+    *out = HWM_VECTOR4_ONE;
 }
 
 void hwm_vector4_set_unix_x(hwm_vector4_t* out)
 {
-    *out = k_hwm_vector4_unit_x;
+    *out = HWM_VECTOR4_UNIT_X;
 }
 
 void hwm_vector4_set_unix_y(hwm_vector4_t* out)
 {
-    *out = k_hwm_vector4_unit_y;
+    *out = HWM_VECTOR4_UNIT_Y;
 }
 
 void hwm_vector4_set_unix_z(hwm_vector4_t* out)
 {
-    *out = k_hwm_vector4_unit_z;
+    *out = HWM_VECTOR4_UNIT_Z;
 }
 
 void hwm_vector4_set_unix_w(hwm_vector4_t* out)
 {
-    *out = k_hwm_vector4_unit_w;
+    *out = HWM_VECTOR4_UNIT_W;
 }
 
 void hwm_vector4_set_scaler(hwm_vector4_t* out, hwf32 scaler)
@@ -221,12 +221,12 @@ hwbool hwm_vector4_is_unit(const hwm_vector4_t* v, hwf32 epsilon)
 
 hwbool hwm_vector4_is_zero(const hwm_vector4_t* v)
 {
-    return memcmp(v, &k_hwm_vector4_zero, sizeof(hwm_vector4_t)) == 0 ? HW_TRUE : HW_FALSE;
+    return memcmp(v, &HWM_VECTOR4_ZERO, sizeof(hwm_vector4_t)) == 0 ? HW_TRUE : HW_FALSE;
 }
 
 hwbool hwm_vector4_is_one(const hwm_vector4_t* v)
 {
-    return memcmp(v, &k_hwm_vector4_one, sizeof(hwm_vector4_t)) == 0 ? HW_TRUE : HW_FALSE;
+    return memcmp(v, &HWM_VECTOR4_ONE, sizeof(hwm_vector4_t)) == 0 ? HW_TRUE : HW_FALSE;
 }
 
 hwbool hwm_vector4_is_nan(const hwm_vector4_t* v)

@@ -5,7 +5,7 @@
 #include "hwm/vector4.h"
 #include "hwm/math.h"
 
-const hwm_matrix44_t k_hwm_matrix44_zero =
+const hwm_matrix44_t HWM_MATRIX44_ZERO =
 {
     0.0f, 0.0f, 0.0f, 0.0f,
     0.0f, 0.0f, 0.0f, 0.0f,
@@ -13,7 +13,7 @@ const hwm_matrix44_t k_hwm_matrix44_zero =
     0.0f, 0.0f, 0.0f, 0.0f,
 };
 
-const hwm_matrix44_t k_hwm_matrix44_identity =
+const hwm_matrix44_t HWM_MATRIX44_IDENTITY =
 {
     1.0f, 0.0f, 0.0f, 0.0f,
     0.0f, 1.0f, 0.0f, 0.0f,
@@ -23,7 +23,7 @@ const hwm_matrix44_t k_hwm_matrix44_identity =
 
 void hwm_matrix44_identity(hwm_matrix44_t* m)
 {
-    *m = k_hwm_matrix44_identity;
+    *m = HWM_MATRIX44_IDENTITY;
 }
 
 void hwm_matrix44_set_scale(hwm_matrix44_t* m, hwf32 x, hwf32 y, hwf32 z)
@@ -808,6 +808,6 @@ hwbool hwm_matrix44_is_orthonormal(const hwm_matrix44_t* m, hwf32 epsilon)
 
 hwbool hwm_matrix44_is_identity(const hwm_matrix44_t* m)
 {
-    return memcmp(m, &k_hwm_matrix44_identity, sizeof(hwm_matrix44_t)) == 0 ? HW_TRUE : HW_FALSE;
+    return memcmp(m, &HWM_MATRIX44_IDENTITY, sizeof(hwm_matrix44_t)) == 0 ? HW_TRUE : HW_FALSE;
 }
 

@@ -14,12 +14,12 @@ typedef struct hwm_vector4_t {
     hwf32 w;
 } hwm_vector4_t;
 
-extern const hwm_vector4_t k_hwm_vector4_one;
-extern const hwm_vector4_t k_hwm_vector4_zero;
-extern const hwm_vector4_t k_hwm_vector4_unit_x;
-extern const hwm_vector4_t k_hwm_vector4_unit_y;
-extern const hwm_vector4_t k_hwm_vector4_unit_z;
-extern const hwm_vector4_t k_hwm_vector4_unit_w;
+extern const hwm_vector4_t HWM_VECTOR4_ONE;
+extern const hwm_vector4_t HWM_VECTOR4_ZERO;
+extern const hwm_vector4_t HWM_VECTOR4_UNIT_X;
+extern const hwm_vector4_t HWM_VECTOR4_UNIT_Y;
+extern const hwm_vector4_t HWM_VECTOR4_UNIT_Z;
+extern const hwm_vector4_t HWM_VECTOR4_UNIT_W;
 
 extern void hwm_vector4_set_zero(hwm_vector4_t* out);
 extern void hwm_vector4_set_one(hwm_vector4_t* out);

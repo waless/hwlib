@@ -4,35 +4,35 @@
 #include "hwm/matrix44.h"
 #include "hwm/vector2.h"
 
-const hwm_vector3_t k_hwm_vector3_one    = {1.0f, 1.0f, 1.0f};
-const hwm_vector3_t k_hwm_vector3_zero   = {0.0f, 0.0f, 0.0f};
-const hwm_vector3_t k_hwm_vector3_unit_x = {1.0f, 0.0f, 0.0f};
-const hwm_vector3_t k_hwm_vector3_unit_y = {0.0f, 1.0f, 0.0f};
-const hwm_vector3_t k_hwm_vector3_unit_z = {0.0f, 0.0f, 1.0f};
+const hwm_vector3_t HWM_VECTOR3_ONE    = {1.0f, 1.0f, 1.0f};
+const hwm_vector3_t HWM_VECTOR3_ZERO   = {0.0f, 0.0f, 0.0f};
+const hwm_vector3_t HWM_VECTOR3_UNIT_X = {1.0f, 0.0f, 0.0f};
+const hwm_vector3_t HWM_VECTOR3_UNIT_Y = {0.0f, 1.0f, 0.0f};
+const hwm_vector3_t HWM_VECTOR3_UNIT_Z = {0.0f, 0.0f, 1.0f};
 
 void hwm_vector3_set_zero(hwm_vector3_t* out)
 {
-    *out = k_hwm_vector3_zero;
+    *out = HWM_VECTOR3_ZERO;
 }
 
 void hwm_vector3_set_one(hwm_vector3_t* out)
 {
-    *out = k_hwm_vector3_one;
+    *out = HWM_VECTOR3_ONE;
 }
 
 void hwm_vector3_set_unix_x(hwm_vector3_t* out)
 {
-    *out = k_hwm_vector3_unit_x;
+    *out = HWM_VECTOR3_UNIT_X;
 }
 
 void hwm_vector3_set_unix_y(hwm_vector3_t* out)
 {
-    *out = k_hwm_vector3_unit_y;
+    *out = HWM_VECTOR3_UNIT_Y;
 }
 
 void hwm_vector3_set_unix_z(hwm_vector3_t* out)
 {
-    *out = k_hwm_vector3_unit_z;
+    *out = HWM_VECTOR3_UNIT_Z;
 }
 
 void hwm_vector3_set_scaler(hwm_vector3_t* out, hwf32 scaler)
@@ -360,12 +360,12 @@ hwbool hwm_vector3_is_unit(const hwm_vector3_t* v, hwf32 epsilon)
 
 hwbool hwm_vector3_is_zero(const hwm_vector3_t* v)
 {
-    return memcmp(v, &k_hwm_vector2_zero, sizeof(hwm_vector3_t)) == 0 ? HW_TRUE : HW_FALSE;
+    return memcmp(v, &HWM_VECTOR3_ZERO, sizeof(hwm_vector3_t)) == 0 ? HW_TRUE : HW_FALSE;
 }
 
 hwbool hwm_vector3_is_one(const hwm_vector3_t* v)
 {
-    return memcmp(v, &k_hwm_vector3_one, sizeof(hwm_vector3_t)) == 0 ? HW_TRUE : HW_FALSE;
+    return memcmp(v, &HWM_VECTOR3_ONE, sizeof(hwm_vector3_t)) == 0 ? HW_TRUE : HW_FALSE;
 }
 
 hwbool hwm_vector3_is_nan(const hwm_vector3_t* v)

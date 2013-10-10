@@ -12,8 +12,8 @@ typedef struct hwm_vector2_t {
     hwf32 y;
 } hwm_vector2_t;
 
-extern const hwm_vector2_t k_hwm_vector2_zero;
-extern const hwm_vector2_t k_hwm_vector2_one;
+extern const hwm_vector2_t HWM_VECTOR2_ZERO;
+extern const hwm_vector2_t HWM_VECTOR2_ONE;
 
 extern void hwm_vector2_set_zero(hwm_vector2_t* out);
 extern void hwm_vector2_set_one(hwm_vector2_t* out);

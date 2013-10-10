@@ -5,9 +5,9 @@
 
 typedef hws32 hwm_fixed32_t;
 
-#define HWM_FIXED32_ONE  0x00010000
-#define HWM_FIXED32_HALF 0x00008000
-#define HWM_FIXED32_PI
+#define HWM_FIXED32_ONE    0x00010000
+#define HWM_FIXED32_HALF   0x00008000
+#define HWM_FIXED32_PI      
 #define HWM_FIXED32_TWO_PI
 
 extern hwm_fixed32_t hwm_fixed32_add(hwm_fixed32_t lhs, hwm_fixed32_t rhs);

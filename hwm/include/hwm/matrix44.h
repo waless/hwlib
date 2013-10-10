@@ -16,8 +16,8 @@ typedef struct hwm_matrix44_t {
 } hwm_matrix44_t;
 
 /* constant value */
-extern const hwm_matrix44_t k_hwm_matrix44_zero;
-extern const hwm_matrix44_t k_hwm_matrix44_identity;
+extern const hwm_matrix44_t HWM_MATRIX44_ZERO;
+extern const hwm_matrix44_t HWM_MATRIX44_IDENTITY;
 
 /* set function */
 extern void hwm_matrix44_identity(hwm_matrix44_t* out);
