@@ -1,14 +1,10 @@
 #include "hwm/fixed32.h"
 
-static const HWM_FIXED32_SIN_TABLE[65536]
+static const HWM_FIXED32_SIN_TABLE[256]
 {
 };
 
-static const HWM_FIXED32_COS_TABLE[65536]
-{
-};
-
-static const HWM_FIXED32_TAN_TABLE[65536]
+static const HWM_FIXED32_COS_TABLE[256]
 {
 };
 
@@ -82,6 +78,18 @@ hwm_fixed32_t hwm_fixed32_abs(hwm_fixed32_t value)
 }
 
 hwm_fix3d32_t hwm_fixed32_log(hwm_fix3d32_t value)
+{
+}
+
+hwm_fixed32_t hwm_fixed32_clamp(hwm_fixed32_t b, hwm_fixed32_t e, hwm_fixed32_t v)
+{
+}
+
+hwm_fixed32_t hwm_fixed32_repeat(hwm_fixed32_t b, hwm_fixed32_t e, hwm_fixed32_t v)
+{
+}
+
+hwm_fixed32_t hwm_fixed32_lerp(hwm_fixed32_t b, hwm_fixed32_t e, hwm_fixed32_t pos)
 {
 }
 

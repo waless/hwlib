@@ -34,6 +34,10 @@ extern hwm_fixed32_t hwm_fixed32_sqrt(hwm_fixed32_t value);
 extern hwm_fixed32_t hwm_fixed32_abs(hwm_fixed32_t value);
 extern hwm_fixed32_t hwm_fixed32_log(hwm_fixed32_t value);
 
+extern hwm_fixed32_t hwm_fixed32_clamp(hwm_fixed32_t b, hwm_fixed32_t e, hwm_fixed32_t v);
+extern hwm_fixed32_t hwm_fixed32_repeat(hwm_fixed32_t b, hwm_fixed32_t e, hwm_fixed32_t v);
+extern hwm_fixed32_t hwm_fixed32_lerp(hwm_fixed32_t b, hwm_fixed32_t e, hwm_fixed32_t pos);
+
 extern hws32 hwm_fixed32_to_s32(hwm_fixed32_t value);
 extern hws64 hwm_fixed32_to_s64(hwm_fixed32_t value);
 extern hwf32 hwm_fixed32_to_f32(hwm_fixed32_t value);
