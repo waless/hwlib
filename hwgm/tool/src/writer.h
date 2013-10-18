@@ -8,9 +8,14 @@ extern "C" {
 #endif
 
 typedef struct hwgm_vertex_t {
-    hwu16 vertex_count;
-    hwf32 vertices[];
+    hwu16   vertex_count;
+    hws16[] vertices;
 } hwgm_vertex_t;
+
+typedef struct hwgm_index_t {
+    hwu16   index_count;
+    hwu16[] indices;
+} hwgm_index_t;
 
 typedef struct hwgm_mesh_t {
     hwu16 index_count;
