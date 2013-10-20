@@ -7,11 +7,21 @@
 extern "C" {
 #endif
 
-typedef s16 hwm_fixed_s16one_t;
-typedef u16 hwm_fixed_u16one_t;
+typedef s16 hwm_sfixed16_1_14_t;
+typedef s16 hwm_ufixed16_1_15_t;
 
-#define HWM_FIXEDS16ONE_ONE  0xC000
-#define HWM_FIXEDS16ONE_HALF 0x8005
+enum {
+    HWM_SFIXED16_1_14_SHIFT        = 14,
+    HWM_SFIXED16_1_14_ONE          = (1 << HWM_SFIXED16_1_14_SHIFT),
+    HWM_SFIXED16_1_14_HALF         = (1 << (HWM_SFIXED16_1_14_SHIFT - 1)),
+    HWM_SFIXED16_1_14_SIGN_MASK    = (0x8000),
+    HWM_SFIXED16_1_14_INTEGER_MASK = (HWM_SFIXED16_1_14_SIGN_MASK | 
+    HWM_SFIXED16_1_14_DECIMAL_MASK = 
+
+    HWM_UFIXED16_1_15_SHIFT = 15,
+    HWM_UFIXED16_1_15_ONE   = (1 << HWM_UFIXED16_1_15_SHIFT),
+    HWM_UFIXED16_1_15_HALF  = (1 << (HWM_UFIXED16_1_15_SHIFT - 1)),
+};
 
 #ifdef __cplusplus
 }
