@@ -7,44 +7,34 @@
 extern "C" {
 #endif
 
-typedef struct hwgm_vertex_t {
-    hwu16   vertex_count;
-    hws16[] vertices;
+typedef struct hwgm_vertices_t {
+    hwu16 vertex_count;
+    hws16 vertices[];
 } hwgm_vertex_t;
 
-typedef struct hwgm_index_t {
-    hwu16   index_count;
-    hwu16[] indices;
-} hwgm_index_t;
-
 typedef struct hwgm_mesh_t {
-    hwu16 index_count;
-    hwu16 indices_offset;
+    hwgm_vertex_t* vertices_ptr;
 } hwgm_mesh_t;
 
 typedef struct hwgm_node_t {
     hwm_matrix44_t transform;
     hwu16          mesh_count;
-    hwu32          mesh_offsets[];
+    hwu16          radius;
+    hwgm_mesh_t*   mesh_ptrs[];
 } hwgm_node_t;
 
 typedef struct hwgm_model_t {
     hws8  code[4];
     hwu8  major_version;
     hwu8  minor_version;
-
-    hwu16 node_count;
-    hwu32 node_offset;
-
-    hwu16 mesh_count;
-    hwu32 mesh_offset;
     
     hwu16 vertex_count;
-    hwu32 vertex_offset;
+    hwu16 joint_count;
 
-    hwgm_node_t   nodes[];
-    hwgm_mesh_t   meshes[];
-    hwgm_vertex_t vertices[];
+    hwgm_node_t* root_ptr;
+
+    hwgm_joint_t   joints[];
+    hwgm_vertexx_t vertices[];
 } hwgm_model_t;
 
 #ifdef __cplusplus
