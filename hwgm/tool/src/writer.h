@@ -7,9 +7,14 @@
 extern "C" {
 #endif
 
+typedef struct hwf_resource_meta_t {
+} hwf_resource_meta_t;
+
 typedef struct hwgm_vertices_t {
     hwu16 vertex_count;
     hws16 vertices[];
+    hwu16 uvs[];
+    hws16 normals[];
 } hwgm_vertex_t;
 
 typedef struct hwgm_mesh_t {
@@ -18,8 +23,8 @@ typedef struct hwgm_mesh_t {
 
 typedef struct hwgm_node_t {
     hwm_matrix44_t transform;
-    hwu16          mesh_count;
     hwu16          radius;
+    hwu16          mesh_count;
     hwgm_mesh_t*   mesh_ptrs[];
 } hwgm_node_t;
 
