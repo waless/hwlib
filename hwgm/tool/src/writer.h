@@ -7,8 +7,18 @@
 extern "C" {
 #endif
 
-typedef struct hwf_resource_meta_t {
-} hwf_resource_meta_t;
+typedef struct hwfr_meta_t {
+} hwfr_meta_t;
+
+typedef struct hwfr_item_t {
+    hwu32 offset;
+    hwu8  tag[TAG_MAX];
+} hwfr_item_t;
+
+typedef struct hwfr_info_t {
+    hwu32       item_count;
+    hwfr_item_t items[];
+} hwfr_info_t;
 
 typedef struct hwgm_vertices_t {
     hwu16 vertex_count;
@@ -16,6 +26,9 @@ typedef struct hwgm_vertices_t {
     hwu16 uvs[];
     hws16 normals[];
 } hwgm_vertex_t;
+
+typedef struct hwgm_material_t {
+} hwgm_material_t;
 
 typedef struct hwgm_mesh_t {
     hwgm_vertex_t* vertices_ptr;
