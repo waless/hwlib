@@ -28,6 +28,7 @@ typedef struct hwgm_vertices_t {
 } hwgm_vertex_t;
 
 typedef struct hwgm_material_t {
+    hwu32 shader_index;
 } hwgm_material_t;
 
 typedef struct hwgm_mesh_t {
