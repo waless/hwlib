@@ -7,17 +7,20 @@
 extern "C" {
 #endif
 
-typedef struct hwfr_meta_t {
-} hwfr_meta_t;
+#define HWGM_ITEM_NAME_MAX 64
+#define HWGM_NODE_NAME_MAX 64
 
-typedef struct hwfr_item_t {
-    hwu32 offset;
-    hwu8  tag[TAG_MAX];
-} hwfr_item_t;
+typedef struct hwf_meta_t {
+    hwu32 count;
+} hwfr_meta_t; 
 
-typedef struct hwfr_info_t {
-    hwu32       item_count;
-    hwfr_item_t items[];
+typedef struct hwf_reference_t {
+    hws32 file_type;
+} hwfr_reference_t;
+
+typedef struct hwf_info_t {
+    hwu32            count;
+    hwfr_reference_t references[];
 } hwfr_info_t;
 
 typedef struct hwgm_vertices_t {
@@ -40,6 +43,7 @@ typedef struct hwgm_node_t {
     hwu16          radius;
     hwu16          mesh_count;
     hwgm_mesh_t*   mesh_ptrs[];
+    hwu8           name[HWGM_NODE_NAME_MAX];
 } hwgm_node_t;
 
 typedef struct hwgm_model_t {
@@ -48,11 +52,9 @@ typedef struct hwgm_model_t {
     hwu8  minor_version;
     
     hwu16 vertex_count;
-    hwu16 joint_count;
 
     hwgm_node_t* root_ptr;
 
-    hwgm_joint_t   joints[];
     hwgm_vertexx_t vertices[];
 } hwgm_model_t;
 
