@@ -10,19 +10,6 @@ extern "C" {
 #define HWGM_ITEM_NAME_MAX 64
 #define HWGM_NODE_NAME_MAX 64
 
-typedef struct hwf_meta_t {
-    hwu32 count;
-} hwfr_meta_t; 
-
-typedef struct hwf_reference_t {
-    hws32 file_type;
-} hwfr_reference_t;
-
-typedef struct hwf_info_t {
-    hwu32            count;
-    hwfr_reference_t references[];
-} hwfr_info_t;
-
 typedef struct hwgm_vertices_t {
     hwu16 vertex_count;
     hws16 vertices[];
@@ -32,6 +19,7 @@ typedef struct hwgm_vertices_t {
 
 typedef struct hwgm_material_t {
     hwu32 shader_index;
+    hwu32 jj
 } hwgm_material_t;
 
 typedef struct hwgm_mesh_t {
