@@ -1,0 +1,12 @@
+﻿<Window x:Class="hwcp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="378.856" Width="565.796">
+    <ListView Margin="190,0,3.333,-1.667" SelectionChanged="ListView_SelectionChanged">
+        <ListView.View>
+            <GridView>
+                <GridViewColumn/>
+            </GridView>
+        </ListView.View>
+    </ListView>
+</Window>
