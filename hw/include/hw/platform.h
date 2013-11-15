@@ -26,6 +26,7 @@
       HW_PLATFORM_OSX     : mac-osx環境
       HW_PLATFORM_ANDROID : android環境
       HW_PLATFORM_IOS     : ios環境
+      HW_PLATFORM_WP8     : windows phone8
 */
 #ifndef HW_PLATFORM_H_
 #define HW_PLATFORM_H_
@@ -36,6 +37,12 @@
 
 /* MicrosoftVisualStudioC++定義 */
 #   define HW_PLATFORM_MSVC
+
+#   if defined(WINDOWS)
+#       define HW_PLATFORM_WINDOWS
+#   elif defined(WINDOWS_PHONE)
+#       define HW_PLATFORM_WP
+#   endif
 
 /* Microsoft Winodws 定義 */
 #   define HW_PLATFORM_WINDOWS
