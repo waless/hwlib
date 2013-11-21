@@ -24,9 +24,9 @@
 
       HW_PLATFORM_WINDOWS : windows環境
       HW_PLATFORM_OSX     : mac-osx環境
-      HW_PLATFORM_ANDROID : android環境
       HW_PLATFORM_IOS     : ios環境
       HW_PLATFORM_WP8     : windows phone8
+      HW_PLATFORM_ANDROID : android環境
 */
 #ifndef HW_PLATFORM_H_
 #define HW_PLATFORM_H_
@@ -41,11 +41,10 @@
 #   if defined(WINDOWS)
 #       define HW_PLATFORM_WINDOWS
 #   elif defined(WINDOWS_PHONE)
-#       define HW_PLATFORM_WP
+#       define HW_PLATFORM_WP8
+#   elif defined(XBOX)
+#       error /* not support */
 #   endif
-
-/* Microsoft Winodws 定義 */
-#   define HW_PLATFORM_WINDOWS
 
 /* 32bit or 64bit 定義 */
 #   if defined(_WIN64)
