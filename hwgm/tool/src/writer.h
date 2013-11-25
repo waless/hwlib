@@ -9,9 +9,12 @@
 extern "C" {
 #endif
 
-extern void writer_initialize(reader_t* reader);
+typedef struct writer_t {
+} writer_t;
+
+extern void writer_initialize(writer_t* writer);
 extern void writer_finalize(writer_t* writer);
-extern void writer_run(writer_t* writer);
+extern void writer_run(writer_t* writer, reader_t* reader);
 
 #ifdef __cplusplus
 }
