@@ -10,6 +10,7 @@ extern "C" {
 #endif
 
 typedef struct writer_t {
+    int s;
 } writer_t;
 
 extern void writer_initialize(writer_t* writer);
