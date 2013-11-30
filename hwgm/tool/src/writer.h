@@ -1,4 +1,4 @@
-#ifndef HWGM_WRITER_H_
+﻿#ifndef HWGM_WRITER_H_
 #define HWGM_WRITER_H_
 
 #include <hw/types.h>
