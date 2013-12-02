@@ -17,6 +17,8 @@
 #   else
 #       error /* invalid */
 #   endif
+#elif defined(HW_PLATFORM_WP8)
+#   error /* invalid */
 #elif defined(HW_PLATFORM_ANDROID)
 #   if defined(HWG_CONFIG_GL_4_0)
 #       error /* invalid */
