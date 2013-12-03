@@ -1,4 +1,4 @@
-#ifndef HWG_CONFIG_H_
+﻿#ifndef HWG_CONFIG_H_
 #define HWG_CONFIG_H_
 
 #include "hw/platform.h"
