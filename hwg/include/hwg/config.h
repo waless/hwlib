@@ -14,5 +14,11 @@
 /* #   define HWG_CONFIG_GL_ES_3_0 */
 #endif
 
+#if defined(HWG_CONFIG_DX_11) || defined(HWG_CONFIG_DX_11_WP)
+#   define HWG_CONFIG_DX
+#elif defined(HWG_CONFIG_GL_4_0) || defined(HWG_CONFIG_GL_ES_1_1) || defined(HWG_CONFIG_GL_ES_2_0) || defined(HWG_CONFIG_GL_ES_3_0)
+#   define HWG_CONFIG_GL
+#endif
+
 #endif
 
