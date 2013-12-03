@@ -1,4 +1,4 @@
-#ifndef HWG_COLOR4_F32_H_
+﻿#ifndef HWG_COLOR4_F32_H_
 #define HWG_COLOR4_F32_H_
 
 #include <hw/types.h>
