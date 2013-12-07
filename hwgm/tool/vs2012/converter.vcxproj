@@ -14,6 +14,7 @@
     <ClCompile Include="..\src\hwgm.c" />
     <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\reader.c" />
+    <ClCompile Include="..\src\writer.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\hwgm.h" />
@@ -66,7 +67,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ASSIMP_SDK)\include;$(ProjectDir)..\..\..\hw\include;$(ProjectDir)..\..\..\hwm\include;$(ProjectDir)..\..\..\hwg\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ASSIMP_SDK)\include;$(ProjectDir)..\..\..\hw\include;$(ProjectDir)..\..\..\hwm\include;$(ProjectDir)..\..\..\hwg\include;$(ProjectDir)..\..\..\hwcp\runtime\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -89,7 +90,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ASSIMP_SDK)\include;$(ProjectDir)..\..\..\hw\include;$(ProjectDir)..\..\..\hwm\include;$(ProjectDir)..\..\..\hwg\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ASSIMP_SDK)\include;$(ProjectDir)..\..\..\hw\include;$(ProjectDir)..\..\..\hwm\include;$(ProjectDir)..\..\..\hwg\include;$(ProjectDir)..\..\..\hwcp\runtime\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

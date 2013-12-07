@@ -1,4 +1,4 @@
-#ifndef HWGM_WRITER_H_
+﻿#ifndef HWGM_WRITER_H_
 #define HWGM_WRITER_H_
 
 #include <hw/types.h>
@@ -10,6 +10,7 @@ extern "C" {
 #endif
 
 typedef struct writer_t {
+    int s;
 } writer_t;
 
 extern void writer_initialize(writer_t* writer);

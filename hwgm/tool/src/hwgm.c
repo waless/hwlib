@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "hw/string/string.h"
 #include "reader.h"
+#include "writer.h"
 
 static hwbool parse_args(hwgm_state_t* state, int argc, const char* argv[]);
 
@@ -22,12 +23,18 @@ void hwgm_finalize(hwgm_state_t* state)
 
 void hwgm_run(hwgm_state_t* state)
 {
-    struct reader_t reader;
+    reader_t reader;
 
     reader_initialize(&reader);
     if(reader_read(&reader, state->input_path)) {
-        //write();
+        writer_t writer;
+
+        writer_initialize(&writer);
+        writer_run(&writer, &reader);
+        writer_finalize(&writer);
     }
+
+    reader_finalize(&reader);
 }
 
 hwbool parse_args(hwgm_state_t* state, int argc, const char* argv[])
