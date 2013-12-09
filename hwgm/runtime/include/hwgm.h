@@ -12,9 +12,24 @@ typedef struct hwgm_vertices_t {
 } hwgm_vertex_t;
 
 typedef struct hwgm_texture_t {
+    /* 外部参照データのインデックス */
     hwu32 index;
-    hwu32 type;
-    hwu32 wrap;
+
+    /* テクスチャのピクセルフォーマット 
+     * hwg_pixel_format_t */
+    hwu8  format;
+
+    /* アドレス動作定義識別子
+     * hwg_texture_wrap_t */
+    hwu8  wrap;
+
+    /* ブレンド動作定義識別子
+     * hwg_texture_blend_op_t */
+    hwu8  blend;
+
+    /* フィルタ動作定義識別子
+     * hwg_texture_filter_t */
+    hwu8  filter;
 } hwgm_texture_t;
 
 typedef struct hwgm_material_t {
