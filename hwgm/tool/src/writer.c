@@ -8,7 +8,7 @@ void writer_finalize(writer_t* writer)
 {
 }
 
-void writer_run(writer_t* writer)
+void writer_run(writer_t* writer, const reader_t* reader)
 {
 }
 
