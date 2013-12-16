@@ -7,11 +7,10 @@ extern "C" {
 
 typedef struct hwgm_model_t {
     /* マジックコード */
-    hws8  code[4];
+    hws8 code[4];
 
     /* バージョン情報 */
-    hwu8  major_version;
-    hwu8  minor_version;
+    hws8 version[8];
 
     /* ルートノード*/
     hwgm_node_t* root;

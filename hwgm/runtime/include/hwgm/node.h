@@ -15,7 +15,7 @@ typedef struct hwgm_node_t {
     hwm_matrix44_t transform;
 
     /* バウンディング球 */
-    hwu16          radius;
+    hwf32          radius;
 
     /* 使用するメッシュ数 */
     hwu8           mesh_count;

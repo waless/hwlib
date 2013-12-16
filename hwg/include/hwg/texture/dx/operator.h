@@ -32,9 +32,9 @@ typedef enum hwg_pixel_format_t {
 } hwg_pixel_format_t;
 
 typedef enum hwg_texture_wrap_t {
-    HWG_TEXTURE_ADDRESS_REPEAT,
-    HWG_TEXTURE_ADDRESS_MIRROR,
-    HWG_TEXTURE_ADDRESS_CLAMP,
+    HWG_TEXTURE_WRAP_REPEAT,
+    HWG_TEXTURE_WRAP_MIRROR,
+    HWG_TEXTURE_WRAP_CLAMP,
 } hwg_texture_wrap_t;
 
 typedef enum hwg_texture_blend_op_t {

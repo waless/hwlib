@@ -3,6 +3,7 @@
 
 #include <hw/types.h>
 #include <hwcp/type.h>
+#include "hwgm/node.h"
 #include "reader.h"
 
 #ifdef __cplusplus
