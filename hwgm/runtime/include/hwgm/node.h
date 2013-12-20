@@ -18,10 +18,10 @@ typedef struct hwgm_node_t {
     hwf32          radius;
 
     /* 使用するメッシュ数 */
-    hwu8           mesh_count;
+    hwu16          mesh_count;
 
     /* 子供の数 */
-    hwu8           child_count;
+    hwu16          child_count;
 
     /* 使用するメッシュへのポインタの配列 */
     hwgm_mesh_t**  meshes;
