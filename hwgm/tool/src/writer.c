@@ -26,11 +26,33 @@ void writer_initialize(writer_t* writer)
 
 void writer_finalize(writer_t* writer)
 {
+    HW_SAFE_FREE(writer->textures);
+    HW_SAFE_FREE(writer->materials);
+    HW_SAFE_FREE(writer->meshes);
+    HW_SAFE_FREE(writer->nodes);
+
+    writer_initialize(writer);
 }
 
 void writer_run(writer_t* writer, const reader_t* reader)
 {
     count_up_node(writer, &reader->root);
+
+    if(writer->node_count > 0) {
+        writer->nodes = (hwgm_node_t*)hwm_malloc(sizeof(hwgm_node_t) * writer->node_count);
+    }
+
+    if(writer->mesh_count > 0) {
+        writer->meshes = (hwgm_mesh_t*)hwm_malloc(sizeof(hwgm_mesh_t) * writer->mesh_count);
+    }
+
+    if(writer->material_count > 0) {
+        writer->maerials = (hwgm_material_t*)hwm_malloc(sizeof(hwgm_material_t) * writer->material_count);
+    }
+
+    if(writer->texture_count > 0) {
+        writer->textures = (hwgm_texture_t*)hwm_malloc(sizeof(hwgm_texture_t) * writer->texture_count);
+    }
 }
 
 void countup_node(writer_t* writer, const reader_node_t* node)
