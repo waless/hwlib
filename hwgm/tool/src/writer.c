@@ -2,89 +2,166 @@
 #include <hw/types.h>
 #include <hwm/vector3.h>
 
-static void count_up_node(writer_t* writer, const reader_node_t* node);
-static void count_up_mesh(writer_t* writer, const reader_mesh_t* mesh);
-static void count_up_material(writer_t* writer, const reader_material_t* material);
-static void count_up_texture(writer_t* writer, const reader_texture_t* texture);
+typedef struct context_t {
+    hwu32 model_count;
+    hwu32 node_count;
+    hwu32 mesh_count;
+    hwu32 material_count;
+    hwu32 texture_count;
+    hwu32 vertices_count;
+
+    hwu32 model_total_size;
+    hwu32 node_total_size;
+    hwu32 mesh_total_size;
+    hwu32 material_total_size;
+    hwu32 texture_total_size;
+    hwu32 vertices_total_size;
+
+    hwu8* models;
+    hwu8* nodes;
+    hwu8* meshes;
+    hwu8* materials;
+    hwu8* textures;
+    hwu8* vertices;
+} context_t;
+
+static void context_initialize(context_t* context);
+
+static void calc_work(context_t* context, const reader_t* reader);
+static void calc_work_node(context_t* context, const reader_node_t* node);
+static void calc_work_mesh(context_t* context, const reader_mesh_t* mesh);
+static void calc_work_material(context_t* context, const reader_material_t* material);
+static void calc_work_texture(context_t* context, const reader_texture_t* texture);
+static void allocate_work(context_t* context);
 static void calc_bounding_box_from_node(hwm_vector3_t* min, hwm_vector3_t* max, const reader_node_t* node);
 static void calc_bounding_box_from_vertices(hwm_vector3_t* min, hwm_vector3_t* max, const hwm_vector3_t* vertices, hwu32 count);
 
-void writer_initialize(writer_t* writer)
+void writer_run(const reader_t* reader)
 {
-    writer->node_count     = 0;
-    writer->mesh_count     = 0;
-    writer->material_count = 0;
-    writer->texture_count  = 0;
-    writer->vertices_count = 0;
+    context_t context;
 
-    writer->nodes     = NULL;
-    writer->meshes    = NULL;
-    writer->materials = NULL;
-    writer->textures  = NULL;
-    writer->vertices  = NULL;
+    context_initialize(&context);
+    calc_work(&context, reader);
+    allocate_work(&context);
 }
 
-void writer_finalize(writer_t* writer)
+void context_initialize(context_t* context)
 {
-    HW_SAFE_FREE(writer->textures);
-    HW_SAFE_FREE(writer->materials);
-    HW_SAFE_FREE(writer->meshes);
-    HW_SAFE_FREE(writer->nodes);
+    context->model_count    = 0;
+    context->node_count     = 0;
+    context->mesh_count     = 0;
+    context->material_count = 0;
+    context->texture_count  = 0;
+    context->vertices_count = 0;
 
-    writer_initialize(writer);
+    context->model_total_size    = 0;
+    context->node_total_size     = 0;
+    context->mesh_total_size     = 0;
+    context->material_total_size = 0;
+    context->texture_total_size  = 0;
+    context->vertices_total_size = 0;
+
+    context->models    = NULL;
+    context->nodes     = NULL;
+    context->meshes    = NULL;
+    context->materials = NULL;
+    context->textures  = NULL;
+    context->vertices  = NULL;
 }
 
-void writer_run(writer_t* writer, const reader_t* reader)
+void calc_work(context_t* context, const reader_t* reader)
 {
-    count_up_node(writer, &reader->root);
+    hwu32 size = 0;
 
-    if(writer->node_count > 0) {
-        writer->nodes = (hwgm_node_t*)hwm_malloc(sizeof(hwgm_node_t) * writer->node_count);
-    }
+    size += sizeof(hwgm_model_t);
 
-    if(writer->mesh_count > 0) {
-        writer->meshes = (hwgm_mesh_t*)hwm_malloc(sizeof(hwgm_mesh_t) * writer->mesh_count);
-    }
+    calc_work_node(context, &readr->root);
 
-    if(writer->material_count > 0) {
-        writer->maerials = (hwgm_material_t*)hwm_malloc(sizeof(hwgm_material_t) * writer->material_count);
-    }
-
-    if(writer->texture_count > 0) {
-        writer->textures = (hwgm_texture_t*)hwm_malloc(sizeof(hwgm_texture_t) * writer->texture_count);
-    }
+    context->model_total_size += size;
+    context->model_count      += 1;
 }
 
-void countup_node(writer_t* writer, const reader_node_t* node)
+void calc_work_node(context_t* context, const reader_node_t* node)
 {
+    hwu32 size = 0;
     hwu32 i;
 
-    writer->node_count += 1;
+    size += sizeof(hwgm_node_t);
+    size += sizeof(hwgm_mesh_t*) * node->mesh_count;
+    size += sizeof(hwgm_node_t*) * node->child_count;
 
     for(i = 0; i < node->mesh_count; ++i) {
-        count_up_mesh(writer, node->meshes + i);
+        calc_work_mesh(context, node->meshes + i);
     }
 
     for(i = 0; i < node->child_count; ++i) {
-        count_up_node(writer, node->children + i);
+        calc_wrork_nde(writer, node->children + i);
     }
+
+    context->node_total_size += size;
+    context->node_count      += 1;
 }
 
-void count_up_mesh(writer_t* writer, const reader_mesh_t* mesh)
+void calc_work_mesh(context_t* context, const reader_mesh_t* mesh)
 {
-    writer->mesh_count += 1;
-    count_up_material(writer, &mesh->material);
+    hwu32 size = 0;
+
+    size += sizeof(hwgm_mesh_t);
+
+    calc_work_material(context, &mesh->material);
+
+    context->mesh_total_size += size;
+    context->mesh_count      += 1;
 }
 
-void count_up_material(writer_t* writer, const reader_material_t* material)
+void calc_work_material(context_t* context, const reader_material_t* material)
 {
-    writer->material_count += 1;
-    count_up_texture(writer, &mesh->texture);
+    hwu32 size = 0;
+    hwu32 i;
+
+    size += sizeof(hwgm_material_t);
+    size += sizeof(hwgm_texture_t*) * reader->diffuse_texture_count;
+
+    for(i = 0; i < material->diffuse_texture_count; ++i) {
+        calc_work_texture(context, &mesh->texture);
+    }
+
+    context->material_total_size += size;
+    context->material_count      += 1;
 }
 
-void count_up_texture(writer_t* writer, const reader_texture_t* texture)
+void calc_work_texture(context_t* context, const reader_texture_t* texture)
 {
-    writer->texture_count += 1;
+    hwu32 size = 0;
+    hwu32 i;
+
+    size += sizeof(hwgm_texture_t);
+
+    context->texture_total_size += size;
+    context->texture_count      += 1;
+}
+
+void allocate_work(context_t* context)
+{
+    if(context->model_count > 0) {
+        context->models = (hwgm_model_t*)hwm_malloc(sizeof(hwgm_model_t) * context->model_count);
+    }
+
+    if(context->node_count > 0) {
+        context->nodes = (hwgm_node_t*)hwm_malloc(sizeof(hwgm_node_t) * context->node_count);
+    }
+
+    if(context->mesh_count > 0) {
+        context->meshes = (hwgm_mesh_t*)hwm_malloc(sizeof(hwgm_mesh_t) * context->mesh_count);
+    }
+
+    if(context->material_count > 0) {
+        context->maerials = (hwgm_material_t*)hwm_malloc(sizeof(hwgm_material_t) * context->material_count);
+    }
+
+    if(context->texture_count > 0) {
+        context->textures = (hwgm_texture_t*)hwm_malloc(sizeof(hwgm_texture_t) * context->texture_count);
+    }
 }
 
 void calc_bounding_box_from_node(hwm_vector3_t* min, hwm_vector3_t* max, const hwm_vector3_t* node)

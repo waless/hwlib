@@ -16,11 +16,13 @@ typedef struct hwgm_model_t {
     hwgm_node_t* root;
 
     /* 各データ数 */
-    hwu32 node_count;
-    hwu32 mesh_count;
-    hwu32 material_count;
-    hwu32 texture_count;
-    hwu32 vertices_count;
+    hwu16 node_count;
+    hwu16 mesh_count;
+    hwu16 material_count;
+    hwu16 texture_count;
+    hwu16 vertices_count;
+    
+    hwu8 padding[2];
     
     /* 各データへのポインタ */
     hwgm_node_t**     nodes;
