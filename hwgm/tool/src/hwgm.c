@@ -27,11 +27,7 @@ void hwgm_run(hwgm_state_t* state)
 
     reader_initialize(&reader);
     if(reader_read(&reader, state->input_path)) {
-        writer_t writer;
-
-        writer_initialize(&writer);
-        writer_run(&writer, &reader);
-        writer_finalize(&writer);
+        writer_run(&reader);
     }
 
     reader_finalize(&reader);

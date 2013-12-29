@@ -1,6 +1,13 @@
 #ifndef HWGM_MODEL_H_
 #define HWGM_MODEL_H_
 
+#include <hw/types.h>
+#include "node.h"
+#include "mesh.h"
+#include "material.h"
+#include "texture.h"
+#include "vertices.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

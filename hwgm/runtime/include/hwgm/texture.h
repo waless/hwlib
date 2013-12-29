@@ -1,6 +1,8 @@
 #ifndef HWGM_TEXTURE_H_
 #define HWGM_TEXTURE_H_
 
+#include <hw/types.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

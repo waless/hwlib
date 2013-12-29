@@ -1,6 +1,10 @@
 #ifndef HWGM_NODE_H_
 #define HWGM_NODE_H_
 
+#include <hw/types.h>
+#include <hwm/matrix44.h>
+#include "mesh.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

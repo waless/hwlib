@@ -1,5 +1,8 @@
-#ifndef HWGM_MESH_H_
+﻿#ifndef HWGM_MESH_H_
 #define HWGM_MESH_H_
+
+#include "material.h"
+#include "vertices.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -17,7 +17,7 @@ typedef struct hwgm_vertices_t {
 
     /* 法線 */
     hws16* normals;
-} hwgm_vertex_t;
+} hwgm_vertices_t;
 
 extern void hwgm_vertices_initialize(hwgm_vertices_t* vertices);
 

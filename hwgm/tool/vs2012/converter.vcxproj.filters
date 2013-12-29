@@ -30,5 +30,8 @@
     <ClInclude Include="..\src\hwgm.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\writer.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

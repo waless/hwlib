@@ -26,13 +26,23 @@ typedef struct context_t {
 } context_t;
 
 static void context_initialize(context_t* context);
+static void context_finalize(context_t* context);
 
 static void calc_work(context_t* context, const reader_t* reader);
 static void calc_work_node(context_t* context, const reader_node_t* node);
 static void calc_work_mesh(context_t* context, const reader_mesh_t* mesh);
+static void calc_work_vertices(context_t* context, const reader_mesh_t* mesh);
 static void calc_work_material(context_t* context, const reader_material_t* material);
 static void calc_work_texture(context_t* context, const reader_texture_t* texture);
+
 static void allocate_work(context_t* context);
+
+static void read(context_t* context, const reader_t* reader);
+static void read_node(context_t* context, const reader_node_t* node);
+static void read_mesh(context_t* context, const reader_mesh_t* mesh);
+static void read_material(context_t* context, const reader_material_t* material);
+static void read_texture(context_t* context, const reader_texture_t* texture);
+
 static void calc_bounding_box_from_node(hwm_vector3_t* min, hwm_vector3_t* max, const reader_node_t* node);
 static void calc_bounding_box_from_vertices(hwm_vector3_t* min, hwm_vector3_t* max, const hwm_vector3_t* vertices, hwu32 count);
 
@@ -69,13 +79,25 @@ void context_initialize(context_t* context)
     context->vertices  = NULL;
 }
 
+void context_finalize(context_t* context)
+{
+    HW_SAFE_FREE(context->vertices);
+    HW_SAFE_FREE(context->textures);
+    HW_SAFE_FREE(context->materials);
+    HW_SAFE_FREE(context->meshes);
+    HW_SAFE_FREE(context->nodes);
+    HW_SAFE_FREE(context->models);
+
+    context_initialize(context);
+}
+
 void calc_work(context_t* context, const reader_t* reader)
 {
     hwu32 size = 0;
 
     size += sizeof(hwgm_model_t);
 
-    calc_work_node(context, &readr->root);
+    calc_work_node(context, &reader->root);
 
     context->model_total_size += size;
     context->model_count      += 1;
@@ -108,10 +130,24 @@ void calc_work_mesh(context_t* context, const reader_mesh_t* mesh)
 
     size += sizeof(hwgm_mesh_t);
 
+    calc_work_vertices(context, mesh);
     calc_work_material(context, &mesh->material);
 
     context->mesh_total_size += size;
     context->mesh_count      += 1;
+}
+
+void calc_work_vertices(context_t* context, const reader_mesh_t* mesh)
+{
+    hwu32 size = 0;
+
+    size += sizeof(hwgm_vertices_t);
+    size += sizeof(hws16) * 3 * mesh->vertex_count;
+    size += sizeof(hws16) * 3 * mesh->vertex_count;
+    size += sizeof(hwu16) * 2 * mesh->vertex_count;
+
+    context->vertices_total_size += size;
+    context->vertices_count      += 1;
 }
 
 void calc_work_material(context_t* context, const reader_material_t* material)
@@ -120,10 +156,10 @@ void calc_work_material(context_t* context, const reader_material_t* material)
     hwu32 i;
 
     size += sizeof(hwgm_material_t);
-    size += sizeof(hwgm_texture_t*) * reader->diffuse_texture_count;
+    size += sizeof(hwgm_texture_t*) * material->diffuse_texture_count;
 
     for(i = 0; i < material->diffuse_texture_count; ++i) {
-        calc_work_texture(context, &mesh->texture);
+        calc_work_texture(context, &material->diffuse_textures + i);
     }
 
     context->material_total_size += size;
@@ -144,24 +180,52 @@ void calc_work_texture(context_t* context, const reader_texture_t* texture)
 void allocate_work(context_t* context)
 {
     if(context->model_count > 0) {
-        context->models = (hwgm_model_t*)hwm_malloc(sizeof(hwgm_model_t) * context->model_count);
+        context->models = (hwgm_model_t*)hw_malloc(context->model_total_size);
     }
 
     if(context->node_count > 0) {
-        context->nodes = (hwgm_node_t*)hwm_malloc(sizeof(hwgm_node_t) * context->node_count);
+        context->nodes = (hwgm_node_t*)hw_malloc(context->node_total_size);
     }
 
     if(context->mesh_count > 0) {
-        context->meshes = (hwgm_mesh_t*)hwm_malloc(sizeof(hwgm_mesh_t) * context->mesh_count);
+        context->meshes = (hwgm_mesh_t*)hw_malloc(context->mesh_total_size);
     }
 
     if(context->material_count > 0) {
-        context->maerials = (hwgm_material_t*)hwm_malloc(sizeof(hwgm_material_t) * context->material_count);
+        context->maerials = (hwgm_material_t*)hw_malloc(context->material_total_size);
     }
 
     if(context->texture_count > 0) {
-        context->textures = (hwgm_texture_t*)hwm_malloc(sizeof(hwgm_texture_t) * context->texture_count);
+        context->textures = (hwgm_texture_t*)hw_malloc(context->texture_total_size);
     }
+
+    if(context->vertices_count > 0) {
+        context->vertices = (hwgm_vertices_t*)hw_mallc(context->vertices_total_size);
+    }
+}
+
+void read(context_t* context, const reader_t* reader)
+{
+    hwu32 i;
+
+    for(i = 0; i < context->model_count; ++i) {
+    }
+}
+
+void read_node(context_t* context, const reader_node_t* node)
+{
+}
+
+void read_mesh(context_t* context, const reader_mesh_t* mesh)
+{
+}
+
+void read_material(context_t* context, const reader_material_t* material)
+{
+}
+
+void read_texture(context_t* context, const reader_texture_t* texture)
+{
 }
 
 void calc_bounding_box_from_node(hwm_vector3_t* min, hwm_vector3_t* max, const hwm_vector3_t* node)
@@ -194,7 +258,7 @@ void calc_bounding_box_from_node(hwm_vector3_t* min, hwm_vector3_t* max, const h
     }
 }
 
-void calc_bounding_box(hwm_vector3_t* min, hwm_vector3_t* max, const hwm_vector3_t* vertices, hwu32 count)
+void calc_bounding_box_from_vertices(hwm_vector3_t* min, hwm_vector3_t* max, const hwm_vector3_t* vertices, hwu32 count)
 {
     hwm_vector3_t vertices_min;
     hwm_vector3_t vertices_max;
@@ -204,18 +268,18 @@ void calc_bounding_box(hwm_vector3_t* min, hwm_vector3_t* max, const hwm_vector3
     hwm_vector3_set_scaler(&vertices_max, -FLOAT_MAX);
     
     for(i = 0; i < count; ++i) {
-        const hwm_vertex_t* v = vertices + i;
+        const hwm_vector3_t* v = vertices + i;
         
         hwm_vector3_min(&vertices_min, &vertices_min, &v);
         hwm_vector3_max(&vertices_max, &vertices_max, &v);
     }
 
     if(min != NULL) {
-        *min = min;
+        *min = vertices_min;
     }
 
     if(max != NULL) {
-        *max = max;
+        *max = vertices_max;
     }
 }
 
