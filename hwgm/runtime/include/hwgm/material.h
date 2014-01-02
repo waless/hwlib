@@ -1,8 +1,6 @@
 #ifndef HWGM_MATERIAL_H_
 #define HWGM_MATERIAL_H_
 
-#include "texture.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
