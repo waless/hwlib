@@ -29,6 +29,7 @@ typedef struct hwgm_model_t {
     hwu16 texture_count;
     hwu16 vertices_count;
     
+    /* パディング */
     hwu8 padding[2];
     
     /* 各データへのポインタ */

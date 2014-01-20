@@ -12,7 +12,8 @@ typedef struct hwgm_material_t {
     /* テクスチャ数 */
     hwu16 texture_count;
 
-    hwu8  padding[2];
+    /* パディング */
+    hwu8 padding[2];
 
     /* テクスチャへのポインタの配列 */
     hwgm_texture_t** textures;

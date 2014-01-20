@@ -23,6 +23,8 @@ enum {
     HWM_UFIXED16_1_15_HALF  = (1 << (HWM_UFIXED16_1_15_SHIFT - 1)),
 };
 
+extern hwm_sfixed16_1_14_t hwm_sfixed16_1_14_from_f32(hwf32 value);
+
 #ifdef __cplusplus
 }
 #endif
