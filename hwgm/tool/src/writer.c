@@ -30,6 +30,11 @@ typedef struct context_t {
     hwgm_model_t model;
 } context_t;
 
+typedef struct range_t {
+    hwm_vector3_t min;
+    hwm_vector3_t max;
+} range_t;
+
 static void context_initialize(context_t* context);
 static void context_finalize(context_t* context);
 
@@ -55,8 +60,8 @@ static hwu32 calc_size_vertices(const reader_mesh_t* mesh);
 static hwu32 calc_size_material(const reader_material_t* material);
 static hwu32 calc_size_texture(const reader_texture_t* texture);
 
-static void calc_bounding_box_from_node(hwm_vector3_t* min, hwm_vector3_t* max, const reader_node_t* node);
-static void calc_bounding_box_from_vertices(hwm_vector3_t* min, hwm_vector3_t* max, const hwm_vector3_t* vertices, hwu32 count);
+static void calc_bounding_box_from_node(range_t* out, const reader_node_t* node);
+static void calc_bounding_box_from_vertices(range_t* out, const hwm_vector3_t* vertices, hwu32 count);
 
 void writer_run(const reader_t* reader)
 {
@@ -197,6 +202,7 @@ hwgm_node_t* read_node(context_t* context, const reader_node_t* node)
     hwgm_mesh_t* mesh = NULL;
     hwgm_node_t* node = NULL;
     hwu32        size = 0;
+    range_t      radius;
     hwu32        i;
 
     out = (hwgm_node_t*)(context->nodes + context->node_pos);
@@ -208,7 +214,7 @@ hwgm_node_t* read_node(context_t* context, const reader_node_t* node)
     }
 
     for(i = 0; i < node->child_count; ++i) {
-        node = hwgm_read_node(context, node->childs + i);
+        node = read_node(context, node->childs + i);
         out->children[i] = node;
     }
 
@@ -346,90 +352,72 @@ hwu32 calc_size_texture(const reader_texture_t* texture)
     return size;
 }
 
-void calc_bounding_box_from_tree(hwm_vector3_t* min, hwm_vector3_t* max, const reader_node_t* root)
+void calc_bounding_box_from_tree(range_t* out, const reader_node_t* root)
 {
-    hwm_vector3_t result_min;
-    hwm_vector3_t result_max;
-    hwu32         i;
+    range_t r;
+    hwu32   i;
 
-    hwm_vector3_set_scaler(&result_min, FLOAT_MAX);
-    hwm_vector3_set_scaler(&result_max, -FLOAT_MAX);
+    hwm_vector3_set_scaler(&r.min, FLOAT_MAX);
+    hwm_vector3_set_scaler(&r.max, -FLOAT_MAX);
 
     if(root != NULL) {
-        calc_bounding_box_from_node(&result_min, &result_max, root);
+        calc_bounding_box_from_node(&r, root);
 
         for(i = 0; i < root->child_count; ++i) {
             const reader_node_t* node = root->children + i;
-                  hwm_vector3_t  node_min;
-                  hwm_vector3_t  node_max;
+                  range_t        node_r;
 
-            calc_bounding_box_from_node(&node_min, &node_max, node);
-            hwm_vector3_min(&result_min, &result_min, &node_min);
-            hwm_vector3_max(&result_max, &result_max, &node_max);
+            calc_bounding_box_from_node(&node_r, node);
+            hwm_vector3_min(&r.min, &r.min, &node_r.min);
+            hwm_vector3_max(&r.max, &r.max, &node_r.max);
         }
     }
 
-    if(min != NULL) {
-        *min = result_min;
-    }
-
-    if(max != NULL) {
-        *max = result_max;
+    if(out != NULL) {
+        *out = r;
     }
 }
 
-void calc_bounding_box_from_node(hwm_vector3_t* min, hwm_vector3_t* max, const reader_node_t* node)
+void calc_bounding_box_from_node(range_t* out, const reader_node_t* node)
 {
-    hwm_vector3_t node_min;
-    hwm_vector3_t node_max;
-    hwu32         i;
+    range_t r;
+    hwu32   i;
 
-    hwm_vector3_set_scaler(&node_min, FLOAT_MAX);
-    hwm_vector3_set_scaler(&node_max, -FLOAT_MAX);
+    hwm_vector3_set_scaler(&r.min, FLOAT_MAX);
+    hwm_vector3_set_scaler(&r.max, -FLOAT_MAX);
 
     if(node != NULL) {
         for(i = 0; i < node->mesh_count; ++i) {
             const reader_mesh_t* mesh = node->meshes + i;
-                  hwm_vector3_t  mesh_min;
-                  hwm_vector3_t  mesh_max;
+                  range_t        mesh_r;
 
-            calc_bounding_box_from_vertices(&mesh_min, &mesh_max, mesh->vertices, mesh->vertex_count);
-            hwm_vector3_min(&node_min, &node_min, &mesh_min);
-            hwm_vector3_max(&node_max, &node_max, &mesh_max);
+            hwm_vector3_min(&r.min, &r.min, &mesh_r.min);
+            hwm_vector3_max(&r.max, &r.max, &mesh_r.max);
         }
     }
 
-    if(min != NULL) {
-        *min = node_min;
-    }
-
-    if(max != NULL) {
-        *max = node_max;
+    if(out != NULL) {
+        *out = r;
     }
 }
 
-void calc_bounding_box_from_vertices(hwm_vector3_t* min, hwm_vector3_t* max, const hwm_vector3_t* vertices, hwu32 count)
+void calc_bounding_box_from_vertices(range_t* out, const hwm_vector3_t* vertices, hwu32 count)
 {
-    hwm_vector3_t vertices_min;
-    hwm_vector3_t vertices_max;
-    hwu32         i;
+    range_t r;
+    hwu32   i;
 
-    hwm_vector3_set_scaler(&vertices_min, FLOAT_MAX);
-    hwm_vector3_set_scaler(&vertices_max, -FLOAT_MAX);
+    hwm_vector3_set_scaler(&r.min, FLOAT_MAX);
+    hwm_vector3_set_scaler(&r.max, -FLOAT_MAX);
     
     for(i = 0; i < count; ++i) {
         const hwm_vector3_t* v = vertices + i;
         
-        hwm_vector3_min(&vertices_min, &vertices_min, &v);
-        hwm_vector3_max(&vertices_max, &vertices_max, &v);
+        hwm_vector3_min(&r.min, &r.min, &v);
+        hwm_vector3_max(&r.max, &r.max, &v);
     }
 
-    if(min != NULL) {
-        *min = vertices_min;
-    }
-
-    if(max != NULL) {
-        *max = vertices_max;
+    if(out != NULL) {
+        *out = r;
     }
 }
 

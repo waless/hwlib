@@ -9,7 +9,7 @@ typedef struct hwgm_vertices_t {
     /* 頂点数 */
     hwu16  vertex_count;
 
-    /* 頂点配列(境界球で正規化) */
+    /* 頂点配列 */
     hws16* vertices;
     
     /* テクスチャ座標 */
