@@ -2,6 +2,11 @@
 #include <hw/types.h>
 #include <hwm/vector3.h>
 
+typedef struct range_t {
+    hwm_vector3_t min;
+    hwm_vector3_t max;
+} range_t;
+
 typedef struct context_t {
     hwu32 node_count;
     hwu32 mesh_count;
@@ -27,13 +32,10 @@ typedef struct context_t {
     hwu8* textures;
     hwu8* vertices;
 
+    hwf32 radius;
+
     hwgm_model_t model;
 } context_t;
-
-typedef struct range_t {
-    hwm_vector3_t min;
-    hwm_vector3_t max;
-} range_t;
 
 static void context_initialize(context_t* context);
 static void context_finalize(context_t* context);
@@ -62,6 +64,8 @@ static hwu32 calc_size_texture(const reader_texture_t* texture);
 
 static void calc_bounding_box_from_node(range_t* out, const reader_node_t* node);
 static void calc_bounding_box_from_vertices(range_t* out, const hwm_vector3_t* vertices, hwu32 count);
+
+static hws16 normaize_position(hwf32 v);
 
 void writer_run(const reader_t* reader)
 {
@@ -108,7 +112,13 @@ void context_finalize(context_t* context)
 
 void calc_work(context_t* context, const reader_t* reader)
 {
+    range_t       r;
+    hwm_vector3_t size;
+
     calc_work_node(context, &reader->root);
+    calc_bounding_box_from_tree(&r, &reader->root);
+    hwm_vector3_sub(&size, &r.max, &r.min);
+    context->radius = hwm_vector3_length(&size);
 }
 
 void calc_work_node(context_t* context, const reader_node_t* node)
@@ -264,7 +274,7 @@ void read_vertices(context_t* context, const reader_mesh_t* mesh)
     vertices = (hws16*)pos;
     for(i = 0; i < mesh->vertex_count; i += 3) {
         const hwm_vector3_t* v = mesh->vertices + i;
-              hws16          x = 0;
+              hws16          x = v->x / context->radius;
               hws16          y = 0;
               hws16          z = 0;
 
@@ -419,5 +429,10 @@ void calc_bounding_box_from_vertices(range_t* out, const hwm_vector3_t* vertices
     if(out != NULL) {
         *out = r;
     }
+}
+
+hws16 normaize_position(hwf32 v, const range_t* r, hwf32 length)
+{
+    v / length;
 }
 
