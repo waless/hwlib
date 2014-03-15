@@ -65,7 +65,7 @@ static hwu32 calc_size_texture(const reader_texture_t* texture);
 static void calc_bounding_box_from_node(range_t* out, const reader_node_t* node);
 static void calc_bounding_box_from_vertices(range_t* out, const hwm_vector3_t* vertices, hwu32 count);
 
-static hws16 normaize_position(hwf32 v);
+static hws16 normalize_position(hwf32 v, const context_t* context);
 
 void writer_run(const reader_t* reader)
 {
@@ -274,9 +274,14 @@ void read_vertices(context_t* context, const reader_mesh_t* mesh)
     vertices = (hws16*)pos;
     for(i = 0; i < mesh->vertex_count; i += 3) {
         const hwm_vector3_t* v = mesh->vertices + i;
-              hws16          x = v->x / context->radius;
+              hws16          x = 0;
               hws16          y = 0;
               hws16          z = 0;
+
+        v = mesh->vertices + i;
+        x = normalize_position(v->x, context);
+        y = normalize_position(v->y, context);
+        z = normalize_position(v->z, context);
 
         vertices[i + 0] = x;
         vertices[i + 1] = y;
@@ -301,8 +306,12 @@ void read_material(hwg_material_t* out, const reader_material_t* material)
 {
 }
 
-void read_texture(hwgm_texture_t* out, const reader_texture_t* texture)
+void read_texture(context_t* context, const reader_texture_t* texture)
 {
+    hwgm_texture_t* out = NULL;
+
+    out = (hwgm_texture_t*)(context->textures + context->texture_pos);
+    hwgm_texture_initialize(out);
 }
 
 hwu32 calc_size_node(const reader_node_t* node)
@@ -431,8 +440,14 @@ void calc_bounding_box_from_vertices(range_t* out, const hwm_vector3_t* vertices
     }
 }
 
-hws16 normaize_position(hwf32 v, const range_t* r, hwf32 length)
+hws16 normalize_position(hwf32 v, const context_t* context)
 {
-    v / length;
+    hwf32 normalized_value = 0.0f;
+    hws16 result           = 0;
+
+    normalized_value = (v / context->radius);
+    result           = (hws16)(normalized_value * 32767.0f);
+
+    return result;
 }
 
