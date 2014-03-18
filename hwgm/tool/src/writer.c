@@ -256,7 +256,7 @@ void read_mesh(context_t* context, const reader_mesh_t* mesh)
     return out;
 }
 
-void read_vertices(context_t* context, const reader_mesh_t* mesh)
+hwgm_vertices_t* read_vertices(context_t* context, const reader_mesh_t* mesh)
 {
     hwgm_vertices_t* out      = NULL;
     hws16*           vertices = NULL;
