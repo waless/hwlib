@@ -270,7 +270,7 @@ hwgm_vertices_t* read_vertices(context_t* context, const reader_mesh_t* mesh)
 
     /* 頂点格納位置を計算、格納
      * 頂点情報は必須 */
-    pos      = (hwu8*)context->vertices + sizeof(hwgm_vertices_t);
+    pos      = (hwu8*)out + sizeof(hwgm_vertices_t);
     vertices = (hws16*)pos;
     for(i = 0; i < mesh->vertex_count; i += 3) {
         const hwm_vector3_t* v = mesh->vertices + i;
@@ -300,10 +300,18 @@ hwgm_vertices_t* read_vertices(context_t* context, const reader_mesh_t* mesh)
         normals = (hws16*)pos;
         pos    += sizeof(hws16) * 3 * mesh->vertex_count;
     }
+
+    return out;
 }
 
-void read_material(hwg_material_t* out, const reader_material_t* material)
+hwgm_material_t* read_material(context_t* context, const reader_material_t* material)
 {
+    hwgm_material_t* out = NULL;
+
+    out = (hwgm_material_t*)(context->materials + context->material_pos);
+    hwgm_material_initialize(out);
+
+    return out;
 }
 
 void read_texture(context_t* context, const reader_texture_t* texture)
