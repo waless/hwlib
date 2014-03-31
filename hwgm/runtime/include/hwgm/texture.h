@@ -11,10 +11,6 @@ typedef struct hwgm_texture_t {
     /* テクスチャへの外部参照インデックス */
     hwu32 index;
 
-    /* テクスチャのピクセルフォーマット 
-     * hwg_pixel_format_t */
-    hwu8  format;
-
     /* アドレス動作定義識別子
      * hwg_texture_wrap_t */
     hwu8  wrap;

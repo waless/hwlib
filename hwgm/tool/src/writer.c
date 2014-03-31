@@ -306,10 +306,17 @@ hwgm_vertices_t* read_vertices(context_t* context, const reader_mesh_t* mesh)
 
 hwgm_material_t* read_material(context_t* context, const reader_material_t* material)
 {
-    hwgm_material_t* out = NULL;
+    hwgm_material_t* out      = NULL;
+    hwgm_texture_t*  textures = NULL;
 
     out = (hwgm_material_t*)(context->materials + context->material_pos);
     hwgm_material_initialize(out);
+
+    pos      = (hwu8*)out + sizeof(hwgm_material_t);
+    textures = (hws16*)pos;
+    for(i = 0; i < material->diffuse_texture_cont; ++i) {
+        hwgm_texture_t* 
+    }
 
     return out;
 }
