@@ -66,6 +66,7 @@ static void calc_bounding_box_from_node(range_t* out, const reader_node_t* node)
 static void calc_bounding_box_from_vertices(range_t* out, const hwm_vector3_t* vertices, hwu32 count);
 
 static hws16 normalize_position(hwf32 v, const context_t* context);
+static hwu16 normalize_texcoord(hwf32 v);
 
 void writer_run(const reader_t* reader)
 {
@@ -258,12 +259,13 @@ void read_mesh(context_t* context, const reader_mesh_t* mesh)
 
 hwgm_vertices_t* read_vertices(context_t* context, const reader_mesh_t* mesh)
 {
-    hwgm_vertices_t* out      = NULL;
-    hws16*           vertices = NULL;
-    hwu16*           uvs      = NULL;
-    hws16*           normals  = NULL;
-    hwu8*            pos      = NULL;
+    hwgm_vertices_t* out       = NULL;
+    hws16*           vertices  = NULL;
+    hwu16*           texcoords = NULL;
+    hws16*           normals   = NULL;
+    hwu8*            pos       = NULL;
     hwu32            i;
+    int              index;
 
     out = (hwgm_vertices_t*)(context->vertices + context->vertices_pos);
     hwgm_vertices_initialize(out);
@@ -272,32 +274,62 @@ hwgm_vertices_t* read_vertices(context_t* context, const reader_mesh_t* mesh)
      * 頂点情報は必須 */
     pos      = (hwu8*)out + sizeof(hwgm_vertices_t);
     vertices = (hws16*)pos;
-    for(i = 0; i < mesh->vertex_count; i += 3) {
-        const hwm_vector3_t* v = mesh->vertices + i;
-              hws16          x = 0;
-              hws16          y = 0;
-              hws16          z = 0;
+    for(i = 0; i < mesh->vertex_count; ++i) {
+        const hwm_vector3_t* v     = NULL;
+              hws16          x     = 0;
+              hws16          y     = 0;
+              hws16          z     = 0;
 
         v = mesh->vertices + i;
         x = normalize_position(v->x, context);
         y = normalize_position(v->y, context);
         z = normalize_position(v->z, context);
 
-        vertices[i + 0] = x;
-        vertices[i + 1] = y;
-        vertices[i + 2] = z;
+        index = i * 3;
+        vertices[index + 0] = x;
+        vertices[index + 1] = y;
+        vertices[index + 2] = z;
     }
     pos += sizeof(hws16) * 3 * mesh->vertex_count;
 
     /* テクスチャ座標格納位置を計算、格納 */
     if(mesh->texcoords != NULL && mesh->texcoord_layer_count > 0) {
-        uvs  = (hwu16*)pos;
+        texcoords = (hwu16*)pos;
+        for(i = 0; i < mesh->vertex_count; ++i) {
+            const hwm_vector3_t* texcoord = NULL;
+                  hwu16          u        = 0;
+                  hwu16          v        = 0;
+
+            texcoord = &mesh->texcoords[0][i];
+            u        = normalize_texcoord(texcoord->x);
+            v        = normalize_texcoord(texcoord->y);
+
+            index = i * 2;
+            texcoords[index + 0] = u;
+            texcoords[index + 1] = v;
+        }
         pos += sizeof(hwu16) * 2 * mesh->vertex_count;
     }
 
     /* 法線位置格納位置を計算、格納 */
     if(mesh->normals != NULL) {
         normals = (hws16*)pos;
+        for(i = 0; i < mesh->vertex_count; ++i) {
+            const hwm_vector3_t* normal = NULL;
+                  hws16          x      = 0;
+                  hws16          y      = 0;
+                  hws16          z      = 0;
+
+            normal = mesh->normals + i;
+            x      = normalize_normal(normal->x);
+            y      = normalize_normal(normal->y);
+            z      = normalize_normal(normal->z);
+
+            index = i * 3;
+            normals[index + 0] = x;
+            normals[index + 1] = y;
+            normals[index + 2] = z;
+        }
         pos    += sizeof(hws16) * 3 * mesh->vertex_count;
     }
 
@@ -306,8 +338,8 @@ hwgm_vertices_t* read_vertices(context_t* context, const reader_mesh_t* mesh)
 
 hwgm_material_t* read_material(context_t* context, const reader_material_t* material)
 {
-    hwgm_material_t* out      = NULL;
-    hwgm_texture_t*  textures = NULL;
+    hwgm_material_t* out     = NULL;
+    hwgm_texture_t*  texture = NULL;
 
     out = (hwgm_material_t*)(context->materials + context->material_pos);
     hwgm_material_initialize(out);
@@ -315,7 +347,8 @@ hwgm_material_t* read_material(context_t* context, const reader_material_t* mate
     pos      = (hwu8*)out + sizeof(hwgm_material_t);
     textures = (hws16*)pos;
     for(i = 0; i < material->diffuse_texture_cont; ++i) {
-        hwgm_texture_t* 
+        texture = material->diffuse_textures + i;
+        read_texture(context, texture);
     }
 
     return out;
@@ -464,5 +497,10 @@ hws16 normalize_position(hwf32 v, const context_t* context)
     result           = (hws16)(normalized_value * 32767.0f);
 
     return result;
+}
+
+hwu16 normalize_texcoord(hwf32 v)
+{
+    return (hwu16)(v / 65535.0f);
 }
 
