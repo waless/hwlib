@@ -13,7 +13,7 @@ typedef struct hwgm_vertices_t {
     hws16* vertices;
     
     /* テクスチャ座標 */
-    hwu16* uvs;
+    hwu16* texcoords;
 
     /* 法線 */
     hws16* normals;
