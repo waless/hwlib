@@ -41,13 +41,23 @@ typedef uint64_t hwu64;
 
 #endif
 
-typedef hws32            hwsptr_t;
-typedef hwu32            hwptr_t;
-typedef float            hwf32;
-typedef double           hwf64;
-typedef signed int       hwsint;
-typedef unsigned int     hwuint;
-typedef int hwbool;
+#if defined(HW_PLATFORM_32BIT)
+
+typedef hws32 hwsptr_t;
+typedef hwu32 hwuptr_t;
+
+#else
+
+typedef hws64 hwsptr_t;
+typedef hwu64 hwuptr_t;
+
+#endif
+
+typedef float        hwf32;
+typedef double       hwf64;
+typedef signed int   hwsint;
+typedef unsigned int hwuint;
+typedef int          hwbool;
 
 #ifndef HW_TRUE
 #    define HW_TRUE 1
