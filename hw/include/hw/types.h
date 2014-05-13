@@ -15,24 +15,38 @@
 #include <stddef.h>
 #include "hw/platform.h"
 
-#ifdef HW_PLATFORM_32BIT
+#if defined(HW_PLATFORM_MSVC)
 
-typedef signed char        hws8;
-typedef signed short       hws16;
-typedef signed long        hws32;
-typedef signed int         hwsint;
-typedef unsigned char      hwu8;
-typedef unsigned short     hwu16;
-typedef unsigned long      hwu32;
-typedef unsigned long long hwu64;
-typedef unsigned int       hwuint;
-typedef hws32              hwsptr_t;
-typedef hwu32              hwptr_t;
-typedef float              hwf32;
-typedef double             hwf64;
+typedef signed __int8    hws8;
+typedef signed __int16   hws16;
+typedef signed __int32   hws32;
+typedef signed __int64   hws64;
+typedef unsigned __int8  hwu8;
+typedef unsigned __int16 hwu16;
+typedef unsigned __int32 hwu32;
+typedef unsigned __int64 hwu64;
 
-#endif  /* HW_PLATFORM_32BIT */
+#else
 
+#include <stdint.h>
+
+typedef int8_t   hws8;
+typedef int16_t  hws16;
+typedef int32_t  hws32;
+typedef int64_t  hws64;
+typedef uint8_t  hwu8;
+typedef uint16_t hwu16;
+typedef uint32_t hwu32;
+typedef uint64_t hwu64;
+
+#endif
+
+typedef hws32            hwsptr_t;
+typedef hwu32            hwptr_t;
+typedef float            hwf32;
+typedef double           hwf64;
+typedef signed int       hwsint;
+typedef unsigned int     hwuint;
 typedef int hwbool;
 
 #ifndef HW_TRUE
