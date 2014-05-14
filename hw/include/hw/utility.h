@@ -9,7 +9,7 @@
 #define HW_MIN(a, b) (((a) < (b)) ? (a) : (b))
 
 #define HW_SAFE_FREE(p)   if((p) != NULL) { hw_free((p)); (p) = NULL; }
-#define HW_SAFE_DELETE(p) if((p) != NULL) { delete p; (p) = NULL; }
+#define HW_SAFE_DELETE(p) if((p) != NULL) { delete (p); (p) = NULL; }
 
 #endif
 
