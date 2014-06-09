@@ -8,6 +8,9 @@
 extern "C" {
 #endif
 
+#include "hw/platform.h"
+#include "hw/config.h"
+
 typedef enum hw_error_kind_t {
     HW_ERROR_SUCCESS = 0,
     HW_ERROR_NULL_POINTER,
@@ -16,18 +19,23 @@ typedef enum hw_error_kind_t {
 
 typedef struct hw_error_t {
     int         kind;
-    const char* message;
+    char        message[HW_ERROR_MESSAGE_LENGTH_MAX];
     const char* file;
     const char* func;
     int         line;
 } hw_error_t;
 
-extern void hw_set_error(int kind, const char* message, const char* file, const char* func, int line);
-extern const hw_error_t* hw_get_error();
+extern void hw_error_push(int kind, const char* message, const char* file, const char* func, int line);
+extern const hw_error_t* hw_error_get(int depth);
+extern const hw_error_t* hw_error_pop();
+extern const hw_error_t* hw_error_peek();
+extern void hw_error_clear();
+extern int hw_errr_get_depth();
 
 #if !defined(HW_RELEASE)
 #   define HW_ERROR(kind)              hw_set_error(kind, "", __FILE__, __func__, __LINE__)
 #   define HW_ERROR_MSG(kind, message) hw_set_error(kind, message, __FILE__, __func__, __LINE__);
+extern const hw_error_t* hw_get_error();
 #else
 #   define HW_ERROR(kind)              hw_set_error(kind, "", "", "", 0)
 #   define HW_ERROR_MSG(kind, message) hw_set_error(kind, "", "", "", 0)
