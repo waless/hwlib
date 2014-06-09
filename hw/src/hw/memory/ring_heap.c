@@ -11,7 +11,7 @@ void hw_ring_heap_initialize(hw_ring_heap_t* heap, void* memory, hwu32 size)
 	/* パラメータを記憶 */
 	heap->memory			= memory;
 	heap->heap_size         = size;
-	heap->current_address	= (hwptr_t)memory;
+	heap->current_address	= (hwuptr_t)memory;
 	heap->allocated_size    = 0;
 }
 
@@ -25,16 +25,16 @@ void* hw_ring_heap_allocate(hw_ring_heap_t* heap, hwu32 size, hwu32 alignment)
 	if(size > 0 && size <= heap->heap_size){
 		/* 確保する先頭アドレスと終端アドレスを計算 */
 		/* 確保の結果、リングバッファ容量を超えたらNULLを返す */
-		hwptr_t head_address  = HW_ALIGNED_ROUND_UP(heap->current_address, alignment);
-		hwptr_t tail_address  = head_address + size;
-		hwptr_t allocate_size = tail_address - head_address;
-		hwptr_t allocated_size = heap->allocated_size + allocate_size;
+		hwuptr_t head_address   = HW_ALIGNED_ROUND_UP(heap->current_address, alignment);
+		hwuptr_t tail_address   = head_address + size;
+		hwuptr_t allocate_size  = tail_address - head_address;
+		hwuptr_t allocated_size = heap->allocated_size + allocate_size;
 		if(allocated_size <= heap->heap_size) {
 
 			/* バッファを１周するか計算 */
 			/* しないなら今のアドレスから次のアドレスを計算 */
-			hwptr_t base_address = (hwptr_t)heap->memory;
-			hwptr_t end_address  = base_address + heap->heap_size;
+			hwuptr_t base_address = (hwuptr_t)heap->memory;
+			hwuptr_t end_address  = base_address + heap->heap_size;
 			if(tail_address <= end_address) {
 				memory = (void*)head_address;
 				heap->allocated_size  = allocated_size;

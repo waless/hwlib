@@ -14,7 +14,7 @@ void hw_stack_heap_initialize(hw_stack_heap_t* heap, void* memory, hwu32 size)
 	HW_NULL_ASSERT(memory);
 	HW_ASSERT(size > 0);
 
-	heap->memory_address = (hwptr_t)memory;
+	heap->memory_address = (hwuptr_t)memory;
 	heap->top_address    = heap->memory_address + size;
 	heap->bottom_address = heap->memory_address;
 	heap->memory_size    = size;
@@ -47,7 +47,7 @@ hw_stack_heap_maker_t hw_stack_heap_get_maker_ex(hw_stack_heap_t* heap, hw_stack
 static void* allocate_from_top(hw_stack_heap_t* heap, hwu32 size, hwu32 alignment)
 {
 	if(size > 0) {
-		hwptr_t address = HW_ALIGNED_ROUND_UP(heap->top_address - size, alignment);
+		hwuptr_t address = HW_ALIGNED_ROUND_UP(heap->top_address - size, alignment);
 		if(address >= heap->bottom_address) {
 			heap->top_address = address;
 			return (void*)address;
@@ -59,8 +59,8 @@ static void* allocate_from_top(hw_stack_heap_t* heap, hwu32 size, hwu32 alignmen
 static void* allocate_from_bottom(hw_stack_heap_t* heap, hwu32 size, hwu32 alignment)
 {
 	if(size > 0) {
-		hwptr_t address = HW_ALIGNED_ROUND_UP(heap->bottom_address, alignment);
-		hwptr_t next_address = address + size;
+		hwuptr_t address      = HW_ALIGNED_ROUND_UP(heap->bottom_address, alignment);
+		hwuptr_t next_address = address + size;
 		if(next_address <= heap->top_address) {
 			heap->bottom_address = next_address;
 			return (void*)address;

@@ -109,8 +109,8 @@ void hw_small_object_heap_deallocate(hw_small_object_heap_t* heap, void* memory)
 hwbool hw_small_object_heap_is_in_heap(hw_small_object_heap_t* heap, void* memory)
 {
 	hwL_unit_heap_list_node_t* target_heap_node = NULL;
-	hwL_unit_heap_list_t*		target_heap		 = NULL;
-	small_object_tag_t*         tag              = NULL;
+	hwL_unit_heap_list_t*	   target_heap		= NULL;
+	small_object_tag_t*        tag              = NULL;
 
 	HW_NULL_ASSERT(heap);
 	HW_NULL_ASSERT(memory);
@@ -119,7 +119,7 @@ hwbool hw_small_object_heap_is_in_heap(hw_small_object_heap_t* heap, void* memor
 	target_heap		 = target_heap_node->parent;
 	tag				 = get_tag_address(memory, hwL_unit_heap_list_get_unit_size(target_heap));
 
-	return ((hwptr_t)tag) == ((hwptr_t)heap);
+	return ((hwuptr_t)tag) == ((hwuptr_t)heap);
 }
 
 void grow_heap(hw_small_object_heap_t* parent, hwL_unit_heap_list_t* heap)
@@ -133,13 +133,13 @@ void grow_heap(hw_small_object_heap_t* parent, hwL_unit_heap_list_t* heap)
 
 hwL_unit_heap_list_node_t* get_node_from_memory(hw_small_object_heap_t* heap, void* memory)
 {
-	hwptr_t					heap_memory		 = 0;
+	hwuptr_t				   heap_memory		= 0;
 	hwL_unit_heap_list_node_t* target_heap_node = NULL;
 	
 	/* ヒープのメモリアドレスはヒープサイズでアラインメントされている */
 	/* そのため、ヒープに属しているメモリブロックのANDをとると */
 	/* ヒープメモリのアドレスを取得できる */
-	heap_memory = (hwptr_t)memory & heap->unit_heap_size;
+	heap_memory = (hwuptr_t)memory & heap->unit_heap_size;
 
 	/* ヒープメモリアドレスからメモリが属しているヒープを取得 */
 	target_heap_node = hwL_unit_heap_list_get_node_from_heap_memory((void*)heap_memory, heap->unit_heap_size);

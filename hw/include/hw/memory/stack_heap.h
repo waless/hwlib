@@ -9,9 +9,9 @@ extern "C" {
 
 typedef struct tag_hw_stack_heap_t
 {
-	hwptr_t memory_address;
-	hwptr_t top_address;
-	hwptr_t bottom_address;
+	hwuptr_t memory_address;
+	hwuptr_t top_address;
+	hwuptr_t bottom_address;
 	hwu32    memory_size;
 } hw_stack_heap_t;
 
@@ -21,7 +21,7 @@ typedef enum tag_hw_stack_heap_direction_t
 	HW_STACK_HEAP_DIRECTION_BOTTOM,
 } hw_stack_heap_direction_t;
 
-typedef hwptr_t hw_stack_heap_maker_t;
+typedef hwuptr_t hw_stack_heap_maker_t;
 
 extern void hw_stack_heap_initialize(hw_stack_heap_t* heap, void* memory, hwu32 size);
 extern void hw_stack_heap_finalize(hw_stack_heap_t* heap);
