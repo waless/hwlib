@@ -24,6 +24,7 @@ obj/
 bin/
 lib/
 ipch/
+Debug/
 Release/
 
 # 無視するファイル
@@ -31,6 +32,8 @@ tags
 GTAGS
 GPATH
 GRTAGS
+ctags.files
+gtags.files
 cscope.files
 cscope.out
 .vimrc.local
