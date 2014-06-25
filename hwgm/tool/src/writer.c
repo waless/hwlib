@@ -69,13 +69,21 @@ static hws16 normalize_position(hwf32 v, const context_t* context);
 static hwu16 normalize_texcoord(hwf32 v);
 static hws16 normalize_normal(hwf32 v);
 
+static hwg_texture_blend_op_t to_runtime_op(reaer_texture_op_t op);
+static hwg_texture_wrap_t to_runime_wrap(reader_texture_wrap_t wrap);
+
+
 void writer_run(const reader_t* reader)
 {
     context_t context;
 
     context_initialize(&context);
+
     calc_work(&context, reader);
     allocate_work(&context);
+    read(&context, &reader);
+
+    context_finalize(&context);
 }
 
 void context_initialize(context_t* context)
@@ -206,6 +214,7 @@ void allocate_work(context_t* context)
 
 void read(context_t* context, const reader_t* reader)
 {
+    read_node(context, &reader->root);
 }
 
 hwgm_node_t* read_node(context_t* context, const reader_node_t* node)
@@ -355,19 +364,25 @@ hwgm_material_t* read_material(context_t* context, const reader_material_t* mate
     offset   = context->material_pos + sizeof(hwgm_material_t);
     textures = (hwgm_texture_t*)((hwu8*)context->materials + offset);
     for(i = 0; i < material->diffuse_texture_cont; ++i) {
-        texture = material->diffuse_textures + i;
-        read_texture(context, texture);
+        texture = read_texture(context, material->diffuse_textures + i);
+        out->textures[i] = texture;
     }
 
     return out;
 }
 
-void read_texture(context_t* context, const reader_texture_t* texture)
+hwgm_texture_t* read_texture(context_t* context, const reader_texture_t* texture)
 {
     hwgm_texture_t* out = NULL;
 
     out = (hwgm_texture_t*)(context->textures + context->texture_pos);
     hwgm_texture_initialize(out);
+
+    out->wrap   = to_runtime_wrap(texture->wrap);
+    out->blend  = to_runtime_op(texture->op);
+    out->filter = HWG_TEXTURE_FILTER_LINEAR;
+
+    return out;
 }
 
 hwu32 calc_size_node(const reader_node_t* node)
@@ -515,5 +530,31 @@ hwu16 normalize_texcoord(hwf32 v)
 hws16 normalize_normal(hwf32 v)
 {
     return (hws16)(v / 32767.0f);
+}
+
+hwg_texture_blend_op_t to_runtime_op(reaer_texture_op_t op)
+{
+    switch(op)
+    {
+    case READER_TEXTURE_OP_MULTIPLY: return HWG_TEXTURE_BLEND_OP_MULTIPLY;
+    case READER_TEXTURE_OP_ADD:      return HWG_TEXTURE_BLEND_OP_ADD;
+    case READER_TEXTURE_OP_SUBTRACT: return HWG_TEXTURE_BLEND_OP_SUBTRACT;
+    }
+
+    /* not support */
+    return HWG_TEXTURE_BLEND_OP_MULTIPLY;
+}
+
+hwg_texture_wrap_t to_runime_wrap(reader_texture_wrap_t wrap)
+{
+    switch(wrap)
+    {
+    case READER_TEXTURE_WRAP_CLAMP:  return HWG_TEXTURE_WRAP_CLAMP;
+    case READER_TEXTURE_WRAP_REPEAT: return HWG_TEXTURE_WRAP_REPEAT;
+    case READER_TEXTURE_WRAP_MIRROR: return HWG_TEXTURE_WRAP_MIRROR;
+    }
+
+    /* not support */
+    return HWG_TEXTURE_WRAP_CLAMP;
 }
 
