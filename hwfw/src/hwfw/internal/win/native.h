@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-#if defined(HW_PLATFORM_WINDOWS)
+#if defined(HW_PLATFORM_WINDOWS_DESKTOP)
 
 extern void native_initialize(const hwfw_config_t* config);
 extern void native_run(hwfw_callback_t* callback);

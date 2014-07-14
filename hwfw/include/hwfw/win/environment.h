@@ -3,7 +3,7 @@
 
 #include <hw/platform.h>
 
-#if defined(HW_PLATFORM_WINDOWS)
+#if defined(HW_PLATFORM_WINDOWS_DESKTOP)
 
 #include <windows.h>
 

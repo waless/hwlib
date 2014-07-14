@@ -35,18 +35,26 @@
 /* MicrosoftVisualStudioC++関連の環境定義 */
 #if defined(_MSC_VER)
 
+#include <winapifamily.h>
+
 /* MicrosoftVisualStudioC++定義 */
 #   define HW_PLATFORM_MSVC
 
-#   if defined(WINDOWS)
-#       define HW_PLATFORM_WINDOWS
-#   elif defined(WINDOWS_PHONE)
-#       define HW_PLATFORM_WP8
-#   elif defined(XBOX)
-#       error /* not support */
+/* Windows環境定義 */
+#   define HW_PLATFORM_WINDOWS
+
+/* Windows種類別定義 */
+#   if !defined(WINAPI_FAMILY) || (WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP)
+#       define HW_PLATFORM_WINDOWS_DESKTOP
+#   else
+#       if defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+#           define HW_PLATFORM_WINDOWS_PHONE
+#       elif defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_STORE_APP)
+#           define HW_PLATFORM_WINDOWS_STORE_APP
+#       endif
 #   endif
 
-/* 32bit or 64bit 定義 */
+/* 32bit or 64bit定義 */
 #   if defined(_WIN64)
 #       define HW_PLATFORM_64BIT
 #       define HW_PLATFORM_MSVC64
@@ -54,7 +62,7 @@
 #       define HW_PLATFORM_32BIT
 #       define HW_PLATFORM_MSVC32
 #   endif
-
+#endif
 
 /* 他環境を考えるとVC専用関数は多用できないのでセキュア関数関連の警告を無視する */
 #   pragma warning(disable:4996)

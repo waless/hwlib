@@ -3,10 +3,10 @@
 
 #include "hw/platform.h"
 
-#if defined(HW_PLATFORM_WINDOWS)
+#if defined(HW_PLATFORM_WINDOWS_DESKTOP)
 #   define HWG_CONFIG_DX_11
 /* #   define HWG_CONFIG_GL_4_0 */
-#elif defined(HW_PLATFORM_WP8)
+#elif defined(HW_PLATFORM_WINDOWS_PHONE)
 #   define HWG_CONFIG_DX_11_WP
 #elif defined(HW_PLATFORM_IOS) || defined(HW_PLATFORM_ANDROID)
 /* #   define HWG_CONFIG_GL_ES_1_1 */

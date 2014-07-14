@@ -4,7 +4,7 @@
 #include <hw/platform.h>
 #include <hwg/config.h>
 
-#if defined(HW_PLATFORM_WINDOWS)
+#if defined(HW_PLATFORM_WINDOWS_DESKTOP)
 #   if defined(HWG_CONFIG_GL_4_0)
 #       error /* not support */
 #   elif defined(HWG_CONFIG_GL_ES_1_1)
@@ -17,7 +17,7 @@
 #   else
 #       error /* invalid */
 #   endif
-#elif defined(HW_PLATFORM_WP8)
+#elif defined(HW_PLATFORM_WINDOWS_PHONE)
 #   error /* invalid */
 #elif defined(HW_PLATFORM_ANDROID)
 #   if defined(HWG_CONFIG_GL_4_0)
