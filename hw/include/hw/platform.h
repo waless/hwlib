@@ -62,7 +62,6 @@
 #       define HW_PLATFORM_32BIT
 #       define HW_PLATFORM_MSVC32
 #   endif
-#endif
 
 /* 他環境を考えるとVC専用関数は多用できないのでセキュア関数関連の警告を無視する */
 #   pragma warning(disable:4996)
