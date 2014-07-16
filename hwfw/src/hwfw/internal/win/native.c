@@ -1,4 +1,6 @@
 #include "internal/win/native.h"
+#include <hw/error.h>
+#include "hwfw/error.h"
 
 #if defined(HW_PLATFORM_WINDOWS_DESKTOP)
 
