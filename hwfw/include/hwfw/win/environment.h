@@ -12,6 +12,7 @@ extern "C" {
 #endif
 
 typedef struct hwfw_config_t {
+    const char* title;
     int left;
     int top;
     int width;

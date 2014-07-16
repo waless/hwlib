@@ -1,6 +1,6 @@
 #include "internal/win/native.h"
 
-#if defined(HW_PLATFORM_WINDOWS)
+#if defined(HW_PLATFORM_WINDOWS_DESKTOP)
 
 static LRESULT WINAPI window_proc(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam);
 static void on_paint();
@@ -13,7 +13,7 @@ static hwfw_callback_t    g_callback;
 static hwfw_config_t      g_config;
 static hwfw_environment_t g_environment;
 
-void native_initialize(const hwfw_config_t* config)
+void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* config)
 {
     WNDCLASS  wc;
     RECT      wrect;
@@ -30,11 +30,11 @@ void native_initialize(const hwfw_config_t* config)
     }
 
     memset(&wc, 0, sizeof(wc));
-    wc.style         = CS_OWDC;
+    wc.style         = CS_OWNDC;
     wc.lpfnWndProc   = (WNDPROC)window_proc;
     wc.hInstance     = hinstance;
     wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-    wc.lpszClassName = "HWFW_WINDOW_CLASS";
+    wc.lpszClassName = TEXT("HWFW_WINDOW_CLASS");
 
     if(RegisterClass(&wc) == FALSE) {
     }
@@ -47,7 +47,7 @@ void native_initialize(const hwfw_config_t* config)
     wrect.bottom = wrect.top  + config->height;
     AdjustWindowRect(&wrect, wstyle, FALSE);
 
-    hwnd = CreateWindow(config->title, 
+    hwnd = CreateWindowA(config->title, 
                         config->title,
                         wstyle,
                         200,
@@ -64,27 +64,26 @@ void native_initialize(const hwfw_config_t* config)
 
     g_environment.hinstance = hinstance;
     g_environment.hwnd      = hwnd;
+
+    if(callback != NULL) {
+        g_callback = *callback;
+    }
 }
 
-void native_run(hwfw_callback_t* callback)
+void native_run()
 {
     MSG msg;
 
-    if(callback->initializer != NULL) {
-        callback->initializer(g_callback.user_data);
+    if(g_callback.initializer != NULL) {
+        g_callback.initializer(g_callback.user_data);
     }
 
     ShowWindow((HWND)g_environment.hwnd, TRUE);
 
-    while(1) {
+    do {
         if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-            if(msg.message == WM_QUIT) {
-                break;
-            }
-            else {
-                TranslateMessage(&msg);
-                DispatchMessage(&msg);
-            }
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
         }
         else {
             if(g_callback.runner != NULL) {
@@ -92,6 +91,7 @@ void native_run(hwfw_callback_t* callback)
             }
         }
     }
+    while(msg.message != WM_QUIT);
 
     if(g_callback.finalizer != NULL) {
         g_callback.finalizer(g_callback.user_data);
@@ -108,7 +108,7 @@ const hwfw_environment_t* native_get_environment()
     return &g_environment;
 }
 
-void* hwfw_get_user_data()
+void* native_get_user_data()
 {
     return g_callback.user_data;
 }
