@@ -35,15 +35,6 @@ extern void hw_error_clear();
 extern int hw_errr_get_depth();
 extern int hw_error_current_frame();
 
-#if !defined(HW_RELEASE)
-#   define HW_ERROR(kind)              hw_set_error(kind, "", __FILE__, __func__, __LINE__)
-#   define HW_ERROR_MSG(kind, message) hw_set_error(kind, message, __FILE__, __func__, __LINE__);
-extern const hw_error_t* hw_get_error();
-#else
-#   define HW_ERROR(kind)              hw_set_error(kind, "", "", "", 0)
-#   define HW_ERROR_MSG(kind, message) hw_set_error(kind, "", "", "", 0)
-#endif
-
 #ifdef __cplusplus
 }
 #endif
