@@ -23,14 +23,17 @@ typedef struct hw_error_t {
     const char* file;
     const char* func;
     int         line;
+    int         frame;
 } hw_error_t;
 
+extern void hw_error_update();
 extern void hw_error_push(int kind, const char* message, const char* file, const char* func, int line);
 extern const hw_error_t* hw_error_get(int depth);
 extern const hw_error_t* hw_error_pop();
 extern const hw_error_t* hw_error_peek();
 extern void hw_error_clear();
 extern int hw_errr_get_depth();
+extern int hw_error_current_frame();
 
 #if !defined(HW_RELEASE)
 #   define HW_ERROR(kind)              hw_set_error(kind, "", __FILE__, __func__, __LINE__)
