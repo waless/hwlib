@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hwfw", "lib\vs2012\hwfw.vcxproj", "{6A573EB3-C3D8-401D-A828-BA5B60120F8F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\vs2012\test.vcxproj", "{1D954B08-AA5D-440F-AEDF-FE459F334165}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6A573EB3-C3D8-401D-A828-BA5B60120F8F} = {6A573EB3-C3D8-401D-A828-BA5B60120F8F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
