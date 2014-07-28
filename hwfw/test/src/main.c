@@ -21,7 +21,7 @@ int main(int argc, void** argv)
     cb.resumer     = on_resume;
     cb.user_data   = 0;
 
-    config.title  = "test";
+    config.title  = TEXT("test");
     config.left   = 0;
     config.top    = 0;
     config.width  = 640;
