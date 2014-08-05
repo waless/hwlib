@@ -1,4 +1,5 @@
 #include "hwfw.h"
+#include <hw/debug/assert.h>
 
 static void on_initialize(void* p);
 static void on_finalize(void* p);

@@ -29,6 +29,7 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
 
     hinstance = GetModuleHandle(NULL);
     if(hinstance == NULL) {
+        return;
     }
 
     memset(&wc, 0, sizeof(wc));
@@ -39,6 +40,7 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
     wc.lpszClassName = TEXT("HWFW_WINDOW_CLASS");
 
     if(RegisterClass(&wc) == FALSE) {
+        return;
     }
 
     wstyle = WS_OVERLAPPEDWINDOW;
@@ -49,7 +51,7 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
     wrect.bottom = wrect.top  + config->height;
     AdjustWindowRect(&wrect, wstyle, FALSE);
 
-    hwnd = CreateWindow(config->title, 
+    hwnd = CreateWindow(wc.lpszClassName,
                         config->title,
                         wstyle,
                         200,
@@ -62,6 +64,7 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
                         NULL);
 
     if(hwnd == NULL) {
+        return;
     }
 
     g_environment.hinstance = hinstance;
@@ -119,6 +122,10 @@ LRESULT WINAPI window_proc(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam)
 {
     switch(umsg)
     {
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+
     case WM_PAINT:
         on_paint();
         break;
