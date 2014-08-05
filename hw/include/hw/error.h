@@ -35,6 +35,9 @@ extern void hw_error_clear();
 extern int hw_errr_get_depth();
 extern int hw_error_current_frame();
 
+#define HW_ERROR(kind) hw_error_push(kind, "", __FILE__, __func__, __LINE__);
+#define HW_ERROR_MESSAGE(kind, message) hw_error_push(kind, message, __FILE__, __func__, __LINE__);
+
 #ifdef __cplusplus
 }
 #endif
