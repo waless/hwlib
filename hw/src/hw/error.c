@@ -13,7 +13,7 @@ void hw_error_update()
     g_frame_counter += 1;
 }
 
-void hw_error_push(int kind, const char* message, const char* file, const char* func, int line)
+void hw_error_push(int kind, const char* message, const char* file, int line)
 {
     HW_ASSERT(g_stack_top < HW_ERROR_DEPTH);
 
@@ -21,7 +21,6 @@ void hw_error_push(int kind, const char* message, const char* file, const char* 
         hw_error_t* target = g_stack + g_stack_top;
         target->kind  = kind;
         target->file  = file;
-        target->func  = func;
         target->line  = line;
         target->frame = g_frame_counter;
 
@@ -88,7 +87,6 @@ void clear(hw_error_t* error)
 {
     error->kind = HW_ERROR_SUCCESS;
     error->file = "";
-    error->func = "";
     error->line = 0;
 
     memset(error->message, 0, sizeof(error->message));
