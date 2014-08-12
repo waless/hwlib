@@ -5,7 +5,7 @@
 #define HW_DEFAULT_ALIGNMENT 8
 
 /* 一時文字列バッファのサイズ */
-#define HW_TMP_STRING_LENGTH 256
+#define HW_TEMPORARY_STRING_LENGTH 256
 
 /* エラーが記録されるスタックの深さ */
 #define HW_ERROR_DEPTH 32
