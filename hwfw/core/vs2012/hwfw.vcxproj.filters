@@ -15,6 +15,9 @@
     <ClCompile Include="..\src\hwfw\internal\win\native.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\hwfw\internal\win\error.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\hwfw\internal\win\native.h">

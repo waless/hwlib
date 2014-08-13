@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\hwfw\hwfw.c" />
+    <ClCompile Include="..\src\hwfw\internal\win\error.c" />
     <ClCompile Include="..\src\hwfw\internal\win\native.c" />
   </ItemGroup>
   <ItemGroup>

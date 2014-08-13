@@ -29,6 +29,22 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
 
     hinstance = GetModuleHandle(NULL);
     if(hinstance == NULL) {
+        DWORD error          = GetLastError();
+        char* message_buffer = NULL;
+
+        FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
+                      FORMAT_MESSAGE_FROM_SYSTEM     |
+                      FORMAT_MESSAGE_IGNORE_INSERTS,
+                      NULL,
+                      error,
+                      MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                      (LPTSTR)&message_buffer, 0, NULL);
+
+        if(message_buffer != NULL) {
+            HW_ERROR_MESSAGE(HWFW_ERROR_WIN_NOTFOUND_INSTANCE, message_buffer);
+            LocalFree(message_buffer);
+        }
+
         return;
     }
 
@@ -51,7 +67,7 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
     wrect.bottom = wrect.top  + config->height;
     AdjustWindowRect(&wrect, wstyle, FALSE);
 
-    hwnd = CreateWindow(wc.lpszClassName,
+    hwnd = CreateWindow(config->title,
                         config->title,
                         wstyle,
                         200,
@@ -64,6 +80,23 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
                         NULL);
 
     if(hwnd == NULL) {
+        DWORD  error          = GetLastError();
+        TCHAR* message_buffer = NULL;
+
+        FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
+                      FORMAT_MESSAGE_FROM_SYSTEM     |
+                      FORMAT_MESSAGE_IGNORE_INSERTS,
+                      NULL,
+                      error,
+                      MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                      (LPTSTR)&message_buffer, 0, NULL);
+
+        if(message_buffer != NULL) {
+            MessageBox(NULL, message_buffer, NULL, MB_OK);
+            HW_ERROR_MESSAGE(HWFW_ERROR_WIN_NOTFOUND_INSTANCE, message_buffer);
+            LocalFree(message_buffer);
+        }
+
         return;
     }
 
