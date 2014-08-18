@@ -19,13 +19,7 @@ void hwfw_error_push(int kind, const char* message, const char* file, int line)
                   (LPTSTR)&system_message, 0, NULL);
 
     if(system_message != NULL) {
-#if 0
-        char message[HW_TEMPORARY_STRING_LENGTH];
-
-        snprintf(message, sizeof(message), "%s", system_message);
-#endif
         hw_error_push(kind, system_message, file, line);
-
         LocalFree(system_message);
         system_message = NULL;
     }
