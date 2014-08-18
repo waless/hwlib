@@ -12,8 +12,6 @@ extern "C" {
 
 typedef enum hwfw_error_win_t {
     HWFW_ERROR_WIN_BEGIN = HWFW_ERROR_BEGIN,
-    HWFW_ERROR_WIN_NOTFOUND_INSTANCE,
-    HWFW_ERROR_WIN_,
     HWFW_ERROR_WIN_END,
 } hwfw_error_win_t;
 
