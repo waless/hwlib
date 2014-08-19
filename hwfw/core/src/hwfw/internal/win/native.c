@@ -41,6 +41,7 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
     wc.lpszClassName = TEXT("HWFW_WINDOW_CLASS");
 
     if(RegisterClass(&wc) == FALSE) {
+        HWFW_ERROR(0, "failed RegisterClass()");
         return;
     }
 
