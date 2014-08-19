@@ -53,7 +53,7 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
     wrect.bottom = wrect.top  + config->height;
     AdjustWindowRect(&wrect, wstyle, FALSE);
 
-    hwnd = CreateWindow(config->title,
+    hwnd = CreateWindow(wc.lpszClassName,
                         config->title,
                         wstyle,
                         200,
