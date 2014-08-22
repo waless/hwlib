@@ -1,6 +1,7 @@
 #ifndef HWFW_H_
 #define HWFW_H_
 
+#include "hw/types.h"
 #include "hwfw/error.h"
 #include "hwfw/environment.h"
 
@@ -23,8 +24,8 @@ typedef struct hwfw_callback_t {
     void*             user_data;
 } hwfw_callback_t;
 
-extern void hwfw_initialize(const hwfw_callback_t* callback, const hwfw_config_t* config);
-extern void hwfw_run();
+extern hwbool hwfw_initialize(const hwfw_callback_t* callback, const hwfw_config_t* config);
+extern hwbool hwfw_run();
 
 extern const hwfw_config_t* hwfw_get_config();
 extern const hwfw_environment_t* hwfw_get_native_environment();

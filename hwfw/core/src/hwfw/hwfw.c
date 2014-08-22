@@ -10,14 +10,14 @@
 #   error /* not support */
 #endif
 
-void hwfw_initialize(const hwfw_callback_t* callback, const hwfw_config_t* config)
+hwbool hwfw_initialize(const hwfw_callback_t* callback, const hwfw_config_t* config)
 {
-    native_initialize(callback, config);
+    return native_initialize(callback, config);
 }
 
-void hwfw_run()
+hwbool hwfw_run()
 {
-    native_run();
+    return native_run();
 }
 
 const hwfw_config_t* hwfw_get_config()

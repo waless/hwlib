@@ -11,8 +11,8 @@ extern "C" {
 
 #if defined(HW_PLATFORM_WINDOWS_DESKTOP)
 
-extern void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* config);
-extern void native_run();
+extern hwbool native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* config);
+extern hwbool native_run();
 extern const hwfw_config_t* native_get_config();
 extern const hwfw_environment_t* native_get_environment();
 extern void* native_get_user_data();

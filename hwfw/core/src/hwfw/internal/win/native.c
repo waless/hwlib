@@ -15,7 +15,7 @@ static hwfw_callback_t    g_callback;
 static hwfw_config_t      g_config;
 static hwfw_environment_t g_environment;
 
-void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* config)
+hwbool native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* config)
 {
     WNDCLASS  wc;
     RECT      wrect;
@@ -30,7 +30,7 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
     hinstance = GetModuleHandle(NULL);
     if(hinstance == NULL) {
         HWFW_ERROR(0, "failed GetModuleHandle()");
-        return;
+        return HW_FALSE;
     }
 
     memset(&wc, 0, sizeof(wc));
@@ -42,7 +42,7 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
 
     if(RegisterClass(&wc) == FALSE) {
         HWFW_ERROR(0, "failed RegisterClass()");
-        return;
+        return HW_FALSE;
     }
 
     wstyle = WS_OVERLAPPEDWINDOW;
@@ -67,7 +67,7 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
 
     if(hwnd == NULL) {
         HWFW_ERROR(0, "failed CreateWindow()");
-        return;
+        return HW_FALSE;
     }
 
     g_environment.hinstance = hinstance;
@@ -76,9 +76,11 @@ void native_initialize(const hwfw_callback_t* callback, const hwfw_config_t* con
     if(callback != NULL) {
         g_callback = *callback;
     }
+
+    return HW_TRUE;
 }
 
-void native_run()
+hwbool native_run()
 {
     MSG msg;
 
@@ -104,6 +106,8 @@ void native_run()
     if(g_callback.finalizer != NULL) {
         g_callback.finalizer(g_callback.user_data);
     }
+
+    return HW_FALSE;
 }
 
 const hwfw_config_t* native_get_config()
