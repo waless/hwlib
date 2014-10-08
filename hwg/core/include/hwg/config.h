@@ -1,7 +1,7 @@
 ﻿#ifndef HWG_CONFIG_H_
 #define HWG_CONFIG_H_
 
-#include "hw/platform.h"
+#include <hw/platform.h>
 
 #if defined(HW_PLATFORM_WINDOWS_DESKTOP)
 #   define HWG_CONFIG_DX_11
