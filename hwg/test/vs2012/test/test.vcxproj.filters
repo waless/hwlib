@@ -8,4 +8,9 @@
       <UniqueIdentifier>{3c0cc17b-a51f-4b2b-b1dd-3fda14d82dd7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\main.c">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>
