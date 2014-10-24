@@ -1,4 +1,4 @@
-#include <hwfw/hwfw.h>
+#include <hwfw.h>
 
 int main(int argc, char* argv[])
 {

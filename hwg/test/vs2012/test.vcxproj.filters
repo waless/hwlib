@@ -9,7 +9,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\main.c">
+    <ClCompile Include="..\src\main.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

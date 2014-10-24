@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hwg", "core\vs2012\hwg.vcxproj", "{1C29577E-C826-412D-BE29-4C9FB7A411DB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\vs2012\test\test.vcxproj", "{E9BA8863-9802-4440-936D-7C29AC452AAD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\vs2012\test.vcxproj", "{E9BA8863-9802-4440-936D-7C29AC452AAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
