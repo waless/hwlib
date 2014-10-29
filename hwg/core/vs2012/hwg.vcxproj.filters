@@ -12,6 +12,9 @@
     <ClCompile Include="..\src\hwg\color4_f32.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\hwg.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\hwg\color4_f32.h">

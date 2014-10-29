@@ -3,14 +3,7 @@
 
 #include "hwg/config.h"
 
-#if !defined(__cplusplus)
-#   error /* this header cpp only */
-#endif
-
-#if defined(HWG_CONFIG_DX_11)
-#   define CINTERFACE
-#   include <d3d11.h>
-#elif defined(HWG_CONFIG_DX_11_WP)
+#if defined(HWG_CONFIG_DX_11) || defined(HWG_CONFIG_DX_11_WP)
 #   define CINTERFACE
 #   include <d3d11.h>
 #endif

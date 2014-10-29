@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\hwg.c" />
     <ClCompile Include="..\src\hwg\color4_f32.c" />
   </ItemGroup>
   <ItemGroup>

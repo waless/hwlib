@@ -1,8 +1,10 @@
 #ifndef HWG_H_
 #define HWG_H_
 
+#include <hw/platform.h>
 #include <hw/types.h>
 #include "hwg/config.h"
+#include <windows.h>
 
 #if defined(__cplusplus)
 extern "C" {
