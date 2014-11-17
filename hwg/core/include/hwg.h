@@ -12,9 +12,9 @@ extern "C" {
 
 typedef struct hwg_parameter_t {
     HWND   hwnd;
-    hwsint frame_width;
-    hwsint frame_height;
-    hwf32  frame_rate;
+    hwuint frame_width;
+    hwuint frame_height;
+    hwuint frame_rate;
     hwbool is_windowed;
 } hwg_parameter_t;
 

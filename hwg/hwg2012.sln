@@ -2,8 +2,23 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hwg", "core\vs2012\hwg.vcxproj", "{1C29577E-C826-412D-BE29-4C9FB7A411DB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{14EACE87-0E97-4C89-8166-0203CF87433F} = {14EACE87-0E97-4C89-8166-0203CF87433F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\vs2012\test.vcxproj", "{E9BA8863-9802-4440-936D-7C29AC452AAD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1C29577E-C826-412D-BE29-4C9FB7A411DB} = {1C29577E-C826-412D-BE29-4C9FB7A411DB}
+		{14EACE87-0E97-4C89-8166-0203CF87433F} = {14EACE87-0E97-4C89-8166-0203CF87433F}
+		{6A573EB3-C3D8-401D-A828-BA5B60120F8F} = {6A573EB3-C3D8-401D-A828-BA5B60120F8F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hwfw", "..\hwfw\core\vs2012\hwfw.vcxproj", "{6A573EB3-C3D8-401D-A828-BA5B60120F8F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{14EACE87-0E97-4C89-8166-0203CF87433F} = {14EACE87-0E97-4C89-8166-0203CF87433F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hw", "..\hw\vc2012\hw.vcxproj", "{14EACE87-0E97-4C89-8166-0203CF87433F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +34,14 @@ Global
 		{E9BA8863-9802-4440-936D-7C29AC452AAD}.Debug|Win32.Build.0 = Debug|Win32
 		{E9BA8863-9802-4440-936D-7C29AC452AAD}.Release|Win32.ActiveCfg = Release|Win32
 		{E9BA8863-9802-4440-936D-7C29AC452AAD}.Release|Win32.Build.0 = Release|Win32
+		{6A573EB3-C3D8-401D-A828-BA5B60120F8F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6A573EB3-C3D8-401D-A828-BA5B60120F8F}.Debug|Win32.Build.0 = Debug|Win32
+		{6A573EB3-C3D8-401D-A828-BA5B60120F8F}.Release|Win32.ActiveCfg = Release|Win32
+		{6A573EB3-C3D8-401D-A828-BA5B60120F8F}.Release|Win32.Build.0 = Release|Win32
+		{14EACE87-0E97-4C89-8166-0203CF87433F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{14EACE87-0E97-4C89-8166-0203CF87433F}.Debug|Win32.Build.0 = Debug|Win32
+		{14EACE87-0E97-4C89-8166-0203CF87433F}.Release|Win32.ActiveCfg = Release|Win32
+		{14EACE87-0E97-4C89-8166-0203CF87433F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
