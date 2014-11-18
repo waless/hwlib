@@ -39,11 +39,11 @@ void on_initialize(void* p)
     const hwfw_environment_t* env = hwfw_get_native_environment();
 
     param.hwnd = env->hwnd;
-    param.frame_width = 640;
+    param.frame_width  = 640;
     param.frame_height = 480;
-    param.frame_rate = 60;
-    param.is_windowed = HW_TRUE;
-    hwg_initialize(param);
+    param.frame_rate   = 60;
+    param.is_windowed  = HW_TRUE;
+    hwg_initialize(&param);
 }
 
 void on_finalize(void* p)
