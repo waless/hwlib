@@ -5,13 +5,13 @@
 #include "hwg/dx.h"
 
 typedef struct hwg_context_t {
-    hwg_parameter_t      param;
-    D3D_DRIVER_TYPE      driver_type;
-    D3D_FEATURE_LEVEL    feature_level;
-    IDXGISwapChain*      swap_chain;
-    ID3D11Device*        device;
-    ID3D11DeviceContext* device_context;
-    ID3D11Texture2D*     back_buffer;
+    hwg_parameter_t         param;
+    D3D_DRIVER_TYPE         driver_type;
+    D3D_FEATURE_LEVEL       feature_level;
+    IDXGISwapChain*         swap_chain;
+    ID3D11Device*           device;
+    ID3D11DeviceContext*    device_context;
+    ID3D11RenderTargetView* render_target;
 } hwg_context_t;
 
 static hwg_context_t g_context;
@@ -89,6 +89,41 @@ hwbool hwg_initialize(const hwg_parameter_t* param)
 
     if(FAILED(result)) {
         HW_ASSERT(0);
+    }
+
+    {
+        ID3D11Texture2D*        back_buffer   = NULL;
+        ID3D11RenderTargetView* render_target = NULL;
+
+        result = IDXGISwapChain_GetBuffer(g_context.swap_chain, 0, &IID_ID3D11Texture2D, (LPVOID*)&back_buffer);
+        if(FAILED(result)) {
+            HW_ASSERT(0);
+            return result;
+        }
+
+        //result = g_context.device->CreateRenderTargetView(back_buffer, NULL, &render_target);
+        result = ID3D11Device_CreateRenderTargetView(g_context.device, (ID3D11Resource*)back_buffer, NULL, &render_target);
+        ID3D11Texture2D_Release(back_buffer);
+        if(FAILED(result)) {
+            HW_ASSERT(0);
+            return result;
+        }
+
+        ID3D11DeviceContext_OMSetRenderTargets(g_context.device_context, 1, &render_target, NULL);
+        //g_context.device_context.OMSetRenderTargets(1, &render_target, NULL);
+        g_context.render_target = render_target;
+    }
+
+    {
+        D3D11_VIEWPORT vp;
+        vp.Width    = (float)param->frame_width;
+        vp.Height   = (float)param->frame_height;
+        vp.MinDepth = 0.0f;
+        vp.MaxDepth = 1.0f;
+        vp.TopLeftX = 0;
+        vp.TopLeftY = 0;
+        //g_context.device_context->RSSetViewports(1, &vp);
+        ID3D11DeviceContext_RSSetViewports(g_context.device_context, 1, &vp);
     }
 
     return HW_TRUE;
